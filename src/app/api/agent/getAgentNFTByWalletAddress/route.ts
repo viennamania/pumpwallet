@@ -110,6 +110,14 @@ export async function POST(request: NextRequest) {
   });
 
   response?.ownedNfts?.map((nft) => {
+
+    //console.log("nft", nft);
+
+    const agentContractAddress = nft.contract.address;
+    const agentNumber = nft.tokenId;
+
+    // api call to get application count for the agent
+
     finalResult.push(nft);
   });
 
