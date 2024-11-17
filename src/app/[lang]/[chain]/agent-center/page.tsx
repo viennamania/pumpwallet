@@ -1866,9 +1866,7 @@ export default function AIPage({ params }: any) {
  
                     {/* applications table */}
 
-                        <div className='mt-10 w-full flex flex-col gap-5
-                            border border-gray-300 p-4 rounded-lg bg-gray-100
-                        '>
+                        <div className='mt-10 w-full flex flex-col gap-5'>
 
                             <div className='flex flex-row items-center gap-2'>
                                 

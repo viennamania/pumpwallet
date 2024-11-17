@@ -1813,6 +1813,22 @@ export default function AIPage({ params }: any) {
                                                                 <span className='text-sm font-semibold text-blue-500'>
                                                                     {agents.find((agent) => agent.walletAddress === selectedHolderWalletAddress)?.nickname} 님의 AI 에이전트 NFT
                                                                 </span>
+                                                                {/* agent wallet address */}
+                                                                <div className='flex flex-row items-center gap-2'>
+                                                                    <span className='text-xs font-semibold text-gray-500'>
+                                                                        지갑주소: {selectedHolderWalletAddress.substring(0, 15)}...
+                                                                    </span>
+                                                                    {/* copy button */}
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            navigator.clipboard.writeText(selectedHolderWalletAddress);
+                                                                            toast.success('지갑주소 복사 완료');
+                                                                        }}
+                                                                        className='p-2 bg-blue-500 text-zinc-100 rounded-lg hover:bg-blue-600'
+                                                                    >
+                                                                        복사
+                                                                    </button>
+                                                                </div>
                                                                 {!loadingAgentBotList && (
                                                                     <span className='text-lg font-semibold text-gray-500'>
                                                                         {agentBotList.length} 개

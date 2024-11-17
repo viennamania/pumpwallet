@@ -109,6 +109,10 @@ export async function POST(request: NextRequest) {
     omitMetadata: false, // // Flag to omit metadata
   });
 
+  ///console.log("response?.ownedNfts", response?.ownedNfts);
+
+
+
   response?.ownedNfts?.map((nft) => {
 
     //console.log("nft", nft);

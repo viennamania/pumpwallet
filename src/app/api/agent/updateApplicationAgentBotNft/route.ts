@@ -1,8 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+/*
 import {
 	updateAgentBotNft,
 } from '@lib/api/agent';
+*/
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
@@ -22,33 +24,36 @@ export async function POST(request: NextRequest) {
   const { applicationId, agentBot, agentBotNumber } = body;
 
 
-  const response = await alchemy.nft.getNftMetadata(
-    agentBot, agentBotNumber
-  );
-
-  if (!response) {
-    return NextResponse.error();
-    
-  }
-
-  //console.log("response: ", response);
 
 
-  
-  const result = await updateAgentBotNft({
-    applicationId: applicationId,
-    agentBotNft: response,
+
+  const response = await fetch("https://owinwallet.com/api/agent/updateApplicationAgentBotNft", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      applicationId: applicationId,
+      agentBot: agentBot,
+      agentBotNumber: agentBotNumber,
+    }),
   });
+
+  //console.log("updateApplicationAgentBotNft res: ", res);
+
   
-  if (!result) {
+  if (!response.ok) {
     return NextResponse.error();
   }
 
- 
+
   return NextResponse.json({
-
+    status: "success",
     result: response,
-    
   });
+  
+
+
+
   
 }
