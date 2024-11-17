@@ -1029,24 +1029,6 @@ export default function Index({ params }: any) {
         </div>
 
 
-        {/* announcement */}
-        <div className="w-full flex flex-col bg-zinc-800 p-5 rounded-lg text-start gap-2 mb-5
-                        hover:shadow-lg
-                transition duration-300 ease-in-out
-                transform hover:-translate-y-1
-        ">
-          <div className="flex flex-row justify-start items-center gap-2">
-            {/* dot */}
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <h2 className="text-xl md:text-3xl font-semibold text-zinc-100 ">
-              {title}
-            </h2>
-          </div>
-          <p className="text-zinc-300">{description}</p>
-        </div>
-
-
-
 
         {true && (
 
@@ -1897,12 +1879,12 @@ function Header(
 
       {/* header menu */}
       <div className="w-full flex flex-row justify-between items-center gap-2
-        bg-green-500 p-4 rounded-lg mb-5
+        bg-zinc-200 p-4 rounded-lg mb-5 md:mb-10
       ">
         {/* logo */}
         <div className="flex flex-row gap-2 items-center">
           <Image
-            src="/circle-logo.webp"
+            src="/logo-ppump.png"
             alt="Circle Logo"
             width={35}
             height={35}
@@ -1937,45 +1919,6 @@ function Header(
         </div>
       </div>
       
-      {/*
-      <Image
-        src={thirdwebIcon}
-        alt=""
-        className="size-[150px] md:size-[150px]"
-        style={{
-          filter: "drop-shadow(0px 0px 24px #a726a9a8)",
-        }}
-      />
-      */}
-      <Image
-        src="/wallet-logo.webp"
-        alt="Wallet Logo"
-        width={150}
-        height={150}
-        className="w-10 h-10 md:w-20 md:h-20"
-      />
-
-
-      
-      <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-yellow-500">
-        PPUMP Wallet
-        <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block -skew-x-6 text-green-500 font-bold"> USDT </span>
-      </h1>
-
-      <p className="text-gray-600
-        text-base">
-        Magic wallet for{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          P2E Game
-        </code>{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          NFT
-        </code>{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          DeFi
-        </code>{" "}
-      </p>
       
     </header>
   );

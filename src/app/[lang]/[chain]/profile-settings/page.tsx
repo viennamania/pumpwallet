@@ -2313,7 +2313,11 @@ export default function SettingsPage({ params }: any) {
                                     </div>
                                     <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
                                         {myNfts?.map((nft, index) => (
-                                            <div key={index} className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                                            <div
+                                                key={index}
+                                                className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                                                bg-yellow-100'
+                                            >
 
                                                 <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                                     {/* goto button for detail page */}
@@ -2548,7 +2552,7 @@ function Header(
             >            
                 <div className="flex flex-row gap-2 items-center">
                     <Image
-                    src="/circle-logo.webp"
+                    src="/logo-ppump.png"
                     alt="Circle Logo"
                     width={35}
                     height={35}
