@@ -1930,7 +1930,7 @@ export default function AIPage({ params }: any) {
 
 
 
-                                                                        <span className='text-sm font-semibold text-yellow-500'>
+                                                                        <span className='text-2xl font-semibold text-gray-500'>
                                                                             {nft.name}
                                                                         </span>
                                                                         <span className='text-sm font-semibold'>
