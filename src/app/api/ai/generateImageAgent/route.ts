@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     const randomColor = Math.floor(Math.random() * robotColors.length);
 
-    const englishPrompt = "One cute and " + randomColor + "color metallic robot character with shiny skin in Japanese anime style with a sign PUMP. transparent background.";
+    const englishPrompt = "One cute and " + randomColor + " color metallic robot character with shiny skin in Japanese anime style with a sign PUMP. transparent background.";
 
 
     const negative_prompt = "easynegative,ng_deepnegative_v1_75t,((monochrome)),((grayscale)),bad-picture-chill-75v, (worst quality, low quality:1.4), monochrome, grayscale, sketches, paintings, lowres, normalres, blurry, acnes on face, {{sperm}}, {{bra}}";
