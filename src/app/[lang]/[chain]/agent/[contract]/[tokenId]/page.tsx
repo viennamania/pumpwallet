@@ -674,11 +674,11 @@ export default function AgentPage({ params }: any) {
                   border-b border-gray-300 pb-2
                 '>
                     <span className='text-lg font-semibold text-gray-800'>
-                        에이전트 NFT 계약번호: #{agentTokenId}
+                        AI 에이전트 NFT 계약번호: #{agentTokenId}
                     </span>
                     <div className='flex flex-col items-start justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
-                          에이전트 NFT 계약주소
+                          AI 에이전트 NFT 계약주소
                         </span>
                         <span className='text-sm text-gray-800'>
                             {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
@@ -699,16 +699,16 @@ export default function AgentPage({ params }: any) {
 
                       <div className='flex flex-col items-start justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
-                            에이전트 NFT 이름
+                            AI 에이전트 NFT 이름
                         </span>
-                        <span className='text-xs text-gray-800'>
+                        <span className='text-xl font-semibold text-gray-800'>
                             {agent.name}
                         </span>
                       </div>
             
                       <div className='flex flex-col items-start justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
-                            에이전트 NFT 설명
+                            AI 에이전트 NFT 설명
                         </span>
                         <span className='text-xs text-gray-800'>
                             {agent.description}
@@ -724,7 +724,7 @@ export default function AgentPage({ params }: any) {
                       <div className='w-full flex flex-col items-start justify-between gap-2'>
                         
                         <span className='text-sm text-yellow-500'>
-                            에이전트 소유자 정보
+                            AI 에이전트 소유자 정보
                         </span>
                         <div className='flex flex-row items-center justify-between gap-2'>
                           <Image

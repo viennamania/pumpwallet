@@ -2063,7 +2063,7 @@ export default function AIPage({ params }: any) {
                                                         {checkingAgentBotNftList.find((item) => item.applicationId === application.id)?.checking ? "Checking..." : "Check NFT"}
                                                     </button>
                                                 ) : (
-                                                    <div className='flex flex-col gap-2
+                                                    <div className='flex flex-col gap-1
                                                         items-center justify-center
                                                         bg-gray-200 p-2 rounded-lg border border-gray-300
                                                     '>
@@ -2084,7 +2084,7 @@ export default function AIPage({ params }: any) {
                                                             />
                                                         </button>
 
-                                                        <span className='text-sm text-yellow-800'>
+                                                        <span className='text-lg text-yellow-800'>
                                                             {agentBotNftList.find((item) => item.applicationId === application.id)?.agentBotNft?.name || ""}
                                                         </span>
                                                         <span className='text-xs text-gray-800'>
@@ -2093,9 +2093,9 @@ export default function AIPage({ params }: any) {
                                                         <Image
                                                             src={agentBotNftList.find((item) => item.applicationId === application.id)?.agentBotNft?.image?.thumbnailUrl || ""}
                                                             alt="NFT"
-                                                            width={50}
-                                                            height={50}
-                                                            className='rounded-lg'
+                                                            width={100}
+                                                            height={100}
+                                                            className='rounded-lg w-full h-full'
                                                         />
                                                     </div>
                                                 )}
