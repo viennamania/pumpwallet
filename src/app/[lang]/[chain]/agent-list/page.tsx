@@ -1723,7 +1723,7 @@ export default function AIPage({ params }: any) {
                                             '>
 
                                                 <span className='text-lg font-semibold text-blue-500'>
-                                                    NFT 홀더 닉네임을 선택하세요
+                                                    NFT 소유자 닉네임을 선택하세요
                                                 </span>
 
                                                 <div className='w-full grid grid-cols-1 xl:grid-cols-2 items-start justify-between gap-5'>
@@ -1732,7 +1732,7 @@ export default function AIPage({ params }: any) {
 
                                                         <div className='flex flex-row items-center gap-2'>
                                                             <span className='text-sm font-semibold text-gray-500'>
-                                                                NFT 홀더 닉네임(알파벳 순서)
+                                                                NFT 소유자 닉네임(알파벳 순서)
                                                             </span>
                                                             {/* agents count */}
                                                             <span className='text-sm font-semibold text-gray-500'>
@@ -1816,13 +1816,13 @@ export default function AIPage({ params }: any) {
                                                                 {/* agent wallet address */}
                                                                 <div className='flex flex-row items-center gap-2'>
                                                                     <span className='text-xs font-semibold text-gray-500'>
-                                                                        지갑주소: {selectedHolderWalletAddress.substring(0, 15)}...
+                                                                        소유자 지갑주소: {selectedHolderWalletAddress.substring(0, 15)}...
                                                                     </span>
                                                                     {/* copy button */}
                                                                     <button
                                                                         onClick={() => {
                                                                             navigator.clipboard.writeText(selectedHolderWalletAddress);
-                                                                            toast.success('지갑주소 복사 완료');
+                                                                            toast.success('홀더 지갑주소 복사 완료');
                                                                         }}
                                                                         className='p-2 bg-blue-500 text-zinc-100 rounded-lg hover:bg-blue-600'
                                                                     >
