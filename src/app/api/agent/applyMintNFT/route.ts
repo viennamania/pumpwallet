@@ -84,12 +84,17 @@ export async function POST(request: NextRequest) {
   ////console.log("getReferApplications jsonObj: ", jsonObj);
 
  
+  /*
   return NextResponse.json({
 
     result: jsonObj?.result,
     
   });
+  */
 
+  const result = jsonObj?.result;
+
+  const applicationId = result.id;
 
 
 
