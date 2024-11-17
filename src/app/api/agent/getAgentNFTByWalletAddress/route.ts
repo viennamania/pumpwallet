@@ -33,7 +33,9 @@ export async function POST(request: NextRequest) {
 
   const erc721ContractAddresses = await getAllErc721ContractAddresses();
 
-  //console.log("erc721ContractAddresses", erc721ContractAddresses);
+  console.log("erc721ContractAddresses", erc721ContractAddresses);
+
+
 
   // {"error":{"message":"Contract address filter size of: 58 is greater than the maximum allowed of: 45!"}}
 
@@ -61,6 +63,16 @@ export async function POST(request: NextRequest) {
 
   //console.log("finalResult", finalResult);
 
+  if (erc721ContractAddresses.length <= 45) {
+    return NextResponse.json({
+      result: {
+        ownedNfts: finalResult,
+      }
+    });
+  }
+
+
+  
 
   contractAddresses = erc721ContractAddresses.slice(45, 90);
   const response2 = await alchemy.nft.getNftsForOwner(

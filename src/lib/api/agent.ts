@@ -71,7 +71,7 @@ export async function insertOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
 
   // check if walletAddress exists
@@ -136,7 +136,7 @@ export async function insertOne(data: any) {
 export async function getAllAgents({ page = 1, limit = 100 }) {
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
 
   // exclude
@@ -184,7 +184,7 @@ export async function getAllAgents({ page = 1, limit = 100 }) {
 export async function getAllAgentsForAILabs({ page = 1, limit = 100 }) {
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   try {
     const result = await collection.aggregate([
@@ -252,7 +252,7 @@ export async function getMyReferAgents(
 
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
 
   // convert agentBotNumber to Int32
@@ -310,7 +310,7 @@ export async function getOneByWalletAddress(walletAddress: string) {
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.findOne({ walletAddress: walletAddress });
 
@@ -361,7 +361,7 @@ export async function updateAssetValuation(
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.updateOne(
     { id: applicationId },
@@ -404,7 +404,7 @@ export async function updateAgentBotNft(
 
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.updateOne(
     { id: applicationId },
@@ -445,7 +445,7 @@ export async function updateHtxUid(
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.updateOne(
     { id: applicationId },
@@ -485,7 +485,7 @@ export async function updateApplicationStartTrading(
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.updateOne(
     { id: applicationId },
@@ -532,7 +532,7 @@ export async function updateApplicationMasterBotInfo(
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('agents');
+  const collection = client.db('pump').collection('agents');
 
   const result = await collection.updateOne(
     { id: applicationId },

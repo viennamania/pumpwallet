@@ -59,9 +59,6 @@ import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../dictionaries";
 
 
-
-import axios from 'axios';
-
 import { deployERC721Contract } from 'thirdweb/deploys';
 
 import {
@@ -475,7 +472,7 @@ export default function AIPage({ params }: any) {
   
         accountAbstraction: {
             chain: params.chain === "arbitrum" ? arbitrum : polygon,
-            factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum
+              
             sponsorGas: true
         },
 
@@ -1437,7 +1434,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    OWIN
+                    PPUMP
                     </span>
                 </div>
             </button>

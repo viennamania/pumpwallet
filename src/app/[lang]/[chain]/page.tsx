@@ -143,7 +143,7 @@ export default function Index({ params }: any) {
 
       accountAbstraction: {
         chain: params.chain === "arbitrum" ? arbitrum : params.chain === "polygon" ? polygon : params.chain === "ethereum" ? ethereum : polygon,
-        factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum
+          
         sponsorGas: true
       },
 
@@ -1065,7 +1065,7 @@ export default function Index({ params }: any) {
                     height={20}
                     className="rounded-lg w-10 h-10"
                   />
-                  <span>Sign in with OWIN Magic Wallet</span>
+                  <span>Sign in with PPUMP Wallet</span>
                 </div>
               </button>
             */}
@@ -1080,12 +1080,12 @@ export default function Index({ params }: any) {
               wallets={wallets}
               accountAbstraction={{
                 chain: polygon,
-                factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum, ethereum
+                 
                 sponsorGas: true
               }}
               theme={"light"}
               connectButton={{
-                label: "Sign in with OWIN Magic Wallet",
+                label: "Sign in with PPUMP Wallet",
               }}
               connectModal={{
                 size: "wide", 
@@ -1909,7 +1909,7 @@ function Header(
             className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
           />
           <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-            OWIN
+            PPUMP
           </span>
         </div>
         {/* menu */}
@@ -1958,7 +1958,7 @@ function Header(
 
       
       <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-yellow-500">
-        OWIN Wallet
+        PPUMP Wallet
         <span className="text-zinc-300 inline-block mx-1"> + </span>
         <span className="inline-block -skew-x-6 text-green-500 font-bold"> USDT </span>
       </h1>

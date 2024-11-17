@@ -56,9 +56,6 @@ import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../../dictionaries";
 
 
-
-import axios from 'axios';
-
 import { deployERC721Contract } from 'thirdweb/deploys';
 
 import {
@@ -104,6 +101,10 @@ const wallets = [
       },
     }),
 ];
+
+
+
+
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -459,7 +460,7 @@ export default function AIPage({ params }: any) {
   
         accountAbstraction: {
             chain: params.chain === "arbitrum" ? arbitrum : polygon,
-            factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum
+              
             sponsorGas: true
         },
 
@@ -1654,7 +1655,7 @@ export default function AIPage({ params }: any) {
                                     height={20}
                                     className="rounded-lg w-10 h-10"
                                     />
-                                    <span>Sign in with OWIN Magic Wallet</span>
+                                    <span>Sign in with PPUMP Wallet</span>
                                 </div>
                                 </button>
                             */}
@@ -1665,12 +1666,12 @@ export default function AIPage({ params }: any) {
                                 wallets={wallets}
                                 accountAbstraction={{
                                     chain: polygon,
-                                    factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum, ethereum
+                                     
                                     sponsorGas: true
                                 }}
                                 theme={"light"}
                                 connectButton={{
-                                    label: "Sign in with OWIN Magic Wallet",
+                                    label: "Sign in with PPUMP Wallet",
                                 }}
                                 connectModal={{
                                     size: "wide", 
@@ -2336,7 +2337,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    OWIN Admin
+                    PPUMP Admin
                     </span>
                 </div>
                 

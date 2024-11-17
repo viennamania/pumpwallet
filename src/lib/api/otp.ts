@@ -16,7 +16,7 @@ export async function insertOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('opts');
+  const collection = client.db('pump').collection('opts');
 
 
 
@@ -83,7 +83,7 @@ export async function findOne(data: any) {
   }
 
   const client = await clientPromise;
-  const collection = client.db('vienna').collection('opts');
+  const collection = client.db('pump').collection('opts');
 
   const result = await collection.findOne<UserProps>(
     {

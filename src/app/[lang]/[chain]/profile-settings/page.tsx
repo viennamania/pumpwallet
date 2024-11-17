@@ -1016,7 +1016,7 @@ export default function SettingsPage({ params }: any) {
                 
 
 
-                toast.success('AI 에이전트 코드 생성 완료');
+                toast.success('AI 에이전트 계약주소 생성 완료');
 
 
                 
@@ -1155,8 +1155,8 @@ export default function SettingsPage({ params }: any) {
         }
 
         if (!erc721ContractAddress) {
-            toast.error('AI 에이전트 코드를 먼저 생성해주세요');
-            setMessageMintingAgentNft('AI 에이전트 코드를 먼저 생성해주세요');
+            toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
+            setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
             return;
         }
 
@@ -1453,12 +1453,12 @@ export default function SettingsPage({ params }: any) {
                             wallets={wallets}
                             accountAbstraction={{
                                 chain: polygon,
-                                factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum, ethereum
+                                 
                                 sponsorGas: true
                             }}
                             theme={"light"}
                             connectButton={{
-                                label: "Sign in with OWIN Magic Wallet",
+                                label: "Sign in with PPUMP Wallet",
                             }}
                             connectModal={{
                                 size: "wide", 
@@ -2157,8 +2157,8 @@ export default function SettingsPage({ params }: any) {
                                         className='animate-spin'
                                     />
                                 )}
-                                {address && loadingDeployErc721Contract && 'AI 에이전트 코드 생성중...'}
-                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 코드 생성하기'}
+                                {address && loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성중...'}
+                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성하기'}
  
                             </div>
 
@@ -2174,7 +2174,7 @@ export default function SettingsPage({ params }: any) {
 
                                 <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        AI 에이전트 코드
+                                        AI 에이전트 계약주소
                                     </div>
 
                                     <span className='text-xs xl:text-lg font-semibold'>
@@ -2555,7 +2555,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    OWIN
+                    PPUMP
                     </span>
                 </div>
             </button>

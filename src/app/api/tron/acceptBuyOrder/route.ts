@@ -71,11 +71,11 @@ export async function POST(request: NextRequest) {
       let msgBody = '';
 
       if (lang === 'en') {
-        msgBody = `[OWIN] TID[${tradeId}] Your buy order has been accepted by ${seller?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
+        msgBody = `[PPUMP] TID[${tradeId}] Your buy order has been accepted by ${seller?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
       } else if (lang === 'kr') {
-        msgBody = `[OWIN] TID[${tradeId}] ${seller?.nickname}님이 구매 주문을 수락했습니다! 거래를 계속하기 위해 USDT를 에스크로해야 합니다!`;
+        msgBody = `[PPUMP] TID[${tradeId}] ${seller?.nickname}님이 구매 주문을 수락했습니다! 거래를 계속하기 위해 USDT를 에스크로해야 합니다!`;
       } else {
-        msgBody = `[OWIN] TID[${tradeId}] Your buy order has been accepted by ${seller?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
+        msgBody = `[PPUMP] TID[${tradeId}] Your buy order has been accepted by ${seller?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
       }
 
 
@@ -93,11 +93,11 @@ export async function POST(request: NextRequest) {
       let msgBody2 = '';
 
       if (lang === 'en') { 
-        msgBody2 = `[OWIN] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
+        msgBody2 = `[PPUMP] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
       } else if (lang === 'kr') {
-        msgBody2 = `[OWIN] TID[${tradeId}] 거래 확인: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
+        msgBody2 = `[PPUMP] TID[${tradeId}] 거래 확인: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
       } else {
-        msgBody2 = `[OWIN] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
+        msgBody2 = `[PPUMP] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
       }
 
 

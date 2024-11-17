@@ -60,8 +60,6 @@ import { getDictionary } from "../../../dictionaries";
 
 
 
-import axios from 'axios';
-
 import { deployERC721Contract } from 'thirdweb/deploys';
 
 import {
@@ -593,7 +591,7 @@ export default function AIPage({ params }: any) {
   
         accountAbstraction: {
             chain: params.chain === "arbitrum" ? arbitrum : polygon,
-            factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum
+              
             sponsorGas: true
         },
 
@@ -1612,12 +1610,12 @@ export default function AIPage({ params }: any) {
                                     wallets={wallets}
                                     accountAbstraction={{
                                         chain: polygon,
-                                        factoryAddress: "0x9Bb60d360932171292Ad2b80839080fb6F5aBD97", // polygon, arbitrum, ethereum
+                                         
                                         sponsorGas: true
                                     }}
                                     theme={"light"}
                                     connectButton={{
-                                        label: "Sign in with OWIN Magic Wallet",
+                                        label: "Sign in with PPUMP Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide", 
