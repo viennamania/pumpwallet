@@ -475,11 +475,11 @@ export default function AgentPage({ params }: any) {
                 }}
                 theme={"light"}
                 connectButton={{
-                  label: "Sign in with PPUMP Wallet",
+                  label: "Sign in with PUMP Wallet",
                 }}
                 connectModal={{
                   size: "wide", 
-                  titleIcon: "https://owinwallet.com/icon-tbot.png",                           
+                  titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
                   showThirdwebBranding: false,
 
                 }}

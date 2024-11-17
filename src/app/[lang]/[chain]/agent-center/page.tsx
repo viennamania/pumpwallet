@@ -1711,7 +1711,7 @@ export default function AIPage({ params }: any) {
                                     height={20}
                                     className="rounded-lg w-10 h-10"
                                     />
-                                    <span>Sign in with PPUMP Wallet</span>
+                                    <span>Sign in with PUMP Wallet</span>
                                 </div>
                                 </button>
                             */}
@@ -1727,11 +1727,11 @@ export default function AIPage({ params }: any) {
                                     }}
                                     theme={"light"}
                                     connectButton={{
-                                        label: "Sign in with PPUMP Wallet",
+                                        label: "Sign in with PUMP Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://owinwallet.com/icon-tbot.png",                           
+                                        titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
                                         showThirdwebBranding: false,
 
                                     }}
@@ -2487,7 +2487,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PPUMP AI Agent Center
+                    PUMP AI Agent Center
                     </span>
                 </div>
                 
