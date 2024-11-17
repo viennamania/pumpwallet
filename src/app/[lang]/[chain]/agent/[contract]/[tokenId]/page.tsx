@@ -557,7 +557,7 @@ export default function AgentPage({ params }: any) {
                     <button
                         onClick={() => {
                             navigator.clipboard.writeText(
-                                'https://owinwallet.com/kr/polygon/tbot/?agent=' +
+                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
                                 agentContractAddress + '&tokenId=' + agentTokenId
                             );
                             toast.success('레퍼럴 URL 복사 완료');

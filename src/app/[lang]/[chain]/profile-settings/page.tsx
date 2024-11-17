@@ -2343,7 +2343,7 @@ export default function SettingsPage({ params }: any) {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://owinwallet.com/kr/polygon/tbot/?agent=' +
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
                                                                 nft.contract.address + '&tokenId=' + nft.tokenId
                                                             );
                                                             toast.success('레퍼럴 URL 복사 완료');
@@ -2462,39 +2462,6 @@ export default function SettingsPage({ params }: any) {
 
                                                 </div>
 
-                                                {/*
-                                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                            
-                                                    <button
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(
-                                                                'https://owinwallet.com/kr/polygon/tbot/?agent=' +
-                                                                erc721ContractAddress + '&tokenId=' + nft.tokenId
-                                                            );
-                                                            toast.success('레퍼럴 URL 복사 완료');
-                                                        }}
-                                                        className="w-full p-2 bg-blue-500 text-zinc-100 rounded hover:bg-blue-600"
-                                                    >
-                                                        레퍼럴 URL 복사
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => {
-                                                            window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
-                                                        }}
-                                                        className="p-2 rounded hover:bg-gray-300"
-                                                    >
-                                                        <Image
-                                                            src="/logo-opensea.png"
-                                                            alt="OpenSea"
-                                                            width={30}
-                                                            height={30}
-                                                            className="rounded-lg"
-                                                        />
-                                                    </button>
-
-                                                </div>
-                                                */}
 
                                             </div>
                                         ))}

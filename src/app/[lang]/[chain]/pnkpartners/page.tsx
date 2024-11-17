@@ -1891,7 +1891,7 @@ export default function AIPage({ params }: any) {
                                                                         <button
                                                                             onClick={() => {
                                                                                 navigator.clipboard.writeText(
-                                                                                    'https://owinwallet.com/kr/polygon/tbot/?agent=' +
+                                                                                    'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
                                                                                     nft.contract.address + '&tokenId=' + nft.tokenId
                                                                                 );
                                                                                 toast.success('레퍼럴 URL 복사 완료');
