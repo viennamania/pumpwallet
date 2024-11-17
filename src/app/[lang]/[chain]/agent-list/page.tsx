@@ -1786,7 +1786,7 @@ export default function AIPage({ params }: any) {
                                                                         }
                                                                     </span>
                                                                     <span className='text-xs font-semibold text-gray-500'>
-                                                                        {agent?.mobile.substring(0, 3) + "..." + agent?.mobile.substring(7, 11)}
+                                                                        {agent?.mobile.substring(0, 6) + "..." + agent?.mobile.substring(8, 11)}
                                                                     </span>
                                                                 </div>
                                                                 
@@ -1802,20 +1802,25 @@ export default function AIPage({ params }: any) {
                                                         border border-gray-300 p-4 rounded-lg
                                                     '>
 
+                                                        <span className='text-sm font-semibold text-blue-500'>
+                                                            AI 에이전트 NFT 목록
+                                                        </span>
 
-                                                        {agentBot && (
+                                                        {selectedHolderWalletAddress && (
+                                                            
                                                             <div className='flex flex-col items-start gap-2'>
                                                                 {/* agent nickname */}
                                                                 <span className='text-sm font-semibold text-blue-500'>
-                                                                    {agents.find((agent) => agent.erc721ContractAddress === agentBot)?.nickname} 님의 AI 에이전트 NFT
+                                                                    {agents.find((agent) => agent.walletAddress === selectedHolderWalletAddress)?.nickname} 님의 AI 에이전트 NFT
                                                                 </span>
                                                                 {!loadingAgentBotList && (
-                                                                    <span className='text-sm font-semibold text-blue-500'>
-                                                                        {agentBotList.length} 개의 AI 에이전트 NFT
+                                                                    <span className='text-lg font-semibold text-gray-500'>
+                                                                        {agentBotList.length} 개
                                                                     </span>
                                                                 )}
                                                             </div>
                                                         )}
+
 
 
                                                         {loadingAgentBotList && (
@@ -1831,10 +1836,11 @@ export default function AIPage({ params }: any) {
                                                                     AI 에이전트 NFT를 불러오는 중...
                                                                 </span>
                                                             </div>
+                                                            
                                                         )}
 
 
-                                                        {!loadingAgentBotList && agentBotList.length === 0 && (
+                                                        {selectedHolderWalletAddress && !loadingAgentBotList && agentBotList.length === 0 && (
                                                             <span className='text-sm font-semibold text-red-500'>
                                                                 AI 에이전트 NFT가 없습니다.
                                                             </span>
