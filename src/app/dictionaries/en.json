@@ -1,0 +1,406 @@
+{
+    
+    
+    "title": "Welcome to OWIN Magic Wallet",
+    "description": "OWIN Magic Wallet is a decentralized trading platform based on blockchain. You can buy and sell USDT through OWIN Magic Wallet.",
+
+
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "contact": "Contact"
+    },
+
+    "footer": {
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "contact": "Contact Us"
+    },
+
+    "home": {
+        "title": "Welcome to Next.js 13 Localization Demo",
+        "content": "This is the home page of our Next.js 13 localization demo project. Here, you can explore the power of internationalization in the latest version of Next.js and learn how to build multilingual web apps with ease. Feel free to navigate through the different sections and discover the features of our demo application. If you have any questions or feedback, don't hesitate to contact us. We're here to help you create versatile, accessible, and engaging web applications for a global audience."
+    },
+
+    "about": {
+        "title": "About Next.js 13 Localization Demo",
+        "content": "The Next.js 13 localization demo project is designed to showcase the capabilities of internationalization in the latest version of Next.js. In this demo, we guide you through the process of building multilingual web apps with dynamic language switching, localized content, and global optimization. Whether you're a seasoned developer or just starting with Next.js, this demo will empower you to create versatile, accessible, and engaging web applications for users worldwide. Join us on a journey to make your projects truly global."
+    },
+
+
+
+    "menu": {
+        "buy": "Buy",
+        "sell": "Sell",
+        "trade": "Trade",
+        "chat": "Chat",
+        "history": "History",
+        "settings": "Settings"
+    },
+
+    "Go_Home": "Go Home",
+
+    "My_Balance": "My Balance",
+    "My_Nickname": "My Nickname",
+
+    "My_Buy_Trades": "My Buy Trades",
+    "My_Sell_Trades": "My Sell Trades",
+
+    "Order": "Order",
+    "Buy": "Buy",
+    "Sell": "Sell",
+    "Amount": "Amount",
+    "Buy_Amount": "Buy Amount",
+    "Sell_Amount": "Sell Amount",
+    "Price": "Price",
+
+    "Contact_Us": "Contact Us",
+
+    "Buy_Description": "Buy USDT with your favorite real-world currency.",
+
+    "Sell_Description": "Sell USDT and receive your favorite real-world currency.",
+
+    "Total": "Total",
+    "Orders": "Sell Orders",
+    "Trades": "Trades",
+    "Completed": "Trade Completed",
+    "Cancelled": "Trade Cancelled",
+
+    "Search_my_trades": "Search my trades",
+
+    "Anonymous": "Anonymous",
+
+    "Seller": "Seller",
+    "Buyer": "Buyer",
+    "Me": "Me",
+
+    "Buy_USDT": "Buy USDT",
+    "Sell_USDT": "Sell USDT",
+
+    "Send_USDT": "Send USDT",
+    "Pay_USDT": "Pay USDT",
+
+    "Coming_Soon": "Coming Soon",
+
+    "Open_Orders": "Open Orders",
+
+
+    "Please_connect_your_wallet_first": "Please connect your wallet first",
+
+
+    "USDT_sent_successfully": "USDT sent successfully",
+
+    "Failed_to_send_USDT": "Failed to send USDT",
+
+
+
+    "Go_Buy_USDT": "Go Buy USDT",
+    "Go_Sell_USDT": "Go Sell USDT",
+
+    "Enter_Wallet_Address": "Enter Wallet Address",
+
+    "Enter_the_amount_and_recipient_address": "Enter the amount and recipient address",
+    "Select_a_user": "Select a user",
+    "User_wallet_address": "User wallet address",
+
+    "This_address_is_not_white_listed": "This address is not white listed.",
+
+    "If_you_are_sure_please_click_the_send_button": "If you are sure, please click the send button.",
+
+    "Sending": "Sending",
+
+    "Rate": "Rate",
+
+    "Payment_Information": "Payment Information",
+    "Payment": "Payment",
+    "Bank_Transfer": "Bank Transfer",
+    "Payment_Amount": "Payment Amount",
+
+
+
+
+    "I_agree_to_the_terms_of_trade": "I agree to the terms of trade",
+    "I_agree_to_cancel_the_trade": "I agree to cancel the trade",
+
+    "Opened_at": "Opened at",
+    "Started_at": "Started at",
+    "Cancelled_at": "Cancelled at",
+    "Completed_at": "Completed at",
+    "Payment_Requested_at": "Payment Requested at",
+
+    "TID": "TID",
+
+    "Trading_Time_is": "Trading Time is",
+
+
+    "Waiting_for_seller_to_deposit": "Waiting for seller to deposit",
+
+    "to_escrow": "to escrow",
+
+
+    "If_the_seller_does_not_deposit_the_USDT_to_escrow": "if the seller does not deposit the USDT to escrow.",
+    "this_trade_will_be_cancelled_in": "This trade will be cancelled in",
+
+    "Cancel_My_Trade": "Cancel My Trade",
+
+
+    "Order_accepted_successfully": "Order accepted successfully",
+    "Order_has_been_cancelled": "Order has been cancelled",
+
+    "My Order": "My Order",
+
+
+    "Wallet_Settings": "Wallet Settings",
+    "Profile_Settings": "Profile Settings",
+
+    "Profile": "Profile",
+    "My_Profile_Picture": "My Profile Picture",
+
+    "Edit": "Edit",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Copy": "Copy",
+    "Enter_your_nickname": "Enter your nickname",
+
+    "Nickname_should_be_5_10_characters": "Nickname should be 5-10 characters long and contain only alphanumeric lowercase characters.",
+
+
+    "My_Buy_USDT_Trades": "My Buy USDT Trades",
+    "My_Sell_USDT_Trades": "My Sell USDT Trades",
+
+    "Sale": "Sale",
+    "Private_Sale": "Private Sale",
+    "Public_Sale": "Public Sale",
+
+    "Place_Order": "Place Order",
+
+
+    "Search_my_orders": "Search my orders",
+
+
+    "Cancel_My_Order": "Cancel My Order",
+
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+
+    "hours_ago": "hours ago",
+    "minutes_ago": "minutes ago",
+    "seconds_ago": "seconds ago",
+
+    "Disconnect_Wallet": "Disconnect Wallet",
+
+
+    "Order_has_been_placed": "Order has been placed",
+
+    "Placing_Order": "Placing Order",
+
+    "My_Order": "My Order",
+
+
+    "If_you_request_payment": "If you request payment, the USDT will be escrowed to the smart contract and then the buyer will be requested to pay.",
+
+
+    "I_agree_to_escrow_USDT": "I agree to escrow USDT to the smart contract and request payment to the buyer.",
+
+
+    "Order_Opened": "Opened",
+
+    "Trade_Started": "Started",
+
+    "Expires_in": "Expires in",
+
+    "Bank_Name": "Bank Name",
+    "Account_Number": "Account Number",
+    "Account_Holder": "Account Holder",
+    "Deposit_Name": "Deposit Name",
+    "Deposit_Amount": "Deposit Amount",
+    "Deposit_Deadline": "Deposit Deadline",
+
+
+    "Waiting_for_seller_to_confirm_payment": "Waiting for seller to confirm payment",
+
+  
+    "Confirm_Payment": "Confirm Payment",
+
+
+    "Connect_Wallet_Description_For_Buyers": "If you want to buy USDT, you need to connect your wallet. Please click the Connect Wallet button. This wallet is decentralized and secure.",
+
+
+
+    "Requesting_Payment": "Requesting Payment",
+
+    "Deposit_Information": "Deposit Information",
+
+    "Request_Payment": "Request Payment",
+
+
+    "I_agree_to_check_the_bank_transfer_of": "I agree to check the bank transfer of KRW from buyer and transfer USDT to the buyer wallet address.",
+
+
+    "Transfering_USDT_to_the_buyer_wallet_address": "Transfering USDT to the buyer wallet address",
+
+  
+    "SMS_will_be_sent_to_your_mobile_number": "SMS will be sent to your mobile number to notify you when the buyer accepts the order.",
+
+    "Accepting_Order": "Accepting Order",
+
+
+    "Waiting_for_trading_partner_to_proceed": "Waiting for trading partner to proceed",
+
+
+    "Waiting_for_seller_to_deposit_USDT_to_escrow": "Waiting for seller to deposit USDT to escrow",
+
+
+
+    "Escrow": "Escrow",
+
+    "EA": "EA",
+
+    "Status": "Status",
+
+
+    "Table_View": "Table View",
+
+  
+    "I_gree_to_escrow_USDT_to_the_smart_contract_and_request_payment_to_the_buyer": "I agree to escrow USDT to the smart contract and request payment to the buyer.",
+
+
+    "My_Wallet_Address": "My Wallet Address",
+    "My_Phone_Number": "My Phone Number",
+
+    "Wallet_Address_Description1": "The address of this wallet is",
+    "Wallet_Address_Description2": "compatible with USDT Tether on the blockchain. Do not deposit any other tokens (e.g., Ethereum) to this address.",
+
+    "I_understand_that_I_should_never_deposit_any_other_tokens": "I understand that I should never deposit any other tokens (e.g., Ethereum) to this address.",
+
+
+    "Chat_with_Seller": "Chat with Seller",
+    "Chat_with_Buyer": "Chat with Buyer",
+
+ 
+    "You_must_have_a_wallet_address_to_buy_USDT": "You must have a wallet address to buy USDT",
+
+
+    "Make_Wallet_Address": "Make Wallet Address",
+
+
+
+
+    "PRICE_10000_KRW": "10,000 KRW",
+    "PRICE_50000_KRW": "50,000 KRW",
+    "PRICE_100000_KRW": "100,000 KRW",
+    "PRICE_300000_KRW": "300,000 KRW",
+    "PRICE_500000_KRW": "500,000 KRW",
+    "PRICE_1000000_KRW": "1,000,000 KRW",
+    "PRICE_5000000_KRW": "5,000,000 KRW",
+    "PRICE_10000000_KRW": "10,000,000 KRW",
+
+
+    "Please_keep_Your_Wallet_address_safe": "Please keep Your Wallet address safe, as it will be required in case of a dispute with the Seller.",
+
+  
+    "Waiting_for_the_USDT_to_be_sent_to_the_store_address": "Waiting for the USDT to be sent to the store address...",
+    
+    "Successfully_sent_USDT_to_the_store_address": "Successfully sent USDT to the store address! You can check the store deposit status within 5 minutes.",
+
+
+    "When_the_deposit_is_completed": "When the deposit is completed, the escrowed USDT will be transferred to the buyer's wallet.",
+
+
+    "Please_enter_deposit_name": "Please enter deposit name",
+
+    "Your_wallet_address_is_copied": "Your wallet address is copied",
+
+    "Charge": "Charge",
+
+  
+    "Deposit_name_description": "When you deposit, please enter the deposit name in the deposit name field. If you do not enter the deposit name, the deposit may not be reflected in your account.",
+
+    "Deposit_Confirmed": "Seller has confirmed the deposit and completed the trade.",
+
+    "Escrow_Completed": "Escrow Completed",
+
+    "Payment_request_has_been_sent": "Payment request has been sent",
+
+    "Payment_has_been_confirmed": "Payment has been confirmed",
+
+    "Reload": "Reload",
+
+ 
+    "Insufficient_balance": "Insufficient balance",
+
+
+    "Account_number_has_been_copied": "Account number has been copied",
+
+    "Payment_name_has_been_copied": "Payment name has been copied",
+
+    "Payment_amount_has_been_copied": "Payment amount has been copied",
+
+  
+
+    "Buy_Order": "Buy Order",
+    "Private_Buy_Order": "Private Buy Order",
+    "Public_Buy_Orer": "Public Buy Order",
+  
+    "Buy_Order_USDT": "Buy Order USDT",
+
+    "Buy_Order_SMS_will_be_sent_to_your_mobile_number": "When the seller accepts the order, an SMS will be sent to your mobile number.",
+
+    "Buy_Orders": "Buy Orders",
+
+    "Buy_Order_Opened": "Buy Order Opened",
+
+    "Buy_Order_Accept": "Buy Order Accept",
+
+    "Not_a_seller": "Not a seller",
+    "Apply": "Apply",
+    "Applying": "Applying",
+    "Enter_your_bank_name": "Enter your bank name",
+    "Enter_your_account_number": "Enter your account number",
+    "Enter_your_account_holder": "Enter your account holder",
+    "Send_OTP": "Send OTP",
+    "Enter_OTP": "Enter OTP",
+    "Verify_OTP": "Verify OTP",
+    "OTP_verified": "OTP verified",
+
+
+    "Please_verify_your_account_first_for_selling": "Please verify your account first for selling",
+
+    "Nickname_should_be_alphanumeric_lowercase": "Nickname should be alphanumeric and lowercase",
+    "Nickname_should_be_at_least_5_characters_and_at_most_10_characters": "Nickname should be at least 5 characters and at most 10 characters",
+
+
+
+    "File_uploaded": "File uploaded!",
+    "Upload_a_file": "Upload a file",
+    "Accepted_formats": "Accepted formats:",
+    "Drag_and_drop_or_click_to_upload": "Drag and drop or click to upload.",
+    "Max_file_size": "Max file size: 50MB",
+    "Photo_upload": "Photo upload",
+    "Confirm_upload": "Confirm upload",
+
+    "Make_Escrow_Wallet": "Make Escrow Wallet",
+
+ 
+    "Escrow_Wallet_Address_has_been_created": "Escrow Wallet Address has been created",
+    "Failed_to_create_Escrow_Wallet_Address": "Failed to create Escrow Wallet Address",
+
+    "Newest_order_has_been_arrived": "Newest order has been arrived",
+
+    "Escrow_balance_is_less_than_payment_amount": "Escrow balance is less than payment amount",
+
+    "Copied_Wallet_Address": "Copied Wallet Address",
+
+
+    "Apply_for_Listing_New_Token": "Apply for Listing New Token",
+    "Apply_for_Listing_New_Seller": "Apply for Listing New Seller",
+
+
+
+    "Mint_NFT": "Mint NFT",
+    "Alert_NFT_minted": "NFT minted successfully",
+    "Minting_NFT": "Minting NFT"
+
+
+}

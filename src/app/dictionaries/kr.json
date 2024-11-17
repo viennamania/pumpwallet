@@ -1,0 +1,350 @@
+{
+    "title": "OWIN Magic Wallet에 오신 것을 환영합니다",
+    "description": "OWIN Magic Wallet은 블록체인 기반의 탈중앙화된 거래 플랫폼입니다. OWIN Magic Wallet을 통해 USDT를 구매하고 판매할 수 있습니다.",
+
+
+    "menu": {
+        "buy": "사다",
+        "sell": "팔다",
+        "trade": "거래",
+        "chat": "채팅",
+        "history": "내역",
+        "settings": "설정"
+    },
+
+    "Go_Home": "홈으로",
+
+    "My_Balance": "내 잔고",
+    "My_Nickname": "내 닉네임",
+
+    "My_Buy_Trades": "내 USDT 구매내역",
+    "My_Sell_Trades": "내 USDT 판매내역",
+
+    "Order": "주문",
+    "Buy": "구매",
+    "Sell": "판매",
+    "Amount": "수량",
+    "Buy_Amount": "구매 수량",
+    "Sell_Amount": "판매 수량",
+    "Price": "가격",
+
+    "Contact_Us": "문의하기",
+
+    "Buy_Description": "좋아하는 실제 통화로 USDT를 구입하세요.",
+
+    "Sell_Description": "USDT를 판매하고 좋아하는 실제 통화를 받으세요.",
+
+    "Total": "합계",
+    "Orders": "판매주문",
+    "Trades": "거래",
+    "Completed": "거래완료",
+    "Cancelled": "거래취소",
+
+    "Search_my_trades": "내 거래 검색",
+
+    "Anonymous": "익명",
+
+
+    "Seller": "판매자",
+    "Buyer": "구매자",
+    "Me": "나",
+
+    "Buy_USDT": "USDT 구매하기",
+    "Sell_USDT": "USDT 판매하기",
+
+    "Send_USDT": "USDT 보내기",
+    "Pay_USDT": "USDT 지불하기",
+
+    "Coming_Soon": "곧 출시 예정",
+    "Open_Orders": "미체결 주문",
+
+
+    "Please_connect_your_wallet_first": "지갑을 먼저 만들어주세요. 지갑이 있어야 사용할 수 있습니다.",
+
+
+    "USDT_sent_successfully": "USDT 를 성공적으로 보냈습니다.",
+
+    "Failed_to_send_USDT": "USDT를 보내는 데 실패했습니다.",
+
+
+
+
+    "Go_Buy_USDT": "USDT 구매하기",
+    "Go_Sell_USDT": "USDT 판매하기",
+
+
+    "Enter_Wallet_Address": "받을 지갑주소 입력",
+    "Enter_the_amount_and_recipient_address": "보낼 금액과 받을 회원을 선택하거나 지갑주소를 입력하세요.",
+    "Select_a_user": "받을회원 선택",
+    "User_wallet_address": "받을 지갑주소",
+
+    "This_address_is_not_white_listed": "이 주소는 화이트리스트에 없습니다.",
+
+    "If_you_are_sure_please_click_the_send_button": "확실하다면 전송 버튼을 클릭하세요.",
+
+    "Sending": "전송 중",
+
+    "Rate": "환율",
+
+    "Payment_Information": "결제 정보",
+    "Payment": "결제",
+    "Bank_Transfer": "은행 송금",
+    "Payment_Amount": "결제 금액",
+
+    "I_agree_to_the_terms_of_trade": "거래 조건에 동의합니다.",
+    "I_agree_to_cancel_the_trade": "거래 취소에 동의합니다.",
+
+    "Opened_at": "주문시작",
+    "Started_at": "거래시작",
+    "Cancelled_at": "거래취소",
+    "Completed_at": "거래완료",
+    "Payment_Requested_at": "결제요청:",
+
+    "TID": "거래번호",
+
+    "Trading_Time_is": "거래시간:",
+
+    "Waiting_for_seller_to_deposit": "판매자 준비중:",
+
+    "to_escrow": "에스크로 보관소로 전송중",
+
+    "If_the_seller_does_not_deposit_the_USDT_to_escrow": "판매자가 USDT를 에스크로 보관소에 보내지 않으면",
+    "this_trade_will_be_cancelled_in": "이 거래는 다음 시간이 지나면 취소됩니다:",
+
+    "Cancel_My_Trade": "거래 취소",
+
+    "Order_accepted_successfully": "주문이 성공적으로 수락되었습니다.",
+    "Order_has_been_cancelled": "주문이 취소되었습니다.",
+
+    "My Order": "내 주문",
+
+ 
+    "Wallet_Settings": "지갑 설정",
+    "Profile_Settings": "프로필 설정",
+
+    "Profile": "프로필",
+    "My_Profile_Picture": "내 프로필 사진",
+
+    "Edit": "수정",
+    "Cancel": "취소",
+    "Save": "저장",
+    "Copy": "복사",
+    "Enter_your_nickname": "닉네임 입력",
+
+    "Nickname_should_be_5_10_characters": "닉네임은 5-10자로 영문 소문자와 숫자만 포함해야 합니다.",
+
+
+    "My_Buy_USDT_Trades": "내 USDT 구매내역",
+    "My_Sell_USDT_Trades": "내 USDT 판매내역",
+
+    "Sale": "판매",
+    "Private_Sale": "비공개 판매",
+    "Public_Sale": "공개 판매",
+
+    "Place_Order": "주문하기",
+
+    "Search_my_orders": "내 주문 검색",
+    
+    "Cancel_My_Order": "주문 취소하기",
+
+    "hours": "시간",
+    "minutes": "분",
+    "seconds": "초",
+
+    "hours_ago": "시간 전",
+    "minutes_ago": "분 전",
+    "seconds_ago": "초 전",
+
+    "Disconnect_Wallet": "지갑 연결 해제",
+
+     "Order_has_been_placed": "주문이 완료되었습니다.",
+
+
+    "Placing_Order": "주문 중",
+
+    "My_Order": "내 주문",
+
+
+    "If_you_request_payment": "결제를 요청하기 위해서는 판매자가 USDT를 에스크로 보관소에 보내야 합니다. 판매자가 1시간내로 USDT를 에스크로 보관소로 보내지 않으면 거래가 취소됩니다.",
+
+    "I_agree_to_escrow_USDT": "USDT를 에스크로 보관소에 보내는 것에 동의합니다.",
+
+    "Order_Opened": "판매시작",
+
+    "Trade_Started": "거래시작",
+
+    "Expires_in": "만료까지 남은 시간",
+
+    "Bank_Name": "은행 이름",
+    "Account_Number": "계좌 번호",
+    "Account_Holder": "예금주",
+    "Deposit_Name": "입금자명",
+    "Deposit_Amount": "입금액",
+    "Deposit_Deadline": "입금 기한",
+
+    "Waiting_for_seller_to_confirm_payment": "판매자 결제 확인 대기 중",
+
+    "Confirm_Payment": "결제 확인",
+
+    "Connect_Wallet_Description_For_Buyers": "USDT를 구매하려면 지갑을 연결해야 합니다. Connect Wallet 버튼을 클릭하세요. 이 지갑은 탈중앙화되어 안전합니다.",
+
+    "Requesting_Payment": "결제 요청 중",
+
+    "Deposit_Information": "입금 정보",
+
+    "Request_Payment": "결제 요청",
+
+    "Checking_the_bank_transfer_from_the_buyer": "구매자의 은행 송금 확인 중",
+
+    "I_agree_to_check_the_bank_transfer_of": "구매자의 KRW 은행 송금을 확인하고 USDT를 구매자의 지갑주소로 전송하는 것에 동의합니다.",
+
+
+    "Transfering_USDT_to_the_buyer_wallet_address": "구매자 지갑주소로 USDT 전송 중",
+
+
+    "SMS_will_be_sent_to_your_mobile_number": "구매자가 주문을 수락하면 SMS가 귀하의 휴대폰 번호로 전송됩니다.",
+
+    "Accepting_Order": "주문 수락 중",
+
+    "Waiting_for_trading_partner_to_proceed": "거래 상대방이 진행 중입니다. 잠시만 기다려주세요.",
+
+    "Waiting_for_seller_to_deposit_USDT_to_escrow": "판매자가 USDT를 에스크로 보관소에 보내는 중입니다. 잠시만 기다려주세요.",
+
+
+
+    "Escrow": "에스크로",
+
+    "EA": "개",
+
+    "Status": "상태",
+
+    "Table_View": "테이블 보기",
+
+    "I_gree_to_escrow_USDT_to_the_smart_contract_and_request_payment_to_the_buyer": "USDT를 에스크로 보관소에 보내고 구매자에게 결제를 요청하는 것에 동의합니다.",
+
+
+    "My_Wallet_Address": "내 지갑주소",
+    "My_Phone_Number": "내 전화번호",
+
+    "Wallet_Address_Description1": "이 지갑의 주소는",
+    "Wallet_Address_Description2": "블록체인에서 USDT 테더와 호환됩니다. 이 주소로 다른 토큰(예: 이더리움)을 절대 입금하지 마십시오.",
+
+    "I_understand_that_I_should_never_deposit_any_other_tokens": "다른 토큰(예: 이더리움)을 이 주소로 입금해서는 안 된다는 것을 이해합니다.",
+
+    "Chat_with_Seller": "판매자와 채팅",
+    "Chat_with_Buyer": "구매자와 채팅",
+
+    "You_must_have_a_wallet_address_to_buy_USDT": "USDT를 구매하려면 지갑주소가 필요합니다.",
+
+
+    "Make_Wallet_Address": "지갑주소 만들기",
+
+    
+
+    "PRICE_10000_KRW": "1만원",
+    "PRICE_50000_KRW": "5만원",
+    "PRICE_100000_KRW": "10만원",
+    "PRICE_300000_KRW": "30만원",
+    "PRICE_500000_KRW": "50만원",
+    "PRICE_1000000_KRW": "100만원",
+    "PRICE_5000000_KRW": "500만원",
+    "PRICE_10000000_KRW": "1,000만원",
+
+    "Please_keep_Your_Wallet_address_safe": "판매자와 분쟁 시 본인 지갑 주소가 꼭 필요하므로 본인 지갑 주소를 잘 저장해놓으시기 바랍니다.",
+
+    "Waiting_for_the_USDT_to_be_sent_to_the_store_address": "USDT가 상점 주소로 전송되기를 기다리는 중입니다.",
+
+    "Successfully_sent_USDT_to_the_store_address": "USDT가 상점 지갑주소로 성공적으로 전송되었습니다. 5분내로 상점에서 충전 상태를 확인할 수 있습니다.",
+
+
+
+    "When_the_deposit_is_completed": "입금이 완료되면 에스크로한 USDT가 구매자 지갑으로 이체됩니다. 입금자명을 정확하게 입력하고 입금을 완료해주세요.",
+
+    "Please_enter_deposit_name": "입금자명을 입력하세요",
+
+
+
+
+    "Your_wallet_address_is_copied": "지갑 주소가 복사되었습니다.",
+
+    "Charge": "충전하기",
+
+    "Deposit_name_description": "입금 시 반드시 사전 등록한 은행과 이름, 계좌번호로 송금해야 합니다. 이와 다를 시에는 입금 처리가 안될 수 있습니다.",
+
+    "Deposit_Confirmed": "판매자가 입금을 확인하고 거래를 완료했습니다.",
+
+    "Escrow_Completed": "에스크로완료",
+
+    "Payment_request_has_been_sent": "결제 요청이 전송되었습니다.",
+
+    "Payment_has_been_confirmed": "결제가 확인되었습니다.",
+
+    "Reload": "새로고침",
+
+
+    "Insufficient_balance": "잔액 부족",
+
+    "Account_number_has_been_copied": "계좌번호가 복사되었습니다.",
+
+    "Payment_name_has_been_copied": "입금자명이 복사되었습니다.",
+
+    "Payment_amount_has_been_copied": "입금액이 복사되었습니다.",
+
+
+    "Buy_Order": "구매신청",
+    "Private_Buy_Order": "비공개 구매주문",
+    "Public_Buy_Orer": "공개 구매주문",
+
+    "Buy_Order_USDT": "USDT 구매주문",
+
+    "Buy_Order_SMS_will_be_sent_to_your_mobile_number": "판매자가 주문을 수락하면 SMS가 귀하의 휴대폰 번호로 전송됩니다.",
+
+    "Buy_Orders": "구매주문",
+
+    "Buy_Order_Opened": "구매신청",
+
+    "Buy_Order_Accept": "신청수락",
+
+    "Not_a_seller": "판매자 등록을 해야합니다.",
+    "Apply": "신청하기",
+    "Applying": "신청 중",
+    "Enter_your_bank_name": "은행 이름을 입력하세요.",
+    "Enter_your_account_number": "계좌 번호를 입력하세요.",
+    "Enter_your_account_holder": "예금주를 입력하세요.",
+    "Send_OTP": "OTP 전송",
+    "Enter_OTP": "OTP를 입력하세요.",
+    "Verify_OTP": "OTP 확인",
+    "OTP_verified": "OTP 확인되었습니다.",
+
+    "Please_verify_your_account_first_for_selling": "판매를 위해 먼저 계정을 인증하세요.",
+
+    "Nickname_should_be_alphanumeric_lowercase": "닉네임은 영문 소문자와 숫자만 포함해야 합니다.",
+    "Nickname_should_be_at_least_5_characters_and_at_most_10_characters": "닉네임은 5자 이상 10자 이하로 입력하세요.",
+
+    "File_uploaded": "파일이 업로드되었습니다.",
+    "Upload_a_file": "파일 업로드",
+    "Accepted_formats": "허용된 형식:",
+    "Drag_and_drop_or_click_to_upload": "드래그 앤 드롭 또는 클릭하여 업로드",
+    "Max_file_size": "최대 파일 크기: 5MB",
+    "Photo_upload": "사진 업로드",
+    "Confirm_upload": "업로드 확인",
+
+    "Make_Escrow_Wallet": "에스크로 지갑 만들기",
+
+    "Escrow_Wallet_Address_has_been_created": "에스크로 지갑 주소가 생성되었습니다.",
+    "Failed_to_create_Escrow_Wallet_Address": "에스크로 지갑 주소 생성에 실패했습니다.",
+
+    
+    "Newest_order_has_been_arrived": "새로운 주문이 도착했습니다.",
+    "Escrow_balance_is_less_than_payment_amount": "에스크로 잔액이 결제 금액보다 적습니다.",
+
+    "Copied_Wallet_Address": "지갑 주소가 복사되었습니다.",
+
+    "Apply_for_Listing_New_Token": "신규 토큰 상장 신청하기",
+    "Apply_for_Listing_New_Seller": "신규 판매자 등록 신청하기",
+
+    "Mint_NFT": "NFT 발행하기",
+    "Alert_NFT_minted": "NFT가 발행되었습니다.",
+    "Minting_NFT": "NFT 발행 중입니다."
+
+}
