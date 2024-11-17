@@ -349,7 +349,9 @@ export default function AgentPage({ params }: any) {
       const fetchData = async () => {
 
           setLoadingApplications(true);
+
           const response = await fetch("/api/agent/getReferApplications", {
+
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
@@ -370,7 +372,7 @@ export default function AgentPage({ params }: any) {
 
           const data = await response.json();
 
-          ////console.log("getReferApplications data", data);
+          console.log("getReferApplications data", data);
 
 
 
