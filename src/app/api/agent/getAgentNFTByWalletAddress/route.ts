@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
   console.log("erc721ContractAddresses", erc721ContractAddresses);
 
 
-
+  /*
   // {"error":{"message":"Contract address filter size of: 58 is greater than the maximum allowed of: 45!"}}
 
   // 45 of erc721ContractAddresses is the maximum allowed
@@ -89,8 +89,7 @@ export async function POST(request: NextRequest) {
 
 
   //console.log("finalResult", finalResult);
-
-
+  
 
   if (!response) {
     return NextResponse.json({
@@ -100,6 +99,20 @@ export async function POST(request: NextRequest) {
     });
     
   }
+
+  */
+
+  let finalResult: any = [];
+
+  const response = await alchemy.nft.getNftsForOwner(
+    walletAddress, {
+    omitMetadata: false, // // Flag to omit metadata
+  });
+
+  response?.ownedNfts?.map((nft) => {
+    finalResult.push(nft);
+  });
+
 
  
   return NextResponse.json({
