@@ -759,9 +759,9 @@ export default function AIPage({ params }: any) {
     
 
 
-    console.log("myNfts", myNfts);
+    ///console.log("myNfts", myNfts);
 
-    console.log("amountNft100", amountNft100);
+    ///console.log("amountNft100", amountNft100);
 
 
     // claim NFT (ERC1155) for the user
@@ -1056,6 +1056,7 @@ export default function AIPage({ params }: any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                center: "ppump",
                 walletAddress: address,
                 agentBot: agentBot,
                 agentBotNumber: selectedBotNumber,

@@ -1,11 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 
-
+/*
 import {
 	getMyReferAgents,
 } from '@lib/api/agent';
-
+*/
 
 
 export async function POST(request: NextRequest) {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
 
 
-  
+  /*
   const result = await getMyReferAgents({
     page: 1,
     limit: 100,
@@ -44,9 +44,10 @@ export async function POST(request: NextRequest) {
     status: "success",
     result: result,
   });
+  */
 
 
-  /*
+  
   // https://owinwallet.com/api/agent/getReferApplications
 
   const response = await fetch("https://owinwallet.com/api/agent/getReferApplications", {
@@ -74,6 +75,6 @@ export async function POST(request: NextRequest) {
     result: jsonObj?.result,
     
   });
-  */
+  
   
 }

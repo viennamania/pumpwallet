@@ -27,9 +27,10 @@ export async function POST(request: NextRequest) {
   apiSecretKey: apiSecretKey,
   */
 
-  const { walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey } = body;
+  const { center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey } = body;
 
 
+  /*
 
   const result = await insertOne({
     walletAddress: walletAddress,
@@ -51,6 +52,49 @@ export async function POST(request: NextRequest) {
   //console.log("result", result);
 
   const applicationId = result.id;
+  */
+
+
+  const response = await fetch("https://owinwallet.com/api/agent/applyMintNFT", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      center: center,
+      walletAddress: walletAddress,
+      agentBot: agentBot,
+      agentBotNumber: agentBotNumber,
+      userName: userName,
+      userPhoneNumber: userPhoneNumber,
+      userEmail: userEmail,
+      htxUserId: htxUserId,
+      htxUsdtWalletAddress: htxUsdtWalletAddress,
+      apiAccessKey: apiAccessKey,
+      apiSecretKey: apiSecretKey,
+    }),
+  });
+
+  if (!response.ok) {
+    return NextResponse.error();
+  }
+
+  const jsonObj = await response.json();
+
+  ////console.log("getReferApplications jsonObj: ", jsonObj);
+
+ 
+  return NextResponse.json({
+
+    result: jsonObj?.result,
+    
+  });
+
+
+
+
+
+
 
   // send sms to agent holder
   // get user phone number by erc721ContractAddress is agentBot
