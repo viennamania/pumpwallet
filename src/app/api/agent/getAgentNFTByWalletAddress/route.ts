@@ -31,9 +31,9 @@ export async function POST(request: NextRequest) {
 
   // get erc721ContractAddress array from the database
 
-  const erc721ContractAddresses = await getAllErc721ContractAddresses();
+  //const erc721ContractAddresses = await getAllErc721ContractAddresses();
 
-  console.log("erc721ContractAddresses", erc721ContractAddresses);
+  //console.log("erc721ContractAddresses", erc721ContractAddresses);
 
 
   /*
