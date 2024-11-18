@@ -1650,6 +1650,115 @@ export default function AIPage({ params }: any) {
 
 
 
+    // queryUnifiedAccountAssets
+    const [checkingUnifiedAccountAssets, setCheckingUnifiedAccountAssets] = useState([] as any[]);
+    const [unifiedAccountAssets, setUnifiedAccountAssets] = useState([] as any[]);
+    useEffect(() => {
+        setCheckingUnifiedAccountAssets(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setUnifiedAccountAssets(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    assets: [],
+                };
+            })
+        );
+    } , [applications]);
+
+    const queryUnifiedAccountAssets = async (
+        applicationId: number,
+        htxAccessKey: string,
+        htxSecretKey: string,
+    ) => {
+
+        if (!htxAccessKey) {
+            toast.error("HTX Access Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!htxSecretKey) {
+            toast.error("HTX Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!applicationId) {
+            toast.error("신청 ID를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingUnifiedAccountAssets(
+            checkingUnifiedAccountAssets.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: true,
+                    }
+                } else {
+                    return item;
+                }
+            })
+        );
+
+        const response = await fetch("/api/htx/queryUnifiedAccountAssets", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                htxAccessKey: htxAccessKey,
+                htxSecretKey: htxSecretKey,
+                applicationId: applicationId,
+            }),
+        });
+
+        const data = await response.json();
+
+        ///console.log("data.result", data.result);
+
+        if (data.result?.status === "ok") {
+
+            setUnifiedAccountAssets(
+                unifiedAccountAssets.map((item) => {
+                    if (item.applicationId === applicationId) {
+                        return {
+                            applicationId: applicationId,
+                            assets: data.result?.data,
+                        }
+                    } else {
+                        return item;
+                    }
+                })
+            );
+
+            toast.success("HTX 통합 계정 자산이 확인되었습니다.");
+        } else {
+            toast.error("HTX 통합 계정 자산을 확인할 수 없습니다.");
+        }
+
+        setCheckingUnifiedAccountAssets(
+            checkingUnifiedAccountAssets.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: false,
+                    }
+                } else {
+                    return item;
+                }
+            })
+        );
+
+    }
+
+
 
 
 
