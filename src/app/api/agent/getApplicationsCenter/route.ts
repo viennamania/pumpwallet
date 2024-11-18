@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (walletAddress === "0x030549f3E1644008c920d0046caE758317Dab8CE" // wayne
+    || walletAddress === "0x79bA77332cE549cA99a2851b8D7e9c0229432417" // orry
 
 
     
