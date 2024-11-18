@@ -2485,6 +2485,7 @@ export default function AIPage({ params }: any) {
                                                         ) : (
 
                                                             <>
+                                                            {/*
 
                                                             {userMasterBotContractAddress && (
                                                                 
@@ -2500,7 +2501,8 @@ export default function AIPage({ params }: any) {
                                                                     {mintingMasterBotNft.find((item) => item.applicationId === application.id)?.minting ? "Minting..." : "Mint MasterBot NFT"}
                                                                 </button>
                                                                 
-                                                            )}  
+                                                            )}
+                                                            */}
 
                                                             </>
                                                         )}
