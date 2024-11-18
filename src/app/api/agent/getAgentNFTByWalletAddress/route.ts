@@ -112,17 +112,22 @@ export async function POST(request: NextRequest) {
   ///console.log("response?.ownedNfts", response?.ownedNfts);
 
 
+  // get tokenType is 'ERC721' from the response
 
   response?.ownedNfts?.map((nft) => {
 
     //console.log("nft", nft);
-
+    /*
     const agentContractAddress = nft.contract.address;
     const agentNumber = nft.tokenId;
 
     // api call to get application count for the agent
+    */
 
-    finalResult.push(nft);
+    if (nft.contract.tokenType === 'ERC721') {
+      finalResult.push(nft);
+    }
+
   });
 
 
