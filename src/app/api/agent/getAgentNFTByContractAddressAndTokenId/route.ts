@@ -71,7 +71,9 @@ export async function POST(request: NextRequest) {
     parseInt(tokenId)
   );
 
-  //console.log("owner: ", owner);
+  ////console.log("owner: ", owner);
+
+
   /*
   {
     owners: [ '0xAcDb8a6c00718597106F8cDa389Aac68973558B3' ],
@@ -88,6 +90,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
 
     result: response,
+    ownerWalletAddress: owner?.owners?.[0],
     ownerInfo: user,
     
   });

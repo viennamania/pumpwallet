@@ -125,6 +125,7 @@ export default function AgentPage({ params }: any) {
 
   
   const [agent, setAgent] = useState({} as any);
+  const [ownerWalletAddress, setOwnerWalletAddress] = useState("");
   const [ownerInfo, setOwnerInfo] = useState({} as any);
 
   const [loadingAgent, setLoadingAgent] = useState(false);
@@ -151,9 +152,15 @@ export default function AgentPage({ params }: any) {
         }
   
         const data = await response.json();
+
+        //console.log("getAgentNFTByContractAddressAndTokenId data", data);
+
   
         setAgent(data.result);
-        setOwnerInfo(data.ownerInfo);
+
+        setOwnerWalletAddress(data?.ownerWalletAddress);
+
+        setOwnerInfo(data?.ownerInfo);
 
         ////console.log("agent======", data.result);
 
@@ -726,6 +733,9 @@ export default function AgentPage({ params }: any) {
                         <span className='text-sm text-yellow-500'>
                             AI 에이전트 소유자 정보
                         </span>
+                        <span className='text-xs text-gray-800'>
+                            소유자 지갑주소: {ownerWalletAddress.slice(0, 10) + '...' + ownerWalletAddress.slice(-10)}
+                        </span>
                         <div className='flex flex-row items-center justify-between gap-2'>
                           <Image
                             src={ownerInfo?.avatar || '/profile-default.png'}
@@ -740,9 +750,6 @@ export default function AgentPage({ params }: any) {
                             </span>
                             <span className='text-xs text-gray-800'>
                                 {ownerInfo?.mobile && ownerInfo?.mobile?.slice(0, 3) + '****' + ownerInfo?.mobile?.slice(-4)}
-                            </span>
-                            <span className='text-xs text-gray-800'>
-                                {ownerInfo?.walletAddress && ownerInfo?.walletAddress.slice(0, 10) + '...' + ownerInfo?.walletAddress.slice(-10)}
                             </span>
                           </div>
                         </div>
