@@ -20,64 +20,37 @@ export async function POST(request: NextRequest) {
     return NextResponse.error();
   }
 
-  if (walletAddress === "0x030549f3E1644008c920d0046caE758317Dab8CE" // wayne
-    || walletAddress === "0x79bA77332cE549cA99a2851b8D7e9c0229432417" // orry
 
 
+
+    const response = await fetch("https://owinwallet.com/api/agent/getApplicationsCenter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        walletAddress,
+        center,
+      }),
+    });
+  
+    if (!response.ok) {
+      return NextResponse.error();
+    }
+  
+    const jsonObj = await response.json();
+  
+    ////console.log("getReferApplications jsonObj: ", jsonObj);
+  
     
-    ) {
-
-      /*
-      const result = await getAllAgents({});
- 
-      return NextResponse.json({
-    
-        result,
-        
-      });
-      */
+    return NextResponse.json({
+  
+      result: jsonObj?.result,
+      
+    });
 
 
 
-      const response = await fetch("https://owinwallet.com/api/agent/getApplicationsCenter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          walletAddress,
-          center,
-        }),
-      });
-    
-      if (!response.ok) {
-        return NextResponse.error();
-      }
-    
-      const jsonObj = await response.json();
-    
-      ////console.log("getReferApplications jsonObj: ", jsonObj);
-    
-     
-      return NextResponse.json({
-    
-        result: jsonObj?.result,
-        
-      });
-
-
-
-
-
-
-
-
-
-  } else {
-
-    return NextResponse.error();
-
-  }
 
 
   
