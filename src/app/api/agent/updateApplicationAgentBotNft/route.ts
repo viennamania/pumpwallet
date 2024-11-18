@@ -46,10 +46,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.error();
   }
 
+  const jsonObj = await response.json();
+
+  ////console.log("jsonObj=", jsonObj);
+
 
   return NextResponse.json({
     status: "success",
-    result: response,
+    result: jsonObj?.result,
   });
   
 

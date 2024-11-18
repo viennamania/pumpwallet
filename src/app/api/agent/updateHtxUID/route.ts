@@ -12,10 +12,12 @@ import {
 import CryptoJS from 'crypto-js';
 
 
-
+/*
 import {
   updateHtxUid
 } from '@lib/api/agent';
+*/
+
 
 
 /*
@@ -162,7 +164,11 @@ export async function POST(request: NextRequest) {
 
         const htxUid = data.data as number;
 
+
+
+        /*        
         const result = await updateHtxUid({ applicationId, htxUid });
+
 
         if (result) {
           return NextResponse.json({
@@ -172,6 +178,39 @@ export async function POST(request: NextRequest) {
             },
           });
         }
+        */
+
+        const response = await fetch("https://owinwallet.com/api/agent/updateHtxUID", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            applicationId: applicationId,
+            htxUid: htxUid,
+          }),
+        });
+      
+        //console.log("updateApplicationAgentBotNft res: ", res);
+      
+        
+        if (!response.ok) {
+          return NextResponse.error();
+        }
+      
+        const jsonObj = await response.json();
+
+
+        return NextResponse.json({
+          result: {
+            status: "ok",
+            htxUid: htxUid,
+          }
+        });
+
+
+
+
       }
       
       
