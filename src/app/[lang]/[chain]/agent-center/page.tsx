@@ -967,7 +967,7 @@ export default function AIPage({ params }: any) {
     //console.log("applications=====", applications);
 
 
-    // check htx asset valuation for each htxUid
+    // check htx asset valuation for each applicationId
     const [checkingHtxAssetValuationForAgent, setCheckingHtxAssetValuationForAgent] = useState([] as any[]);
     const [htxAssetValuationForAgent, setHtxAssetValuationForAgent] = useState([] as any[]);
 
@@ -2139,19 +2139,15 @@ export default function AIPage({ params }: any) {
                                                         </span>
                                                     </button>
 
-                                                    <div className='flex flex-col gap-2'>
-
+                                                    <div className='mt-5 flex flex-col gap-2'>
                                                         <span className='text-xs text-yellow-800'>
-                                                            AI Agent Bot Code
+                                                            AI 에이전트 계약주소
                                                         </span>
                                                         <span className='text-xs text-gray-800'>
-                                                            {application.agentBot.slice(0, 10)}...{application.agentBot.slice(-10)}
+                                                            {application.agentBot.slice(0, 6)}...{application.agentBot.slice(-4)}
                                                         </span>
-                                                    </div>
-
-                                                    <div className='flex flex-col gap-2'>
                                                         <span className='text-xs text-yellow-800'>
-                                                            AI Agent Bot Number
+                                                            AI 에이전트 계약번호
                                                         </span>
                                                         <span className='text-lg text-gray-800'>
                                                             #{application.agentBotNumber}

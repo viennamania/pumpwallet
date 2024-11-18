@@ -479,6 +479,126 @@ export default function AgentPage({ params }: any) {
 
 
 
+    // check htx asset valuation for each applicationId
+    const [checkingHtxAssetValuationForAgent, setCheckingHtxAssetValuationForAgent] = useState([] as any[]);
+    const [htxAssetValuationForAgent, setHtxAssetValuationForAgent] = useState([] as any[]);
+
+    useEffect(() => {
+        setCheckingHtxAssetValuationForAgent(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setHtxAssetValuationForAgent(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    assetValuation: item.assetValuation,
+                };
+            })
+        );
+    } , [applications]);
+
+    const checkHtxAssetValuation = async (
+        applicationId: number,
+        htxAccessKey: string,
+        htxSecretKey: string,
+    ) => {
+
+        if (!htxAccessKey) {
+            toast.error("HTX Access Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!htxSecretKey) {
+            toast.error("HTX Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!applicationId) {
+            toast.error("신청 ID를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingHtxAssetValuationForAgent(
+            checkingHtxAssetValuationForAgent.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: true,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+
+        const response = await fetch("/api/agent/getAssetValuation", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                htxAccessKey: htxAccessKey,
+                htxSecretKey: htxSecretKey,
+                applicationId: applicationId,
+            }),
+        });
+
+        const data = await response.json();
+
+        
+
+        ///console.log("getAssetValuation data.result", data.result);
+
+
+        if (data.result?.status === "ok") {
+
+            setHtxAssetValuationForAgent(
+                htxAssetValuationForAgent.map((item) => {
+                    if (item.applicationId === applicationId) {
+                        return {
+                            applicationId: applicationId,
+                            assetValuation: data.result?.assetValuation,
+                        }
+                    } else {
+                        return item;
+                    }
+                })
+            );
+
+            toast.success("HTX 자산 가치가 확인되었습니다.");
+        } else {
+            toast.error("HTX 자산 가치를 확인할 수 없습니다.");
+        }
+
+        setCheckingHtxAssetValuationForAgent(
+            checkingHtxAssetValuationForAgent.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: false,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+    };
+
+
+
+
+
+
+
+
 
   return (
 
@@ -988,6 +1108,48 @@ export default function AgentPage({ params }: any) {
                               </span>
                           </div>
                         </div>
+
+                        {/* assetValuation */}
+
+                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+                          <div className='flex flex-col gap-2'>
+                              <span className='text-xs text-yellow-800'>
+                                  HTX 자산 가치(SPOT)
+                              </span>
+                              <span className='text-sm text-gray-800'>
+                                  {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
+                              </span>
+                              {/* convert timestamp to date */}
+                              <span className='text-xs text-gray-800'>
+                                  {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp
+                                  ? new Date(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp).toLocaleString()
+                                  : ""
+                                  }
+                              </span>
+                          </div>
+                          <button
+                              onClick={() => {
+                                  checkHtxAssetValuation(
+                                      application.id,
+                                      application.apiAccessKey,
+                                      application.apiSecretKey,
+                                  );
+                              }}
+                              disabled={
+                                  checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking
+                              }
+                              className={`${checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                  hover:bg-blue-600
+                              `}
+                          >
+                              {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Checking..." : "Check"}
+                          </button>
+                        </div>
+
+
+
+                        
+
 
                         {/* masterBot */}
                         {application?.masterBotInfo ? (
