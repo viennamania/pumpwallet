@@ -1087,7 +1087,6 @@ export default function SettingsPage({ params }: any) {
                     },
                     body: JSON.stringify({
                         walletAddress: address,
-                        //erc721ContractAddress: erc721ContractAddress,
                     }),
                 });
 
@@ -1116,12 +1115,12 @@ export default function SettingsPage({ params }: any) {
 
        };
 
-       if (address && erc721ContractAddress) {
+       if (address ) {
            getMyNFTs();
        }
 
    }
-   , [ address, erc721ContractAddress ]);
+   , [ address ]);
    
 
 

@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   } = body;
 
 
-  console.log("walletAddress", walletAddress);
+  ///console.log("getAgentNFTByWalletAddress walletAddress", walletAddress);
 
   // get erc721ContractAddress array from the database
 
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     // api call to get application count for the agent
     */
 
-    if (nft.contract.tokenType === 'ERC721') {
+    if (nft.tokenType === 'ERC721') {
       finalResult.push(nft);
     }
 
