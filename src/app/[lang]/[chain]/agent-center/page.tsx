@@ -2169,7 +2169,7 @@ export default function AIPage({ params }: any) {
                                                         {checkingAgentBotNftList.find((item) => item.applicationId === application.id)?.checking ? "Checking..." : "Check NFT"}
                                                     </button>
                                                 ) : (
-                                                    <div className='flex flex-col gap-1
+                                                    <div className='w-full flex flex-col gap-1
                                                         items-center justify-center
                                                         bg-gray-200 p-2 rounded-lg border border-gray-300
                                                     '>

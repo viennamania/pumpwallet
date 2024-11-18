@@ -857,7 +857,7 @@ export default function AgentPage({ params }: any) {
                       <div className='w-full flex flex-col items-start justify-between gap-2'>
                         
                         <span className='text-sm text-yellow-500'>
-                            AI 에이전트 소유자 정보
+                            AI 에이전트 NFT 소유자 정보
                         </span>
                         <span className='text-xs text-gray-800'>
                             소유자 지갑주소: {ownerWalletAddress.slice(0, 10) + '...' + ownerWalletAddress.slice(-10)}
