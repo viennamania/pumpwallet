@@ -1673,7 +1673,7 @@ export default function AIPage({ params }: any) {
                             height={40}
                         />
                         <span className="text-sm font-semibold text-gray-500">
-                            PUMP AI 로봇 트레이딩&아카데미 센터
+                            PPUMP AI 로봇 트레이딩&아카데미 센터
                         </span>
                     </div>
                     <div className='flex flex-row items-center gap-4'>
@@ -1864,7 +1864,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     theme={"light"}
                                         connectButton={{
-                                            label: "Sign in with PUMP Wallet",
+                                            label: "Sign in with PPUMP Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide",                            

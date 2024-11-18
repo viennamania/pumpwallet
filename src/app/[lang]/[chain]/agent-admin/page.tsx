@@ -1655,7 +1655,7 @@ export default function AIPage({ params }: any) {
                                     height={20}
                                     className="rounded-lg w-10 h-10"
                                     />
-                                    <span>Sign in with PUMP Wallet</span>
+                                    <span>Sign in with PPUMP Wallet</span>
                                 </div>
                                 </button>
                             */}
@@ -1671,7 +1671,7 @@ export default function AIPage({ params }: any) {
                                 }}
                                 theme={"light"}
                                 connectButton={{
-                                    label: "Sign in with PUMP Wallet",
+                                    label: "Sign in with PPUMP Wallet",
                                 }}
                                 connectModal={{
                                     size: "wide", 
@@ -2337,7 +2337,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PUMP Admin
+                    PPUMP Admin
                     </span>
                 </div>
                 

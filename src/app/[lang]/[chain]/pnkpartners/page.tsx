@@ -1615,7 +1615,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     theme={"light"}
                                     connectButton={{
-                                        label: "Sign in with PUMP Wallet",
+                                        label: "Sign in with PPUMP Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide", 
