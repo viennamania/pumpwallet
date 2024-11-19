@@ -2433,7 +2433,7 @@ const TradeDetail = (
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PUMP
+                    PPUMP
                     </span>
                 </div>
             </button>

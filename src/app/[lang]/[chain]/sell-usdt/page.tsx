@@ -2580,10 +2580,10 @@ export default function Index({ params }: any) {
                             {Deposit_Name} / {Buyer}
                           </th>
 
-                          <th className="text-left">{Price} / {Sell_Amount} / {Rate}</th>
+                          <th className="text-center">{Sell_Amount} / {Rate} / {Price}</th>
 
 
-                          <th className="text-left">{Payment}</th>
+                          <th className="text-center">{Payment}</th>
                           <th className="text-left">{Payment_Amount}</th>
                           
                           <th className="text-left">{Status}</th>
@@ -2653,23 +2653,33 @@ export default function Index({ params }: any) {
                               </td>
 
 
-                              <td className="p-2">
-                                <div className="flex flex-col gap-1">
+                              <td className="p-2 w-32">
+
+                                <div className="flex flex-col items-end justify-center gap-1">
+
+                                  <div className="flex flex-row items-center gap-1">
+                                    <span className="text-lg text-blue-500 font-semibold">
+                                      {item.usdtAmount}
+                                    </span>
+                                    <span>USDT</span>
+                                  </div>
+
+                                  <span className="text-xs">
+                                    {Number(item.rate).toFixed(2)}
+                                  </span>
                                   <span className="text-lg text-yellow-500 font-semibold">
                                     {Number(item.krwAmount).toLocaleString('ko-KR', {
                                       style: 'currency',
                                       currency: 'KRW',
                                     })}
                                   </span>
-                                  <span className="text-sm">{item.usdtAmount}{' '}USDT</span>
-                                  <span className="text-xs">
-                                    {Number(item.rate).toFixed(2)}
-                                  </span>
+
                                 </div>
+
                               </td>
 
                            
-                              <td>
+                              <td className="p-2 w-32">
                                 <div className="flex flex-col gap-1">
                                   <span>{item.seller?.bankInfo.bankName}</span>
                                   <span>{item.seller?.bankInfo.accountNumber}</span>
@@ -3690,7 +3700,7 @@ const TradeDetail = (
   
         {/* header menu */}
         <div className="w-full flex flex-row justify-between items-center gap-2
-          bg-green-500 p-4 rounded-lg mb-5
+          bg-gray-100 p-4 rounded-lg mb-5 md:mb-10
         ">
             {/* logo */}
             <button
@@ -3707,7 +3717,7 @@ const TradeDetail = (
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PUMP
+                    PPUMP
                     </span>
                 </div>
             </button>

@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     try {
 
-      const msgBody = `[PUMP] TID[${tradeId}] Your sell order has been cancelled by ${buyer?.nickname}!`;
+      const msgBody = `[PPUMP] TID[${tradeId}] Your sell order has been cancelled by ${buyer?.nickname}!`;
 
       message = await client.messages.create({
         ///body: "This is the ship that made the Kessel Run in fourteen parsecs?",
