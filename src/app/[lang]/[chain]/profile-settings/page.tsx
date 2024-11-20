@@ -1469,19 +1469,6 @@ export default function SettingsPage({ params }: any) {
                             //locale={"en_US"}
                             />
 
-                            {/* button for connect smart wallet */}
-                            {/*
-                            <button
-                                onClick={() => {
-                                    setActiveAccount(smartConnectWallet);
-                                    
-                                }}
-                                className="p-2 bg-blue-500 text-zinc-100 rounded"
-                            >
-                                Connect Smart Wallet
-                            </button>
-                            */}
-
                         </div>
 
 
