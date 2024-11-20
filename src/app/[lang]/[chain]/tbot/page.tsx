@@ -3185,31 +3185,9 @@ function Header(
                 </div>
             </button>
 
-          {/* menu */}
-          {/* COIN, NFT, DEFI */}
+
           <div className="flex flex-row gap-2 items-center">
-            <button
-                onClick={() => {
-  
-                  /*
-                  router.push(
-                    "/" + params.lang + "/" + params.chain + "/send-token/?wallet=" + wallet + "&token=CAMT"
-                  );
-                  */
-  
-                }}
-              className="text-gray-600 hover:underline text-xs xl:text-lg"
-            >
-              WALLET
-            </button>
-            <button
-              onClick={() => {
-                //console.log("chat");
-              }}
-              className="text-gray-600 hover:underline text-xs xl:text-lg"
-            >
-              TRADE
-            </button>
+
             <button
               onClick={() => {
                 router.push(

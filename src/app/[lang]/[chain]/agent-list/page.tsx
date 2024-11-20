@@ -1604,6 +1604,7 @@ export default function AIPage({ params }: any) {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
+
                     <div className='flex flex-row items-center gap-4'>
                         
                         <Image
@@ -1612,10 +1613,37 @@ export default function AIPage({ params }: any) {
                             width={100}
                             height={40}
                         />
-                        <span className="text-sm font-semibold text-gray-500">
-                            AI 트레이딩 TBOT 서비스센터 입니다.
-                        </span>
+
+                        <div className='flex flex-col items-start gap-2'>
+
+                            <span className="text-sm font-semibold text-gray-500">
+                                AI 트레이딩 TBOT 서비스센터 입니다.
+                            </span>
+
+                            <button
+                                onClick={() => {
+                                window.open('https://futures.htx.com.pk/futures/copy_trading/following/trader/NTA1MDk1Njk');
+                                }}
+                                className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            >
+                                <div className='flex flex-row items-center gap-2'>
+                                    <Image
+                                        src="/logo-exchange-htx.png"
+                                        alt="HTX"
+                                        width={20}
+                                        height={20}
+                                        className='rounded-full bg-white p-1'
+                                    />
+                                    <span className='text-sm font-semibold'>
+                                        트레이더 퍼포먼스 보러가기
+                                    </span>
+                                </div>
+                            </button>
+
+                        </div>
+                        
                     </div>
+
                     <div className='flex flex-row items-center gap-4'>
                         {/* red dot */}
                         <div className='w-4 h-4 bg-red-500 rounded-full'></div>
