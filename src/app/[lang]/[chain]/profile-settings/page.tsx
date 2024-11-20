@@ -2150,7 +2150,9 @@ export default function SettingsPage({ params }: any) {
 
                         </button>
 
-                        )}
+                    )}
+
+
 
                         {/* My Referral Code */}
                         {/* address */}
@@ -2290,6 +2292,21 @@ export default function SettingsPage({ params }: any) {
                                     )}
                                
 
+
+
+
+                                </div>
+
+
+                            </div>
+
+                        )}
+
+
+
+                        {address && myNfts && myNfts.length > 0 && (
+
+                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
 
                                     {/* my NFTs */}
                                     <div className='mt-10 flex flex-col gap-2 items-start justify-between'>
@@ -2453,10 +2470,9 @@ export default function SettingsPage({ params }: any) {
                                         ))}
                                     </div>
 
-                                </div>
-
 
                             </div>
+
 
                         )}
 
