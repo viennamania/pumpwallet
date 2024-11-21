@@ -1065,9 +1065,18 @@ export default function AgentPage({ params }: any) {
                             <div className='w-full flex flex-col items-start justify-between gap-2
                               border-b border-gray-300 pb-2
                             '>
-                                <span className='text-lg text-green-500'>
-                                  거래시작
-                                </span>
+                                <div className='flex flex-row items-center justify-between gap-2'>
+                                  <Image
+                                    src='/icon-bot-live.gif'
+                                    width={80}
+                                    height={30}
+                                    alt='Bot'
+                                    className='rounded-lg'
+                                  />
+                                  <span className='text-lg text-green-500'>
+                                    거래시작
+                                  </span>
+                                </div>
                                 <span className='text-sm text-gray-800'>
                                     거래시작일: {
                                     application.startTrading
