@@ -804,20 +804,36 @@ export default function AgentPage({ params }: any) {
                 </div>
 
 
-                <div className='w-full flex flex-col items-start justify-center gap-2
-                  border-b border-gray-300 pb-2
+                <div className='w-full flex flex-row items-center justify-between gap-2
+                 border-b border-gray-300 pb-2
                 '>
-                    <span className='text-lg font-semibold text-gray-800'>
-                        AI 에이전트 NFT 계약번호: #{agentTokenId}
-                    </span>
-                    <div className='flex flex-col items-start justify-between gap-2'>
+                    <Image
+                      src='/smart-contract.png'
+                      width={60}
+                      height={60}
+                      alt='Agent'
+                      className='rounded-lg'
+                    />
+
+                  <div className='w-full flex flex-col xl:flex-row items-start justify-start gap-2'>
+                      <div className='flex flex-col items-center justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
                           AI 에이전트 NFT 계약주소
                         </span>
-                        <span className='text-sm text-gray-800'>
+                        <span className='text-sm text-gray-800 font-semibold'>
                             {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
                         </span>
                       </div>
+                      <div className='flex flex-col items-center justify-between gap-2'>
+                        <span className='text-sm text-yellow-500'>
+                            AI 에이전트 NFT 계약번호
+                        </span>
+                        <span className='text-lg text-gray-800 font-semibold'>
+                            #{agentTokenId}
+                        </span>
+                      </div>
+
+                  </div>
 
                 </div>
 
