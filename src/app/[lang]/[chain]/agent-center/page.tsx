@@ -1762,6 +1762,132 @@ export default function AIPage({ params }: any) {
 
 
 
+    // getPositionList
+    const [checkingPositionList, setCheckingPositionList] = useState([] as any[]);
+    const [positionList, setPositionList] = useState([] as any[]);
+    /*
+    {"positions":
+        [
+            {"lever":"5","position_side":"long","contract_code":"BCH-USDT","open_avg_price":"377.48","volume":"136","margin_mode":"cross","position_margin":"103.53408","margin_rate":"0.033641785791011462","unreal_profit":"4.2976","profit":"4.2976","profit_rate":"0.041856522199851645","liquidation_price":"19.61"},
+            {"lever":"5","position_side":"long","contract_code":"ONDO-USDT","open_avg_price":"0.7358","volume":"327","margin_mode":"cross","position_margin":"48.31752","margin_rate":"0.033641785791011462","unreal_profit":"0.977100000000000051","profit":"0.977100000000000051","profit_rate":"0.020304600173309145","liquidation_price":null},
+            {"lever":"5","position_side":"long","contract_code":"MEW-USDT","open_avg_price":"0.009241","volume":"32","margin_mode":"cross","position_margin":"58.4384","margin_rate":"0.033641785791011462","unreal_profit":"-3.545999999999968","profit":"-3.545999999999968","profit_rate":"-0.05995171401713626","liquidation_price":null}
+        ]
+    }
+    */
+
+
+    useEffect(() => {
+        setCheckingPositionList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setPositionList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    positions: item?.positionList?.positions || [],
+                    timestamp: item?.positionList?.timestamp || 0,
+                };
+            })
+        );
+    } , [applications]);
+
+    const getPositionList = async (
+        applicationId: number,
+        htxAccessKey: string,
+        htxSecretKey: string,
+    ) => {
+
+        if (!htxAccessKey) {
+            toast.error("HTX Access Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!htxSecretKey) {
+            toast.error("HTX Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!applicationId) {
+            toast.error("신청 ID를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingPositionList(
+            checkingPositionList.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: true,
+                    }
+                } else {
+                    return item;
+                }
+            })
+        );
+
+        const response = await fetch("/api/htx/position_list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                htxAccessKey: htxAccessKey,
+                htxSecretKey: htxSecretKey,
+                applicationId: applicationId,
+            }),
+        });
+
+        const data = await response.json();
+
+        ///console.log("data.result", data.result);
+
+        if (data.result?.status === "ok") {
+
+            setPositionList(
+                positionList.map((item) => {
+                    if (item.applicationId === applicationId) {
+                        return {
+                            applicationId: applicationId,
+                            positions: data.result?.data?.positions,
+                            timestamp: data.result?.timestamp,
+                        }
+                    } else {
+                        return item;
+                    }
+                })
+            );
+
+            toast.success("HTX 포지션 리스트가 확인되었습니다.");
+        } else {
+            toast.error("HTX 포지션 리스트를 확인할 수 없습니다.");
+        }
+
+        setCheckingPositionList(
+            checkingPositionList.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: false,
+                    }
+                } else {
+                    return item;
+                }
+            })
+        );
+
+    }
+
+
+
+
+
+
 
 
     return (
@@ -2441,6 +2567,133 @@ export default function AIPage({ params }: any) {
                                             </div>
 
                                       
+                                            {/* getPositionList */}
+                                            <div className='w-full flex flex-col items-start justify-between gap-2'>
+                                                
+                                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                    <span className='text-xs text-yellow-800'>
+                                                        HTX 포지션 리스트
+                                                    </span>
+                                                    <button
+                                                        onClick={() => {
+                                                            getPositionList(
+                                                                application.id,
+                                                                application.apiAccessKey,
+                                                                application.apiSecretKey,
+                                                            );
+                                                        }}
+                                                        disabled={
+                                                            checkingPositionList.find((item) => item.applicationId === application.id)?.checking
+                                                        }
+                                                        className={`${checkingPositionList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                                            hover:bg-blue-600
+                                                        `}
+                                                    >
+                                                        {checkingPositionList.find((item) => item.applicationId === application.id)?.checking ? "Checking..." : "Check"}
+                                                    </button>
+
+                                                </div>
+
+                                                {/* timestamp */}
+                                                <span className='text-xs text-gray-800'>
+                                                    {positionList.find((item) => item.applicationId === application.id)?.timestamp
+                                                    ? new Date(positionList.find((item) => item.applicationId === application.id)?.timestamp).toLocaleString()
+                                                    : ""
+                                                    }
+                                                </span>
+
+                                                <table className='w-full text-xs text-gray-800
+                                                    border border-gray-300 rounded-lg p-2 shadow-md bg-white divide-y divide-gray-300
+                                                '>
+                                                    <thead
+                                                        className='bg-gray-200 text-xs
+                                                        w-full rounded-lg
+                                                        '
+                                                    >
+
+                                                        <tr className='bg-gray-200 
+                                                            border border-gray-300
+                                                        '>
+                                                            <th className='text-center
+                                                                border border-gray-300
+                                                            '>
+                                                                Contract<br/>Side
+                                                            </th>
+                                                            <th className='text-center
+                                                                border border-gray-300
+                                                            '>
+                                                                Volumn<br/>Margin<br/>Profit<br/>Rate
+                                                            </th>
+                                                            <th className='text-center
+                                                                border border-gray-300
+                                                            '>
+                                                                Price
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody
+                                                        className='divide-y divide-gray-300'
+                                                    >
+                                                        {positionList.find((item) => item.applicationId === application.id)?.positions.map((position : any) => (
+                                                            <tr key={position.contract_code}
+                                                                className='border border-gray-300 bg-white
+                                                                hover:bg-gray-100
+                                                                '
+                                                            >
+                                                                <td className='text-right
+                                                                    border border-gray-300
+                                                                    p-2
+                                                                '>
+                                                                    <span className='text-xs text-gray-800 font-semibold'>
+                                                                    {/// ETH-USDT  delete -USDT
+                                                                        position.contract_code.replace("-USDT", "")
+                                                                    }
+                                                                    </span><br/>
+
+                                                                    {
+                                                                        position.position_side === "long" ? (
+                                                                            <span className='text-green-500 font-semibold'>
+                                                                                Long
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className='text-red-500 font-semibold'>
+                                                                                Short
+                                                                            </span>
+                                                                        )
+                                                                    }
+                                                                    
+                                                                </td>
+                                                                <td className='text-right
+                                                                    border border-gray-300
+                                                                    p-2
+                                                                '>
+                                                                    {position.volume}<br/>
+
+                                                                    {Number(position.position_margin).toFixed(2)}<br/>
+                                                               
+                                                                    {Number(position.profit).toFixed(2)}<br/>
+
+                                                                    {Number(position.profit_rate).toFixed(2)}%
+                                                                </td>
+                                                                <td className='text-right
+                                                                    border border-gray-300
+                                                                    p-2
+                                                                '>
+                                                                    {position.liquidation_price}
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            
+
+
+
+
+
                                             
 
 
