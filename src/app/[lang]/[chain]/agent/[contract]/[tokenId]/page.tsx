@@ -101,6 +101,7 @@ import { Router } from 'next/router';
 import path from 'path';
 
 import { TronWeb, utils as TronWebUtils, Trx, TransactionBuilder, Contract, Event, Plugin } from 'tronweb';
+import { stat } from 'fs';
 
 
 
@@ -625,6 +626,7 @@ export default function AgentPage({ params }: any) {
                     applicationId: item.id,
                     positions: item?.positionList?.positions || [],
                     timestamp: item?.positionList?.timestamp || 0,
+                    status: item?.positionList?.status || false,
                 };
             })
         );
@@ -689,6 +691,7 @@ export default function AgentPage({ params }: any) {
                             applicationId: applicationId,
                             positions: data.result?.data?.positions,
                             timestamp: data.result?.timestamp,
+                            status: data.result?.status,
                         }
                     } else {
                         return item;
