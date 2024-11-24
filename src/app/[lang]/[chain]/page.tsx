@@ -53,7 +53,12 @@ import { balanceOf, getBalance, transfer } from "thirdweb/extensions/erc20";
  
 
 
-import { getUserPhoneNumber } from "thirdweb/wallets/in-app";
+import {
+  getUserPhoneNumber,
+  getProfiles,
+  getSocialIcon,
+  getUserEmail,
+} from "thirdweb/wallets/in-app";
 
 
 import { toast } from 'react-hot-toast';
@@ -77,6 +82,7 @@ import AppBarComponent from "@/components/Appbar/AppBar";
 import { getDictionary } from "../../dictionaries";
 import { parse } from "path";
 import { N } from "ethers";
+import { get } from "http";
 
 
 
@@ -89,7 +95,10 @@ import { N } from "ethers";
 const wallets = [
   inAppWallet({
     auth: {
-      options: ["phone"],
+      options: [
+        "phone",
+        "telegram",
+      ],
     },
   }),
 ];
@@ -476,8 +485,9 @@ export default function Index({ params }: any) {
 
       
 
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
 
+  /*
   useEffect(() => {
 
 
@@ -496,11 +506,79 @@ export default function Index({ params }: any) {
     }
 
   } , [address]);
+  */
 
+  /*
+  getUserPhoneNumber({ client }).then((phoneNumber) => {
+    setPhoneNumber(phoneNumber || "");
+  } );
+  */
  
 
-  ////console.log(phoneNumber);
+  
 
+  /*
+  [
+    {
+        "type": "telegram",
+        "details": {
+            "id": "441516803",
+            "picture": "https://t.me/i/userpic/320/Y6uxsOyjWvZLIKQwohfxvvOaLzv4tpnQ-edBSN1yOH8.jpg",
+            "lastName": "Park",
+            "username": "waynepark",
+            "firstName": "Wayne"
+        }
+    }
+  ]
+  */
+  /*
+  [
+    {
+        "type": "phone",
+        "details": {
+            "phone": "+8201098551647",
+            "id": "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506"
+        }
+    }
+  ]
+  */
+
+  const [userType, setUserType] = useState("");
+  const [userTelegramId, setUserTelegramId] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [userNickname, setUserNickname] = useState("");
+
+  getProfiles({ client }).then((profiles) => {
+    
+    ///console.log("profiles======", profiles);
+
+    if (profiles) {
+      profiles.forEach((
+        profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
+      ) => {
+        if (profile.type === "phone") {
+          setUserType("phone");
+          setUserPhoneNumber(profile.details.phone || "");
+        } else if (profile.type === "telegram") {
+          setUserType("telegram");
+          const details = profile.details as any;
+          setUserAvatar(details.picture || "");
+          setUserNickname(details.username || "");
+          setUserTelegramId(details.id || "");
+        }
+      });
+    }
+
+  } );
+
+
+
+  /*
+  console.log("userPhoneNumber", userPhoneNumber);
+  console.log("userAvatar", userAvatar);
+  console.log("userNickname", userNickname);
+  console.log("userTelegramId", userTelegramId);
+  */
 
 
 

@@ -10,7 +10,22 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress, nickname } = body;
+  /*
+                    nickname: nickname,
+                     avatar: avatar,
+                    userType: userType,
+                    phoneNumber: userPhoneNumber,
+                    telegramId: userTelegramId,
+                    */
+
+  const {
+    walletAddress,
+    nickname,
+    avatar,
+    userType,
+    phoneNumber,
+    telegramId,
+  } = body;
 
   console.log("walletAddress", walletAddress);
   console.log("nickname", nickname);
