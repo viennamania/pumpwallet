@@ -148,7 +148,10 @@ export default function SettingsPage({ params }: any) {
     const wallets = [
         inAppWallet({
           auth: {
-            options: ["phone"],
+            options: [
+                "phone",
+                "telegram",
+            ],
           },
         }),
     ];
@@ -1502,29 +1505,35 @@ export default function SettingsPage({ params }: any) {
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                        <div className='w-full flex flex-row gap-2'>
+                        <div className='flex flex-col gap-2'>
 
-                        <ConnectButton
-                            client={client}
-                            wallets={wallets}
-                            accountAbstraction={{
-                                chain: polygon,
-                                 
-                                sponsorGas: true
-                            }}
-                            theme={"light"}
-                            connectButton={{
-                                label: "Sign in with PPUMP Wallet",
-                            }}
-                            connectModal={{
-                                size: "wide", 
-                                titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
-                                showThirdwebBranding: false,
+                            <ConnectButton
+                                client={client}
+                                wallets={wallets}
+                                accountAbstraction={{
+                                    chain: polygon,
+                                    
+                                    sponsorGas: true
+                                }}
+                                theme={"light"}
+                                connectButton={{
+                                    label: "Sign in with PPUMP Wallet",
+                                }}
+                                connectModal={{
+                                    size: "wide", 
+                                    titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
+                                    showThirdwebBranding: false,
 
-                            }}
-                            locale={"ko_KR"}
-                            //locale={"en_US"}
+                                }}
+                                locale={"ko_KR"}
+                                //locale={"en_US"}
                             />
+
+                            {!address && (
+                                <div className="text-xs xl:text-sm font-semibold">
+                                    {Please_connect_your_wallet_first}
+                                </div>
+                            )}
 
                         </div>
 
@@ -1903,7 +1912,7 @@ export default function SettingsPage({ params }: any) {
 
                         {
                             //(userCode && !seller) || (userCode && seller && editSeller) && (
-                            true && (
+                            address && (
 
                             <div className='flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
                                 
@@ -2161,21 +2170,23 @@ export default function SettingsPage({ params }: any) {
 
 
                     {/* 새로고침 버튼 */}
-                    <div className='w-full flex flex-row items-center justify-start gap-2'>
-                        <button
-                            onClick={() => {
-                                window.location.reload();
-                            }}
-                            className="p-2 bg-blue-500 text-zinc-100 rounded"
-                        >
-                            새로고침
-                        </button>
+                    {address && userCode && (
+                        <div className='w-full flex flex-row items-center justify-start gap-2'>
+                            <button
+                                onClick={() => {
+                                    window.location.reload();
+                                }}
+                                className="p-2 bg-blue-500 text-zinc-100 rounded"
+                            >
+                                새로고침
+                            </button>
 
-                        <span className="text-xs font-semibold text-red-500">
-                            민팅에 되지않을 경우 새로고침 해주세요.
-                        </span>
+                            <span className="text-xs font-semibold text-red-500">
+                                민팅에 되지않을 경우 새로고침 해주세요.
+                            </span>
 
-                    </div>
+                        </div>
+                    )}
 
 
                     {address && userCode && !erc721ContractAddress && (
