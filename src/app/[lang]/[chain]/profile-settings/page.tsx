@@ -1536,10 +1536,10 @@ export default function SettingsPage({ params }: any) {
                                     //locale={"en_US"}
                                 />
                                 {/* userType */}
-                                {userType === "telegram" && (
+                                {address && userType === "telegram" && (
                                     <button
                                         onClick={() => {
-                                            window.open("https://t.me/ppumpt_bot", "_blank");
+                                            window.open("https://t.me/ppump_bot", "_blank");
                                         }}
                                         className="p-2 bg-zinc-800 text-white rounded"
                                         >
