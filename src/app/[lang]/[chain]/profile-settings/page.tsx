@@ -738,7 +738,7 @@ export default function SettingsPage({ params }: any) {
                     //nickname: nickname,
                     nickname: editedNickname,
 
-                    mobile: phoneNumber,
+                    mobile: userPhoneNumber,
                 }),
             });
 
@@ -896,7 +896,7 @@ export default function SettingsPage({ params }: any) {
           lang: params.lang,
           chain: params.chain,
           walletAddress: address,
-          mobile: phoneNumber,
+          mobile: userPhoneNumber,
         }),
       });
   
