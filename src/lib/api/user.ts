@@ -364,6 +364,25 @@ export async function getOneByWalletAddress(
 
 }
 
+// getOneByTelegramId
+export async function getOneByTelegramId(
+  telegramId: string,
+): Promise<UserProps | null> {
+
+  //console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
+
+  const client = await clientPromise;
+
+  const collection = client.db('pump').collection('users');
+
+  const results = await collection.findOne<UserProps>(
+    { telegramId: telegramId },
+  );
+
+  return results;
+
+}
+
 
 
 

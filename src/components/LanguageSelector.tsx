@@ -9,6 +9,7 @@ const LanguageSelector = () => {
     const router = useRouter();
     const pathname = usePathname();
     const langs = [
+      { lang: "kr", fullName: "Korean", shortName: "KO" },
       { lang: "en", fullName: "English", shortName: "EN" },
       { lang: "es", fullName: "Spanish", shortName: "ES" },
       { lang: "fr", fullName: "French", shortName: "FR" },

@@ -23,9 +23,25 @@ import * as fal from "@fal-ai/serverless-client";
 
 
 // nextjs-app
-export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+//export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 
 
+import {
+	getOneByTelegramId,
+} from '@lib/api/user';
+
+
+import { Network, Alchemy } from 'alchemy-sdk';
+
+
+const settings = {
+    apiKey: process.env.ALCHEMY_API_KEY,
+    network: Network.MATIC_MAINNET,
+  };
+  
+const alchemy = new Alchemy(settings);
+  
+  
 
 
 const replicate = new Replicate({
@@ -75,6 +91,7 @@ bot.use(async (ctx, next) => {
 
 
 // Commands - Start, Play, Leaderboard, About, Help
+/*
 bot.command("start", async (ctx) => {
     
     //const userDocId = await registerUser(ctx.from?.id.toString() || "", ctx.from?.first_name || "", ctx.from?.last_name || "", ctx.from?.username || "");
@@ -88,6 +105,7 @@ bot.command("start", async (ctx) => {
         "parse_mode": "HTML"
     })
 });
+*/
 
 /*
 {
@@ -99,6 +117,133 @@ bot.command("start", async (ctx) => {
   parameters: {}
 }
 */
+
+
+bot.command("start", async (ctx) => {
+    const keyboard = new InlineKeyboard()
+        ///.game("Play now!")
+        .row()
+        .text("나의 AI 에이전트 NFT", "ai_agent_nft")
+        .text("About", "about")
+        .row()
+        .text("Help", "help")
+
+
+
+    //ctx.reply("AI 에이전트 서비스에 오신 것을 환영합니다.", {
+
+    ctx.replyWithPhoto("https://vzrcy5vcsuuocnf3.public.blob.vercel-storage.com/MDSPSiO-1SeviINyF6iV2VSZ9odepO5lSjv0nw.png", {
+        "caption": "<b>AI 에이전트 서비스에 오신 것을 환영합니다.</b>",
+        "parse_mode": "HTML",
+
+
+        reply_markup: keyboard,
+        protect_content: true,
+        disable_notification: true
+    });
+
+} );
+
+
+
+bot.on("callback_query:data", async (ctx) => {
+    const data = ctx.callbackQuery.data;
+
+
+    if (data === "ai_agent_nft") {
+        
+        //console.log("telegramId=", ctx.from.id.toString());
+
+        //ctx.reply("Telegram ID: " + ctx.from.id.toString());
+
+        const user = await getOneByTelegramId(ctx.from.id.toString());
+
+        ///console.log("user=", user);
+
+        if (!user) {
+            ctx.reply("User not found");
+            return;
+        }
+
+        const walletAddress = user.walletAddress;
+
+        let finalResult: any = [];
+
+        const response = await alchemy.nft.getNftsForOwner(
+          walletAddress, {
+          omitMetadata: false, // // Flag to omit metadata
+        });
+
+      
+        response?.ownedNfts?.map((nft) => {
+          if (nft.tokenType === 'ERC721') {
+            finalResult.push(nft);
+        }
+        });
+
+        //console.log("finalResult", finalResult);
+        // image.pngUrl
+
+        finalResult.forEach((element: any) => {
+            const photo = element.image?.pngUrl;
+            const name = element.name;
+            ctx.replyWithPhoto(photo, {
+                caption: name
+            });
+        } );
+
+
+
+
+
+
+
+    } else if (data === "about") {
+        ctx.reply("About");
+    } else if (data === "help") {
+        ctx.reply("Help");
+    } else if (data === "start") {
+        ctx.reply("/start");
+
+    } else if (data === "tbot") {
+        ctx.reply("tbot");
+    } else if (data === "mint_agent_nft") {
+        ctx.reply("mint_agent_nft");
+    } else if (data === "leaderboard") {
+        ctx.reply("Leaderboard");
+    }
+
+} );
+
+
+/*
+bot.command("ai_agent_nft", async (ctx) => {
+    const keyboard = new InlineKeyboard()
+        .row()
+        .text("AI 에이전트 생성", "tbot")
+        .text("AI 에이전트 NFT 발행", "mint_agent_nft")
+        .row()
+        .text("돌아가기", "start");
+
+    ctx.reply("AI 에이전트 메뉴를 선택하세요.", {
+        reply_markup: keyboard,
+        protect_content: true,
+        disable_notification: true
+    });
+
+} );
+*/
+
+
+bot.command("about", (ctx) => {
+    ctx.reply("About!!! \nThis is a game bot");
+});
+bot.command("help", (ctx) => {
+    ctx.reply(`
+    <b>Settle Mints Game Bot Help</b><br>
+    <p>Get in touch with the game support team.</p>
+  `, { parse_mode: "HTML" })
+});
 
 
 bot.command("play", async (ctx) => {
@@ -122,6 +267,9 @@ bot.command("play", async (ctx) => {
 
 });
 
+
+
+/*
 bot.command("leaderboard", (ctx) => {
     ctx.reply("Leaderboard!!! \n1. User1\n2. User2\n3. User3");
 });
@@ -134,6 +282,7 @@ bot.command("help", (ctx) => {
     <p>Get in touch with the game support team.</p>
   `, { parse_mode: "HTML" })
 });
+
 bot.on("callback_query:data", async (ctx) => {
     const data = ctx.callbackQuery.data;
     if (data === "leaderboard") {
@@ -154,6 +303,7 @@ bot.on("callback_query:game_short_name", async (ctx) => {
     await ctx.answerCallbackQuery({ url: `https://preview.codecanyon.net/item/coin-flip-land-html5/full_screen_preview/55506571?_ga=2.230819288.636301431.1732326489-1387678474.1732326489/?token=${token}` });
 
 });
+*/
 
 bot.catch((err) => console.error(err));
 
@@ -166,7 +316,7 @@ bot.catch((err) => console.error(err));
 
 
 
-
+/*
 bot.command("start", async (ctx) => {
     // You can get the chat identifier of the user to send your game to with `ctx.from.id`.
     // which gives you the chat identifier of the user who invoked the start command.
@@ -187,7 +337,7 @@ bot.command("start", async (ctx) => {
     });
 
 });
-
+*/
 
 
 
@@ -242,7 +392,7 @@ bot.on('message:text', async (ctx) => {
 
     //await ctx.reply('Hello!')
 
-
+    /*
     const hello = "안녕하세요! AI 에이전트 서비스입니다.";
 
     await ctx.reply(hello, {
@@ -251,6 +401,7 @@ bot.on('message:text', async (ctx) => {
                 message_id: ctx.msg.message_id
         },
     });
+    */
 
     ///await bot.api.sendMessage(441516803, "Hi!", {/* more options */});
     /*
@@ -281,6 +432,7 @@ bot.on('message:text', async (ctx) => {
     );
     */
 
+    /*
     await bot.api.sendMessage(
         ctx.message.chat.id,
         'https://pumpwallet.vercel.app',
@@ -288,11 +440,12 @@ bot.on('message:text', async (ctx) => {
             parse_mode: "HTML",
         },
     );
+    */
 
 
     if (ctx.message.text === '/start') {
 
-
+        /*
         //await ctx.reply('Hello!')
 
         // image
@@ -304,6 +457,7 @@ bot.on('message:text', async (ctx) => {
         })
 
         return
+        */
 
 
     }  else if (ctx.message.text === '/tbot') {
