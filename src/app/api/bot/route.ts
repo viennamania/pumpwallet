@@ -161,7 +161,7 @@ bot.on("callback_query:data", async (ctx) => {
         ///console.log("user=", user);
 
         if (!user) {
-            ctx.reply("User not found");
+            await ctx.reply("User not found");
             return;
         }
 
@@ -184,12 +184,14 @@ bot.on("callback_query:data", async (ctx) => {
         //console.log("finalResult", finalResult);
         // image.pngUrl
 
-        finalResult.forEach((element: any) => {
+        finalResult.forEach(async (element: any) => {
             const photo = element.image?.pngUrl;
             const name = element.name;
-            ctx.replyWithPhoto(photo, {
+
+            await ctx.replyWithPhoto(photo, {
                 caption: name
             });
+
         } );
 
 
