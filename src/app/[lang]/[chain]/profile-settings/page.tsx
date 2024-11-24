@@ -534,8 +534,14 @@ export default function SettingsPage({ params }: any) {
             const details = profile.details as any;
             setUserTelegramId(details.id || "");
             !avatar && setAvatar(details.picture || "/profile-default.png");
-            !nickname && setNickname(details.username || "");
-            !nickname && setEditedNickname(details.username || "");
+
+            //!nickname && setEditedNickname(details.username || "");
+
+            // nickname duplicate check
+            //checkNicknameIsDuplicate(details.username || "");
+
+
+
           }
         });
       }
@@ -550,6 +556,7 @@ export default function SettingsPage({ params }: any) {
 
 
 
+    
 
     const [userCode, setUserCode] = useState("");
 
@@ -700,10 +707,6 @@ export default function SettingsPage({ params }: any) {
                     
                     //nickname: nickname,
                     nickname: editedNickname,
-                    avatar: avatar,
-                    userType: userType,
-                    phoneNumber: userPhoneNumber,
-                    telegramId: userTelegramId,
 
                 }),
             });
@@ -740,8 +743,11 @@ export default function SettingsPage({ params }: any) {
                     
                     //nickname: nickname,
                     nickname: editedNickname,
-
+                    userType: userType,
                     mobile: userPhoneNumber,
+                    telegramId: userTelegramId,
+
+
                 }),
             });
 
@@ -1507,27 +1513,39 @@ export default function SettingsPage({ params }: any) {
 
                         <div className='flex flex-col gap-2'>
 
-                            <ConnectButton
-                                client={client}
-                                wallets={wallets}
-                                accountAbstraction={{
-                                    chain: polygon,
-                                    
-                                    sponsorGas: true
-                                }}
-                                theme={"light"}
-                                connectButton={{
-                                    label: "Sign in with PPUMP Wallet",
-                                }}
-                                connectModal={{
-                                    size: "wide", 
-                                    titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
-                                    showThirdwebBranding: false,
+                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                                <ConnectButton
+                                    client={client}
+                                    wallets={wallets}
+                                    accountAbstraction={{
+                                        chain: polygon,
+                                        
+                                        sponsorGas: true
+                                    }}
+                                    theme={"light"}
+                                    connectButton={{
+                                        label: "Sign in with PPUMP Wallet",
+                                    }}
+                                    connectModal={{
+                                        size: "wide", 
+                                        titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
+                                        showThirdwebBranding: false,
 
-                                }}
-                                locale={"ko_KR"}
-                                //locale={"en_US"}
-                            />
+                                    }}
+                                    locale={"ko_KR"}
+                                    //locale={"en_US"}
+                                />
+                                {/* userType */}
+                                {userType === "telegram" && (
+                                    <Image
+                                        src="/logo-telegram.webp"
+                                        alt="Telegram"
+                                        width={25}
+                                        height={25}
+                                        className="rounded-lg"
+                                    />
+                                )}
+                            </div>
 
                             {!address && (
                                 <div className="text-xs xl:text-sm font-semibold">

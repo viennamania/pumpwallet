@@ -35,7 +35,7 @@
 		"replicate": "^1.0.1",
 		"sharp": "^0.33.5",
 		"talkjs": "^0.22.0",
-		"thirdweb": "^5.67.0",
+		"thirdweb": "^5.68.0",
 		"tronweb": "^6.0.0",
 		"twilio": "^5.2.2",
 		"use-sound": "^4.0.3"

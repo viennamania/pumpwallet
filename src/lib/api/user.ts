@@ -128,9 +128,15 @@ export async function insertOne(data: any) {
 
 export async function insertOneVerified(data: any) {
 
-  //console.log('insertOne data: ' + JSON.stringify(data));
+  /*
+      walletAddress: walletAddress,
+    nickname: nickname,
+    userType: userType,
+    mobile: mobile,
+    telegramId: telegramId,
+  */
 
-  if (!data.walletAddress || !data.nickname || !data.mobile) {
+  if (!data.walletAddress || !data.nickname || !data.userType) {
     return null;
   }
 
@@ -150,7 +156,7 @@ export async function insertOneVerified(data: any) {
     { projection: { _id: 0, emailVerified: 0 } }
   );
 
-  ///console.log('checkUser: ' + checkUser);
+  console.log('checkUser: ' + checkUser);
 
 
   if (checkUser) {
@@ -167,9 +173,12 @@ export async function insertOneVerified(data: any) {
 
     {
       id: id,
-      email: data.email,
       nickname: data.nickname,
+      userType: data.userType,
       mobile: data.mobile,
+      telegramId: data.telegramId,
+      email: data.email,
+
 
       walletAddress: data.walletAddress,
 
@@ -186,9 +195,11 @@ export async function insertOneVerified(data: any) {
   if (result) {
     return {
       id: id,
-      email: data.email,
       nickname: data.nickname,
+      userType: data.userType,
       mobile: data.mobile,
+      telegramId: data.telegramId,
+      email: data.email,
     };
   } else {
     return null;
