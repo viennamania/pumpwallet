@@ -972,6 +972,8 @@ export default function Index({ params }: any) {
 
 
 
+
+
   return (
 
 
@@ -990,29 +992,51 @@ export default function Index({ params }: any) {
 
         <div className="w-full flex flex-row gap-2 justify-between items-center">
           
-          {/* goto TBOT */}
-          <div className=" flex flex-row gap-2 justify-start items-center">
-            
-            <button
-              onClick={() => {
-                router.push(
-                  "/" + params.lang + "/polygon/tbot?agent=" + agent
-                );
-              }}
-              className="p-2 bg-zinc-800 text-white rounded"
-            >
-              <div className="flex flex-row gap-2 items-center">
-                <Image
-                  src="/icon-tbot.png"
-                  alt="TBOT"
-                  width={50}
-                  height={50}
-                />
-                <span>Go to TBOT</span>
-              </div>
-            </button>
+          <div className=" flex flex-col xl:flex-row gap-2 justify-start items-start">
+              
+              <button
+                onClick={() => {
+                  router.push(
+                    "/" + params.lang + "/polygon/tbot?agent=" + agent
+                  );
+                }}
+                className="p-2 bg-zinc-800 text-white rounded"
+              >
+                <div className="flex flex-row gap-2 items-center">
+                  <Image
+                    src="/icon-tbot.png"
+                    alt="TBOT"
+                    width={50}
+                    height={50}
+                    className="rounded-lg w-10 h-10"
+                  />
+                  <span>Go to TBOT</span>
+                </div>
+              </button>
 
-          </div>
+              {userType === "telegram" && (
+                  <button
+                      onClick={() => {
+                          window.open("https://t.me/ppumpt_bot", "_blank");
+                      }}
+                      className="p-2 bg-zinc-800 text-white rounded"
+                      >
+                      <div className="flex flex-row gap-2 items-center">
+                          <Image
+                          src="/logo-telegram.webp"
+                          alt="Telegram"
+                          width={50}
+                          height={50}
+                          className="rounded-lg w-10 h-10"
+                          />
+                          <span>Go to Telegram</span>
+                      </div>
+                  </button>
+              )}
+
+            </div>
+
+
 
           {/* language selection */}
           

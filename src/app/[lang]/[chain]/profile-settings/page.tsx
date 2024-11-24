@@ -550,7 +550,7 @@ export default function SettingsPage({ params }: any) {
 
 
 
-    console.log("nickname", nickname);
+    ///console.log("nickname", nickname);
 
 
 
@@ -1537,13 +1537,23 @@ export default function SettingsPage({ params }: any) {
                                 />
                                 {/* userType */}
                                 {userType === "telegram" && (
-                                    <Image
-                                        src="/logo-telegram.webp"
-                                        alt="Telegram"
-                                        width={25}
-                                        height={25}
-                                        className="rounded-lg"
-                                    />
+                                    <button
+                                        onClick={() => {
+                                            window.open("https://t.me/ppumpt_bot", "_blank");
+                                        }}
+                                        className="p-2 bg-zinc-800 text-white rounded"
+                                        >
+                                        <div className="flex flex-row gap-2 items-center">
+                                            <Image
+                                            src="/logo-telegram.webp"
+                                            alt="Telegram"
+                                            width={50}
+                                            height={50}
+                                            className="rounded-lg w-10 h-10"
+                                            />
+                                            <span>Go to Telegram</span>
+                                        </div>
+                                    </button>
                                 )}
                             </div>
 

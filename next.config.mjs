@@ -32,6 +32,7 @@ const nextConfig = {
 
   experimental: {
     appDir: true,
+    serverComponentsExternalPackages: ['grammy'],
   },
 
 
