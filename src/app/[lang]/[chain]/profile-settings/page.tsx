@@ -517,36 +517,43 @@ export default function SettingsPage({ params }: any) {
     const [userTelegramId, setUserTelegramId] = useState("");
     //const [userAvatar, setUserAvatar] = useState("");
     //const [userNickname, setUserNickname] = useState("");
-  
-    getProfiles({ client }).then((profiles) => {
-      
-      ///console.log("profiles======", profiles);
-  
-      if (profiles) {
-        profiles.forEach((
-          profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
-        ) => {
-          if (profile.type === "phone") {
-            setUserType("phone");
-            setUserPhoneNumber(profile.details.phone || "");
-          } else if (profile.type === "telegram") {
-            setUserType("telegram");
-            const details = profile.details as any;
-            setUserTelegramId(details.id || "");
-            !avatar && setAvatar(details.picture || "/profile-default.png");
-
-            //!nickname && setEditedNickname(details.username || "");
-
-            // nickname duplicate check
-            //checkNicknameIsDuplicate(details.username || "");
 
 
 
-          }
-        });
-      }
-  
-    } );
+    useEffect(() => {
+
+        const fetchData = async () => {
+    
+          getProfiles({ client }).then((profiles) => {
+            
+            ///console.log("profiles======", profiles);
+    
+            if (profiles) {
+              profiles.forEach((
+                profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
+              ) => {
+                if (profile.type === "phone") {
+                  setUserType("phone");
+                  setUserPhoneNumber(profile.details.phone || "");
+                } else if (profile.type === "telegram") {
+                  setUserType("telegram");
+                  const details = profile.details as any;
+                  setUserTelegramId(details.id || "");
+                }
+              });
+            }
+    
+          } );
+    
+        }
+    
+    
+        client && fetchData();
+    
+      }, []);
+
+
+
 
 
 
