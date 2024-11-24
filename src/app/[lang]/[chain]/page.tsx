@@ -548,30 +548,45 @@ export default function Index({ params }: any) {
   const [userAvatar, setUserAvatar] = useState("");
   const [userNickname, setUserNickname] = useState("");
 
-  getProfiles({ client }).then((profiles) => {
-    
-    ///console.log("profiles======", profiles);
 
-    if (profiles) {
-      profiles.forEach((
-        profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
-      ) => {
-        if (profile.type === "phone") {
-          setUserType("phone");
-          setUserPhoneNumber(profile.details.phone || "");
-        } else if (profile.type === "telegram") {
-          setUserType("telegram");
-          const details = profile.details as any;
-          setUserAvatar(details.picture || "");
-          setUserNickname(details.username || "");
-          setUserTelegramId(details.id || "");
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      getProfiles({ client }).then((profiles) => {
+        
+        ///console.log("profiles======", profiles);
+
+        if (profiles) {
+          profiles.forEach((
+            profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
+          ) => {
+            if (profile.type === "phone") {
+              setUserType("phone");
+              setUserPhoneNumber(profile.details.phone || "");
+            } else if (profile.type === "telegram") {
+              setUserType("telegram");
+              const details = profile.details as any;
+              setUserAvatar(details.picture || "");
+              setUserNickname(details.username || "");
+              setUserTelegramId(details.id || "");
+            }
+          });
         }
-      });
+
+      } );
+
     }
 
-  } );
 
-  console.log("userType", userType);
+    client && fetchData();
+
+  } , []);
+
+
+
+  //console.log("userType", userType);
 
 
   /*
@@ -817,6 +832,7 @@ export default function Index({ params }: any) {
   //console.log("params.chain", params.chain);
 
   const [tronWalletAddress, setTronWalletAddress] = useState('');
+  /*
   useEffect(() => {
         
       // get tron wallet address
@@ -850,12 +866,14 @@ export default function Index({ params }: any) {
 
 
   console.log("tronWalletAddress", tronWalletAddress);
+  */
 
 
-  console.log("address", address);
 
   // getTronBalance
   const [tronBalance, setTronBalance] = useState(0);
+
+  /*
   useEffect(() => {
     
     const getTronBalance = async () => {
@@ -886,7 +904,7 @@ export default function Index({ params }: any) {
   } , [tronWalletAddress, params.chain, params.lang]);
 
   console.log("tronBalance", tronBalance);
-
+  */
 
 
 
