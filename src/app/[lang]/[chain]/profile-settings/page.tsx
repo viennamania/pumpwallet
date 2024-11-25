@@ -746,15 +746,12 @@ export default function SettingsPage({ params }: any) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    walletAddress: address,
-                    
+                    walletAddress: address,                    
                     //nickname: nickname,
                     nickname: editedNickname,
                     userType: userType,
                     mobile: userPhoneNumber,
                     telegramId: userTelegramId,
-
-
                 }),
             });
 

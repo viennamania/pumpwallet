@@ -128,13 +128,6 @@ export async function insertOne(data: any) {
 
 export async function insertOneVerified(data: any) {
 
-  /*
-      walletAddress: walletAddress,
-    nickname: nickname,
-    userType: userType,
-    mobile: mobile,
-    telegramId: telegramId,
-  */
 
   if (!data.walletAddress || !data.nickname || !data.userType) {
     return null;
@@ -207,6 +200,11 @@ export async function insertOneVerified(data: any) {
   
 
 }
+
+
+
+
+
 
 
 
