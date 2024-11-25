@@ -24,6 +24,7 @@ const nextConfig = {
       "replicate.delivery",
       "replicate.com",
  
+      "t.me",
 
     ],
   },
