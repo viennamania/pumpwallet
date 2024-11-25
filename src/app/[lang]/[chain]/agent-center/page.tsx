@@ -2544,7 +2544,7 @@ export default function AIPage({ params }: any) {
                                             
 
 
-
+                                            {/*
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>
@@ -2554,7 +2554,6 @@ export default function AIPage({ params }: any) {
                                                         {application.htxUsdtWalletAddress.slice(0, 10)}...{application.htxUsdtWalletAddress.slice(-10)}
                                                     </span>
                                                 </div>
-                                                {/* copy button */}
                                                 <button
                                                     onClick={() => {
                                                         navigator.clipboard.writeText(application.htxUsdtWalletAddress);
@@ -2567,6 +2566,32 @@ export default function AIPage({ params }: any) {
                                                     Copy
                                                 </button>
                                             </div>
+                                            */}
+
+
+                                            <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                <div className='flex flex-col gap-2'>
+                                                    <span className='text-xs text-yellow-800'>
+                                                        매직월렛 USDT 지갑주소
+                                                    </span>
+                                                    <span className='text-xs text-gray-800'>
+                                                        {application.walletAddress.slice(0, 10)}...{application.walletAddress.slice(-10)}
+                                                    </span>
+                                                </div>
+                                                {/* copy button */}
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(application.walletAddress);
+                                                        toast.success("Copied to clipboard");
+                                                    }}
+                                                    className="bg-gray-500 text-white p-2 rounded-lg
+                                                        hover:bg-gray-600
+                                                    "
+                                                >
+                                                    Copy
+                                                </button>
+                                            </div>
+
 
                                             {/*
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>

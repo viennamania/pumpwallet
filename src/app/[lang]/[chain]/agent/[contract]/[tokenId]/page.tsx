@@ -1254,6 +1254,12 @@ export default function AgentPage({ params }: any) {
                               </span>
                           </div>
 
+                          <div className='w-full flex-row items-center justify-between gap-2'>
+                              <span className='text-xs text-gray-800'>
+                                  매직월렛 USDT 지갑주소: {application.walletAddress.slice(0, 5) + '****' + application.walletAddress.slice(-5)}
+                              </span>
+                          </div>
+
 
                           {/*
                           <div className='w-full hidden flex-row items-center justify-between gap-2'>
