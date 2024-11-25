@@ -36,8 +36,12 @@ import { inAppWallet } from "thirdweb/wallets";
 
 
 
-import { getUserPhoneNumber } from "thirdweb/wallets/in-app";
-
+import {
+    getUserPhoneNumber,
+    getProfiles,
+    getSocialIcon,
+    getUserEmail,
+  } from "thirdweb/wallets/in-app";
 
 import Image from 'next/image';
 
@@ -86,7 +90,10 @@ import { min } from 'moment';
 const wallets = [
     inAppWallet({
       auth: {
-        options: ["phone"],
+        options: [
+            "phone",
+            "telegram",
+        ],
       },
     }),
 ];
@@ -413,7 +420,7 @@ export default function AIPage({ params }: any) {
 
 
     
-
+    /*
     const [phoneNumber, setPhoneNumber] = useState("");
 
     useEffect(() => {
@@ -434,6 +441,56 @@ export default function AIPage({ params }: any) {
       }
   
     } , [activeAccount]);
+    */
+
+
+
+    const [userType, setUserType] = useState("");
+    const [userTelegramId, setUserTelegramId] = useState("");
+    const [userAvatar, setUserAvatar] = useState("");
+    const [userNickname, setUserNickname] = useState("");
+    const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  
+  
+  
+    useEffect(() => {
+  
+      const fetchData = async () => {
+  
+        getProfiles({ client }).then((profiles) => {
+          
+          ///console.log("profiles======", profiles);
+  
+          if (profiles) {
+            profiles.forEach((
+              profile  // { type: "phone", details: { phone: "+8201098551647", id: "30e2276d8030b0bb9c27b4b7410d9de8960bab3d632f34d23d6e089182625506" } }
+            ) => {
+              if (profile.type === "phone") {
+                setUserType("phone");
+                setUserPhoneNumber(profile.details.phone || "");
+              } else if (profile.type === "telegram") {
+                setUserType("telegram");
+                const details = profile.details as any;
+                setUserAvatar(details.picture || "");
+                setUserNickname(details.username || "");
+                setUserTelegramId(details.id || "");
+              }
+            });
+          }
+  
+        } );
+  
+      }
+  
+  
+      client && fetchData();
+  
+    } , []);
+
+
+
+
+
 
 
     const { connect, isConnecting } = useConnectModal();
@@ -497,8 +554,7 @@ export default function AIPage({ params }: any) {
 
     const [userCode, setUserCode] = useState("");
 
-    const [userAvatar, setUserAvatar] = useState("");
-
+ 
 
     const [userMasterBotContractAddress, setUserMasterBotContractAddress] = useState("");
 
@@ -2050,6 +2106,27 @@ export default function AIPage({ params }: any) {
                                         {Copy}
                                     </button>
                                 </div>
+
+                                {address && userType === "telegram" && (
+                                    <button
+                                        onClick={() => {
+                                            window.open("https://t.me/ppump_bot", "_blank");
+                                        }}
+                                        className="p-2 bg-zinc-800 text-white rounded"
+                                        >
+                                        <div className="flex flex-row gap-2 items-center">
+                                            <Image
+                                            src="/logo-telegram.webp"
+                                            alt="Telegram"
+                                            width={50}
+                                            height={50}
+                                            className="rounded-lg w-10 h-10"
+                                            />
+                                            <span>Go to Telegram</span>
+                                        </div>
+                                    </button>
+                                )}
+
 
 
 
