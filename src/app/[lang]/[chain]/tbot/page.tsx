@@ -1148,6 +1148,7 @@ export default function AIPage({ params }: any) {
                 agentBotNumber: selectedBotNumber,
                 userName: userName,
                 userPhoneNumber: userPhoneNumber,
+                userTelegramId: userTelegramId,
                 userEmail: userEmail,
                 htxUserId: htxUserId,
                 htxUsdtWalletAddress: htxUsdtWalletAddress,
