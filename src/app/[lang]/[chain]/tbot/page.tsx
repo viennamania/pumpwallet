@@ -2508,6 +2508,23 @@ export default function AIPage({ params }: any) {
                                             )}
                                         </div>
 
+                                        {/* got to install htx */}
+                                        {/* https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223 */}
+                                        <div className='flex flex-col gap-2'>
+                                            <span className='text-sm font-semibold text-gray-500'>
+                                                HTX 계정이 없으신가요?
+                                            </span>
+                                            <button
+                                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                                '
+                                                onClick={() => {
+                                                    window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
+                                                }}
+                                            >
+                                                HTX 계정 만들기
+                                            </button>
+                                        </div>
 
                                         <div className='w-full flex flex-col gap-2
                                             border border-gray-300 p-4 rounded-lg
