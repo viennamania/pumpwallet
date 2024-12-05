@@ -25,7 +25,7 @@ export async function insertOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('prompts');
+  const collection = client.db('shinemywinter').collection('prompts');
 
 
   const result = await collection.insertOne(
@@ -57,7 +57,7 @@ export async function findOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('prompts');
+  const collection = client.db('shinemywinter').collection('prompts');
 
   const result = await collection.findOne<PromptProps>(
     {
@@ -72,7 +72,7 @@ export async function findOne(data: any) {
 export async function findAll() {
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('prompts');
+  const collection = client.db('shinemywinter').collection('prompts');
 
   const result = await collection.find<PromptProps>({}).sort({ createdAt: -1 }).limit(500).toArray();
 

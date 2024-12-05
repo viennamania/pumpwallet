@@ -32,7 +32,7 @@ export async function insertOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
 
   // check if image already exists
@@ -81,7 +81,7 @@ export async function findOne(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.findOne<ImageProps>(
     {
@@ -107,7 +107,7 @@ export async function findOneByUrl(data: any) {
 
   const client = await clientPromise;
 
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.findOne<ImageProps>(
     {
@@ -136,7 +136,7 @@ export async function findOneByImage(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.findOne<ImageProps>(
     {
@@ -173,7 +173,7 @@ export async function updateOneByImage(data: any) {
   const tokenid = parseInt(data.tokenid);
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.updateOne(
     {
@@ -205,7 +205,7 @@ export async function findAllByUserid(data: any) {
   }
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.find<ImageProps>(
     {
@@ -229,7 +229,7 @@ export async function deleteOneByImage(data: any) {
   }
 
   const client = await clientPromise;
-  const collection = client.db('pump').collection('images');
+  const collection = client.db('shinemywinter').collection('images');
 
   const result = await collection.deleteOne(
     {
