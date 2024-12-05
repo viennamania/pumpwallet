@@ -129,6 +129,8 @@ export default function Index({ params }: any) {
   // get params from the URL
 
   const searchParams = useSearchParams();
+
+  const center = searchParams.get('center');
  
   const wallet = searchParams.get('wallet');
 
@@ -1005,6 +1007,7 @@ export default function Index({ params }: any) {
         
         
         <Header
+          center={center || ""}
           agent={agent || ""}
           tokenId={agentNumber || ""}
         />
@@ -1982,11 +1985,13 @@ export default function Index({ params }: any) {
 
 function Header(
   {
+    center,
     agent,
     tokenId,
   }
   :
   {
+    center: string;
     agent: string;
     tokenId: string;
   }
@@ -2022,7 +2027,7 @@ function Header(
           <button
             onClick={() => {
               router.push(
-                "/kr/polygon/tbot/?agent=" + agent + "&tokenId=" + tokenId
+                "/kr/polygon/tbot/?agent=" + agent + "&tokenId=" + tokenId + "&center=" + center
               );
             }}
             className="text-gray-600 hover:underline text-xs xl:text-lg"
@@ -2031,7 +2036,9 @@ function Header(
           </button>
           <button
             onClick={() => {
-              router.push('/kr/polygon/profile-settings/?agent=' + agent + '&tokenId=' + tokenId);
+              router.push(
+                '/kr/polygon/profile-settings/?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
+              );
             }}
             className="text-gray-600 hover:underline text-xs xl:text-lg"
           >
