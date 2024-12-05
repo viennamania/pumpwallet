@@ -437,7 +437,7 @@ bot.on('message:text', async (ctx) => {
     /*
     await bot.api.sendMessage(
         ctx.message.chat.id,
-        'https://pumpwallet.vercel.app',
+        'https://aiagentbot.vercel.app',
         {
             parse_mode: "HTML",
         },

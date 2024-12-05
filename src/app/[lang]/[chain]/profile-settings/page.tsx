@@ -1523,7 +1523,7 @@ export default function SettingsPage({ params }: any) {
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
+                                        titleIcon: "https://aiagentbot.vercel.app/icon-pump-bot.png",                           
                                         showThirdwebBranding: false,
 
                                     }}
@@ -2454,7 +2454,7 @@ export default function SettingsPage({ params }: any) {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
+                                                                'https://aiagentbot.vercel.app/kr/polygon/tbot/?agent=' +
                                                                 nft.contract.address + '&tokenId=' + nft.tokenId
                                                             );
                                                             toast.success('레퍼럴 URL 복사 완료');

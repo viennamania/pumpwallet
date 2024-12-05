@@ -1440,7 +1440,7 @@ export default function Index({ params }: any) {
                       }}
                       connectModal={{
                         size: "wide", 
-                        titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
+                        titleIcon: "https://aiagentbot.vercel.app/icon-pump-bot.png",                           
                         showThirdwebBranding: false,
 
                       }}

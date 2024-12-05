@@ -2026,7 +2026,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://pumpwallet.vercel.app/icon-pump-bot.png",                           
+                                        titleIcon: "https://aiagentbot.vercel.app/icon-pump-bot.png",                           
                                         showThirdwebBranding: false,
 
                                     }}
