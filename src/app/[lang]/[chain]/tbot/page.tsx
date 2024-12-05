@@ -1147,12 +1147,18 @@ export default function AIPage({ params }: any) {
 
         // api call
 
+        let marketingCenter = "owin";
+        if (center === "ppump_orry_bot") {
+            marketingCenter = "ppump";
+        }
+
         const response = await fetch("/api/agent/applyMintNFT", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                marketingCenter: marketingCenter,
                 center: center,
                 walletAddress: address,
                 agentBot: agentBot,
@@ -1161,6 +1167,7 @@ export default function AIPage({ params }: any) {
                 userPhoneNumber: userPhoneNumber,
                 userTelegramId: userTelegramId,
                 userEmail: userEmail,
+                exchange: "okx",
                 htxUserId: htxUserId,
                 htxUsdtWalletAddress: htxUsdtWalletAddress,
                 apiAccessKey: apiAccessKey,

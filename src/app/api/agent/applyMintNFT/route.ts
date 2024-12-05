@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   apiSecretKey: apiSecretKey,
   */
 
-  const { center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey, apiPassword } = body;
+  const { marketingCenter, center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, exchange, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey, apiPassword } = body;
 
 
 
@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      marketingCenter: marketingCenter,
       center: center,
       walletAddress: walletAddress,
       agentBot: agentBot,
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
       userPhoneNumber: userPhoneNumber,
       userEmail: userEmail,
       userTelegramId: userTelegramId,
+      exchange: exchange,
       htxUserId: htxUserId,
       htxUsdtWalletAddress: htxUsdtWalletAddress,
       apiAccessKey: apiAccessKey,
