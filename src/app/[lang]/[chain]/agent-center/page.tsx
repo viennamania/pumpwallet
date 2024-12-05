@@ -2229,7 +2229,7 @@ export default function AIPage({ params }: any) {
                                                 },
                                                 body: JSON.stringify({
                                                     walletAddress: address,
-                                                    center: 'ppump',
+                                                    marketingCenter: "ppump",
                                                 }),
                                             });
 
