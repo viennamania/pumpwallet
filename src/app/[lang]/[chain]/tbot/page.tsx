@@ -3369,7 +3369,7 @@ export default function AIPage({ params }: any) {
                         </span>
                     </div>
 
-                    <div className='w-full grid grid-cols-1 xl:grid-cols-5 gap-2
+                    <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2
                         border border-red-300 p-4 rounded-lg
                     '>
 
