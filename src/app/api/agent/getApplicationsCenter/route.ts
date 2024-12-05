@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress, center } = body;
+  const { walletAddress, marketingCenter } = body;
 
 
   if (!walletAddress) {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         walletAddress,
-        center,
+        marketingCenter,
       }),
     });
   
