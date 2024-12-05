@@ -1880,13 +1880,10 @@ export default function AIPage({ params }: any) {
 
 
 
-    const [payNameList, setPayrNameList] = useState([
-        '','','','','',
-    ]) as any[];
+    const [payName, setPayName] = useState("");
+    const [payAmount, setPayAmount] = useState(0);
 
-    const [payAmountList, setPayAmountList] = useState([
-        0,0,0,0,0,
-    ]) as any[];
+    const [selectedMasterBot, setSelectedMasterBot] = useState(0);
 
     /*
     useEffect(() => {
@@ -3420,9 +3417,15 @@ export default function AIPage({ params }: any) {
                         border border-red-300 p-4 rounded-lg
                     '>
 
-                        <div className='flex flex-col gap-2
-                            border border-gray-300 p-4 rounded-lg
-                        '>
+                        <div
+                        className={`flex flex-col gap-2
+                            p-4 rounded-lg border-2
+                            ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
+                        `}
+                        onClick={() => {
+                            setSelectedMasterBot(0);
+                        } }
+                        >
                             <Image
                                 src="/logo-mbot-upgrade.png"
                                 alt="Master Bot Upgrade"
@@ -3442,50 +3445,15 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 515,460 원(vat 포함)
                             </span>
-
-                            {/* 입급할 계좌 */}
-                            {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 계좌
-                                </span>
-                                {center === "ppump_orry_bot" ? (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    KB국민은행 342301-04-169235 (주)프로젝트오리진
-                                </span>
-                                ) : (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    NH 농협은행 301-0357-6583-41 온리윈 주식회사
-                                </span>
-                                )}
-                            </div>
-
-                            {/* 입금자명 */}
-                            <input
-                                //disabled={true}
-                                value={payNameList[0]}
-                                onChange={(e) =>
-                                    setPayrNameList([e.target.value])
-                                }
-
-                                type="text"
-                                placeholder="입금자명"
-                                className="w-full p-2 rounded-lg border border-gray-300"
-                            />
-                            <button
-                                disabled={!payNameList[0] || !address }
-                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                '
-                            >
-                                구매신청하기
-                            </button>
                         </div>
-                        <div className='flex flex-col gap-2
-                            border border-gray-300 p-4 rounded-lg
-                        '>
+                        <div className={`flex flex-col gap-2
+                            p-4 rounded-lg border-2
+                            ${selectedMasterBot === 1 ? 'border-blue-500' : 'border-gray-300'}
+                        `}
+                        onClick={() => {
+                            setSelectedMasterBot(1);
+                        } }
+                        >
                             <Image
                                 src="/logo-mbot-upgrade.png"
                                 alt="Master Bot Upgrade"
@@ -3505,49 +3473,15 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 859,100원(vat포함)
                             </span>
-                            {/* 입급할 계좌 */}
-                            {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 계좌
-                                </span>
-                                {center === "ppump_orry_bot" ? (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    KB국민은행 342301-04-169235 (주)프로젝트오리진
-                                </span>
-                                ) : (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    NH 농협은행 301-0357-6583-41 온리윈 주식회사
-                                </span>
-                                )}
-                            </div>
-
-                            {/* 입금자명 */}
-                            <input
-                                //disabled={true}
-                                value={payNameList[0]}
-                                onChange={(e) =>
-                                    setPayrNameList([e.target.value])
-                                }
-
-                                type="text"
-                                placeholder="입금자명"
-                                className="w-full p-2 rounded-lg border border-gray-300"
-                            />
-                            <button
-                                disabled={!payNameList[0] || !address }
-                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                '
-                            >
-                                구매신청하기
-                            </button>
                         </div>
-                        <div className='flex flex-col gap-2
-                            border border-gray-300 p-4 rounded-lg
-                        '>
+                        <div className={`flex flex-col gap-2
+                            p-4 rounded-lg border-2
+                            ${selectedMasterBot === 2 ? 'border-blue-500' : 'border-gray-300'}
+                        `}
+                        onClick={() => {
+                            setSelectedMasterBot(2);
+                        } }
+                        >
                             <Image
                                 src="/logo-mbot-upgrade.png"
                                 alt="Master Bot Upgrade"
@@ -3567,49 +3501,15 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 1,718,200 원(vat포함)
                             </span>
-                            {/* 입급할 계좌 */}
-                            {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 계좌
-                                </span>
-                                {center === "ppump_orry_bot" ? (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    KB국민은행 342301-04-169235 (주)프로젝트오리진
-                                </span>
-                                ) : (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    NH 농협은행 301-0357-6583-41 온리윈 주식회사
-                                </span>
-                                )}
-                            </div>
-
-                            {/* 입금자명 */}
-                            <input
-                                //disabled={true}
-                                value={payNameList[0]}
-                                onChange={(e) =>
-                                    setPayrNameList([e.target.value])
-                                }
-
-                                type="text"
-                                placeholder="입금자명"
-                                className="w-full p-2 rounded-lg border border-gray-300"
-                            />
-                            <button
-                                disabled={!payNameList[0] || !address }
-                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                '
-                            >
-                                구매신청하기
-                            </button>
                         </div>
-                        <div className='flex flex-col gap-2
-                            border border-gray-300 p-4 rounded-lg
-                        '>
+                        <div className={`flex flex-col gap-2
+                            p-4 rounded-lg border-2
+                            ${selectedMasterBot === 3 ? 'border-blue-500' : 'border-gray-300'}
+                        `}
+                        onClick={() => {
+                            setSelectedMasterBot(3);
+                        } }
+                        >
                             <Image
                                 src="/logo-mbot-upgrade.png"
                                 alt="Master Bot Upgrade"
@@ -3629,49 +3529,16 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 8,591,000 원(vat포함)
                             </span>
-                            {/* 입급할 계좌 */}
-                            {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 계좌
-                                </span>
-                                {center === "ppump_orry_bot" ? (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    KB국민은행 342301-04-169235 (주)프로젝트오리진
-                                </span>
-                                ) : (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    NH 농협은행 301-0357-6583-41 온리윈 주식회사
-                                </span>
-                                )}
-                            </div>
-
-                            {/* 입금자명 */}
-                            <input
-                                //disabled={true}
-                                value={payNameList[0]}
-                                onChange={(e) =>
-                                    setPayrNameList([e.target.value])
-                                }
-
-                                type="text"
-                                placeholder="입금자명"
-                                className="w-full p-2 rounded-lg border border-gray-300"
-                            />
-                            <button
-                                disabled={!payNameList[0] || !address }
-                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                '
-                            >
-                                구매신청하기
-                            </button>
                         </div>
-                        <div className='flex flex-col gap-2
-                            border border-gray-300 p-4 rounded-lg
-                        '>
+                        <div className={`flex flex-col gap-2
+                            p-4 rounded-lg border-2
+                            ${selectedMasterBot === 4 ? 'border-blue-500' : 'border-gray-300'}
+                        `}
+                        onClick={() => {
+                            setSelectedMasterBot(4);
+                        } }
+                        >
+
                             <Image
                                 src="/logo-mbot-upgrade.png"
                                 alt="Master Bot Upgrade"
@@ -3691,7 +3558,13 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 17,182,000 원(vat포함)
                             </span>
-                            {/* 입급할 계좌 */}
+                        </div>
+
+                    </div>
+
+                    <div className='w-full flex flex-col gap-2 mt-5'>
+
+                                                {/* 입급할 계좌 */}
                             {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
                             <div className='flex flex-col gap-2
                                 border border-gray-300 p-4 rounded-lg
@@ -3709,13 +3582,42 @@ export default function AIPage({ params }: any) {
                                 </span>
                                 )}
                             </div>
+                            {/* 입금할 금액 */}
+                            <div className='flex flex-col gap-2
+                                border border-gray-300 p-4 rounded-lg
+                            '>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    입금할 금액
+                                </span>
+                                {selectedMasterBot === 0 ? (
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    515,460 원(vat 포함)
+                                </span>
+                                ) : selectedMasterBot === 1 ? (
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    859,100원(vat포함)
+                                </span>
+                                ) : selectedMasterBot === 2 ? (
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    1,718,200 원(vat포함)
+                                </span>
+                                ) : selectedMasterBot === 3 ? (
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    8,591,000 원(vat포함)
+                                </span>
+                                ) : (
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    17,182,000 원(vat포함)
+                                </span>
+                                )}
+                            </div>
 
                             {/* 입금자명 */}
                             <input
                                 //disabled={true}
-                                value={payNameList[0]}
+                                value={payName || ""}
                                 onChange={(e) =>
-                                    setPayrNameList([e.target.value])
+                                    setPayName(e.target.value)
                                 }
 
                                 type="text"
@@ -3723,17 +3625,15 @@ export default function AIPage({ params }: any) {
                                 className="w-full p-2 rounded-lg border border-gray-300"
                             />
                             <button
-                                disabled={!payNameList[0] || !address }
+                                disabled={!payName || !address }
                                 className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
                                     hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
                                 '
                             >
                                 구매신청하기
                             </button>
-                        </div>
 
                     </div>
-
                            
 
                 </div>
