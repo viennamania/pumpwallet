@@ -735,6 +735,7 @@ export default function AIPage({ params }: any) {
 
 
 
+    const [masterBot, setMasterBot] = useState({} as any);
 
 
     console.log("address", address);
@@ -763,12 +764,14 @@ export default function AIPage({ params }: any) {
 
             const data = await response.json();
 
-            console.log("data", data);
+            //console.log("data", data);
 
 
             if (data.result) {
                 setNickname(data.result.nickname);
                 setUserCode(data.result.id);
+
+                setMasterBot(data.result.masterBot);
 
             }
         };
@@ -1881,45 +1884,65 @@ export default function AIPage({ params }: any) {
 
 
     const [payName, setPayName] = useState("");
-    const [payAmount, setPayAmount] = useState(0);
 
     const [selectedMasterBot, setSelectedMasterBot] = useState(0);
+    const [masterBotPrice, setMasterBotPrice] = useState(0);
 
-    /*
-    useEffect(() => {
+    const [applyingUpgradeMasterBot, setApplyingUpgradeMasterBot] = useState(false);
 
-        const fetchData = async () => {
+    const applyUpgradeMasterBot = async () => {
 
-            const response = await fetch("/api/agent/getPayList", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
+        if (address === "") {
+            toast.error("먼저 지갑을 연결해 주세요.");
+            return;
+        }
+
+        if (payName === "") {
+            toast.error("지급자 이름을 입력해 주세요.");
+            return;
+        }
+
+        if (masterBotPrice === 0) {
+            toast.error("Master bot을 선택해 주세요.");
+            return;
+        }
+
+        setApplyingUpgradeMasterBot(true);
+
+        const response = await fetch("/api/user/updateMasterBot", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                masterBot: {
+                    id: selectedMasterBot,
+                    price: masterBotPrice,
+                    payName: payName,
                 },
-                body: JSON.stringify({
-                    walletAddress: address,
-                }),
-            });
+            }),
+        });
 
-            if (!response.ok) {
-                console.error("Error fetching pay list");
-                return;
-            }
+        if (!response.ok) {
+            setApplyingUpgradeMasterBot(false);
+            console.error("Error updating user master bot");
+            toast.error('Error updating user master bot');
+            return;
+        }
 
-            const data = await response.json();
+        const data = await response.json();
 
-            console.log("data", data);
+        if (data.result) {
+            setMasterBot(data.result.masterBot);
+            toast.success('Master bot updated');
+        } else {
+            toast.error('Error updating user master bot');
+        }
 
-            if (data.result) {
-                setPayrNameList(data.result.payNameList);
-                setPayAmountList(data.result.payAmountList);
-            }
+        setApplyingUpgradeMasterBot(false);
+    }
 
-        };
-
-        fetchData();
-
-    } , [address]);
-     */
 
 
 
@@ -3413,227 +3436,367 @@ export default function AIPage({ params }: any) {
                         </span>
                     </div>
 
-                    <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2
-                        border border-red-300 p-4 rounded-lg
-                    '>
+                    {userCode && !masterBot?.id && (
+                    <>
 
-                        <div
-                        className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                            ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
-                        `}
-                        onClick={() => {
-                            setSelectedMasterBot(0);
-                        } }
-                        >
-                            <Image
-                                src="/logo-mbot-upgrade.png"
-                                alt="Master Bot Upgrade"
-                                width={200}
-                                height={200}
-                                className='rounded-lg w-full'
-                            />
-                            <span className='text-sm font-semibold text-blue-500'>
-                                마스터 봇 6개월
-                            </span>
-                            <span className='text-lg font-semibold text-red-500'>
-                                2% UPGARADE
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                330 + 33 = 363 USDT
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                515,460 원(vat 포함)
-                            </span>
-                        </div> 
-                        <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                            ${selectedMasterBot === 1 ? 'border-blue-500' : 'border-gray-300'}
-                        `}
-                        onClick={() => {
-                            setSelectedMasterBot(1);
-                        } }
-                        >
-                            <Image
-                                src="/logo-mbot-upgrade.png"
-                                alt="Master Bot Upgrade"
-                                width={200}
-                                height={200}
-                                className='rounded-lg w-full'
-                            />
-                            <span className='text-sm font-semibold text-blue-500'>
-                                마스터 봇 6개월
-                            </span>
-                            <span className='text-lg font-semibold text-red-500'>
-                                4% UPGARADE
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                550 + 55 = 605 USDT
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                859,100원(vat포함)
-                            </span>
-                        </div>
-                        <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                            ${selectedMasterBot === 2 ? 'border-blue-500' : 'border-gray-300'}
-                        `}
-                        onClick={() => {
-                            setSelectedMasterBot(2);
-                        } }
-                        >
-                            <Image
-                                src="/logo-mbot-upgrade.png"
-                                alt="Master Bot Upgrade"
-                                width={200}
-                                height={200}
-                                className='rounded-lg w-full'
-                            />
-                            <span className='text-sm font-semibold text-blue-500'>
-                                마스터 봇 6개월
-                            </span>
-                            <span className='text-lg font-semibold text-red-500'>
-                                6% UPGARADE
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                1100 + 110 = 1210 USDT
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                1,718,200 원(vat포함)
-                            </span>
-                        </div>
-                        <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                            ${selectedMasterBot === 3 ? 'border-blue-500' : 'border-gray-300'}
-                        `}
-                        onClick={() => {
-                            setSelectedMasterBot(3);
-                        } }
-                        >
-                            <Image
-                                src="/logo-mbot-upgrade.png"
-                                alt="Master Bot Upgrade"
-                                width={200}
-                                height={200}
-                                className='rounded-lg w-full'
-                            />
-                            <span className='text-sm font-semibold text-blue-500'>
-                                마스터 봇 6개월
-                            </span>
-                            <span className='text-lg font-semibold text-red-500'>
-                                8% UPGARADE
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                5500 + 550 = 6050 USDT
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                8,591,000 원(vat포함)
-                            </span>
-                        </div>
-                        <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                            ${selectedMasterBot === 4 ? 'border-blue-500' : 'border-gray-300'}
-                        `}
-                        onClick={() => {
-                            setSelectedMasterBot(4);
-                        } }
-                        >
+                        <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2
+                            border border-red-300 p-4 rounded-lg
+                        '>
 
-                            <Image
-                                src="/logo-mbot-upgrade.png"
-                                alt="Master Bot Upgrade"
-                                width={200}
-                                height={200}
-                                className='rounded-lg w-full'
-                            />
-                            <span className='text-sm font-semibold text-blue-500'>
-                                마스터 봇 6개월
-                            </span>
-                            <span className='text-lg font-semibold text-red-500'>
-                                10% UPGARADE
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                11000 + 1100 = 12100 USDT
-                            </span>
-                            <span className='text-sm font-semibold text-gray-500'>
-                                17,182,000 원(vat포함)
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <div className='w-full flex flex-col gap-2 mt-5'>
-
-                                                {/* 입급할 계좌 */}
-                            {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 계좌
+                            <div
+                            className={`flex flex-col gap-2
+                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
+                            `}
+                            onClick={() => {
+                                setSelectedMasterBot(0);
+                                setMasterBotPrice(515460);
+                            } }
+                            >
+                                <Image
+                                    src="/logo-mbot-upgrade.png"
+                                    alt="Master Bot Upgrade"
+                                    width={200}
+                                    height={200}
+                                    className='rounded-lg w-full'
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    마스터 봇 6개월
                                 </span>
-                                {center === "ppump_orry_bot" ? (
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    KB국민은행 342301-04-169235 (주)프로젝트오리진
+                                <span className='text-lg font-semibold text-red-500'>
+                                    2% UPGARADE
                                 </span>
-                                ) : (
                                 <span className='text-sm font-semibold text-gray-500'>
-                                    NH 농협은행 301-0357-6583-41 온리윈 주식회사
+                                    330 + 33 = 363 USDT
                                 </span>
-                                )}
-                            </div>
-                            {/* 입금할 금액 */}
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    입금할 금액
-                                </span>
-                                {selectedMasterBot === 0 ? (
                                 <span className='text-sm font-semibold text-gray-500'>
                                     515,460 원(vat 포함)
                                 </span>
-                                ) : selectedMasterBot === 1 ? (
+                            </div> 
+                            <div className={`flex flex-col gap-2
+                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                ${selectedMasterBot === 1 ? 'border-blue-500' : 'border-gray-300'}
+                            `}
+                            onClick={() => {
+                                setSelectedMasterBot(1);
+                                setMasterBotPrice(859100);
+                            } }
+                            >
+                                <Image
+                                    src="/logo-mbot-upgrade.png"
+                                    alt="Master Bot Upgrade"
+                                    width={200}
+                                    height={200}
+                                    className='rounded-lg w-full'
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    마스터 봇 6개월
+                                </span>
+                                <span className='text-lg font-semibold text-red-500'>
+                                    4% UPGARADE
+                                </span>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    550 + 55 = 605 USDT
+                                </span>
                                 <span className='text-sm font-semibold text-gray-500'>
                                     859,100원(vat포함)
                                 </span>
-                                ) : selectedMasterBot === 2 ? (
+                            </div>
+                            <div className={`flex flex-col gap-2
+                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                ${selectedMasterBot === 2 ? 'border-blue-500' : 'border-gray-300'}
+                            `}
+                            onClick={() => {
+                                setSelectedMasterBot(2);
+                                setMasterBotPrice(1718200);
+                            } }
+                            >
+                                <Image
+                                    src="/logo-mbot-upgrade.png"
+                                    alt="Master Bot Upgrade"
+                                    width={200}
+                                    height={200}
+                                    className='rounded-lg w-full'
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    마스터 봇 6개월
+                                </span>
+                                <span className='text-lg font-semibold text-red-500'>
+                                    6% UPGARADE
+                                </span>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    1100 + 110 = 1210 USDT
+                                </span>
                                 <span className='text-sm font-semibold text-gray-500'>
                                     1,718,200 원(vat포함)
                                 </span>
-                                ) : selectedMasterBot === 3 ? (
+                            </div>
+                            <div className={`flex flex-col gap-2
+                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                ${selectedMasterBot === 3 ? 'border-blue-500' : 'border-gray-300'}
+                            `}
+                            onClick={() => {
+                                setSelectedMasterBot(3);
+                                setMasterBotPrice(859100);
+                            } }
+                            >
+                                <Image
+                                    src="/logo-mbot-upgrade.png"
+                                    alt="Master Bot Upgrade"
+                                    width={200}
+                                    height={200}
+                                    className='rounded-lg w-full'
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    마스터 봇 6개월
+                                </span>
+                                <span className='text-lg font-semibold text-red-500'>
+                                    8% UPGARADE
+                                </span>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    5500 + 550 = 6050 USDT
+                                </span>
                                 <span className='text-sm font-semibold text-gray-500'>
                                     8,591,000 원(vat포함)
                                 </span>
-                                ) : (
+                            </div>
+                            <div className={`flex flex-col gap-2
+                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                ${selectedMasterBot === 4 ? 'border-blue-500' : 'border-gray-300'}
+                            `}
+                            onClick={() => {
+                                setSelectedMasterBot(4);
+                                setMasterBotPrice(1718200);
+                            } }
+                            >
+
+                                <Image
+                                    src="/logo-mbot-upgrade.png"
+                                    alt="Master Bot Upgrade"
+                                    width={200}
+                                    height={200}
+                                    className='rounded-lg w-full'
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    마스터 봇 6개월
+                                </span>
+                                <span className='text-lg font-semibold text-red-500'>
+                                    10% UPGARADE
+                                </span>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    11000 + 1100 = 12100 USDT
+                                </span>
                                 <span className='text-sm font-semibold text-gray-500'>
                                     17,182,000 원(vat포함)
                                 </span>
-                                )}
                             </div>
 
-                            {/* 입금자명 */}
-                            <input
-                                //disabled={true}
-                                value={payName || ""}
-                                onChange={(e) =>
-                                    setPayName(e.target.value)
-                                }
+                        </div>
 
-                                type="text"
-                                placeholder="입금자명"
-                                className="w-full p-2 rounded-lg border border-gray-300"
-                            />
-                            <button
-                                disabled={!payName || !address }
-                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                '
-                            >
-                                구매신청하기
-                            </button>
+                        <div className='w-full flex flex-col gap-2 mt-5'>
 
-                    </div>
+                                                    {/* 입급할 계좌 */}
+                                {/* KB국민은행 342301-04-169235 (주) 프로젝트오리진 */}
+                                <div className='flex flex-col gap-2
+                                    border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        입금할 계좌
+                                    </span>
+                                    {center === "ppump_orry_bot" ? (
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        KB국민은행 342301-04-169235 (주)프로젝트오리진
+                                    </span>
+                                    ) : (
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        NH 농협은행 301-0357-6583-41 온리윈 주식회사
+                                    </span>
+                                    )}
+                                </div>
+                                {/* 입금할 금액 */}
+                                <div className='flex flex-col gap-2
+                                    border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        입금할 금액
+                                    </span>
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        {masterBotPrice.toLocaleString()} 원(vat 포함)
+                                    </span>
+                                </div>
+
+                                {/* 입금자명 */}
+                                <input
+                                    //disabled={true}
+                                    value={payName || ""}
+                                    onChange={(e) =>
+                                        setPayName(e.target.value)
+                                    }
+
+                                    type="text"
+                                    placeholder="입금자명"
+                                    className="w-full p-2 rounded-lg border border-gray-300"
+                                />
+                                <button
+                                    disabled={!payName || !address || applyingUpgradeMasterBot}
+                                    className={` ${!payName || !address || applyingUpgradeMasterBot ?
+                                        'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold`}
+
+                                    onClick={applyUpgradeMasterBot}
+
+                                >
+                                    {applyingUpgradeMasterBot ? "업그레이드 신청중..." : "업그레이드 신청하기"}
+                                </button>
+
+                        </div>
+
+                    </>
+                    )}
+            
+                    {userCode && masterBot?.id && (
+
+                        <div className='w-full flex flex-col gap-2'>
+                            <div className='w-full flex flex-col gap-2'>
+                                <span className='text-lg font-semibold text-blue-500'>
+                                    마스터 봇 업그레이드 신청이 완료되었습니다.
+                                </span>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    • 결제 확인 후 24시간 이내에 마스터 봇이 업그레이드 됩니다.
+                                </span>
+                                {/* payName, masterBotPrice, 입금할 계좌 */}
+                                <div className='flex flex-col gap-2
+                                border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        입금자명
+                                    </span>
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        {masterBot?.payName}
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        {masterBot?.price.toLocaleString()} 원(vat 포함)
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        {center === "ppump_orry_bot" ? (
+                                        "KB국민은행 342301-04-169235 (주)프로젝트오리진"
+                                        ) : (
+                                        "NH 농협은행 301-0357-6583-41 온리윈 주식회사"
+                                        )}
+                                    </span>
+                                </div>
+                            </div>
+                            {masterBot?.id === 0 && (
+                                <div className='w-full flex flex-col gap-2
+                                border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <Image
+                                        src="/logo-mbot-upgrade.png"
+                                        alt="Master Bot Upgrade"
+                                        width={200}
+                                        height={200}
+                                        className='rounded-lg w-full'
+                                    />
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        마스터 봇 6개월
+                                    </span>
+                                    <span className='text-lg font-semibold text-red-500'>
+                                        2% UPGARADE
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        330 + 33 = 363 USDT
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        515,460 원(vat 포함)
+                                    </span>
+                                </div>
+                            )}
+                            {masterBot?.id === 1 && (
+                                <div className='w-full flex flex-col gap-2
+                                border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <Image
+                                        src="/logo-mbot-upgrade.png"
+                                        alt="Master Bot Upgrade"
+                                        width={200}
+                                        height={200}
+                                        className='rounded-lg w-full'
+                                    />
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        마스터 봇 6개월
+                                    </span>
+                                    <span className='text-lg font-semibold text-red-500'>
+                                        4% UPGARADE
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        550 + 55 = 605 USDT
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        859,100원(vat포함)
+                                    </span>
+                                </div>
+                            )}
+                            {masterBot?.id === 2 && (
+                                <div className='w-full flex flex-col gap-2
+                                border border-gray-300 p-4 rounded-lg
+                                '>
+                                    <Image
+                                        src="/logo-mbot-upgrade.png"
+                                        alt="Master Bot Upgrade"
+                                        width={200}
+                                        height={200}
+                                        className='rounded-lg w-full'
+                                    />
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        마스터 봇 6개월
+                                    </span>
+                                    <span className='text-lg font-semibold text-red-500'>
+                                        6% UPGARADE
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        1100 + 110 = 1210 USDT
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        1,718,200 원(vat포함)
+                                    </span>
+                                </div>
+                            )}
+                            {masterBot?.id === 3 && (
+                                <div className='w-full flex flex-col gap-2'>
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        마스터 봇 6개월
+                                    </span>
+                                    <span className='text-lg font-semibold text-red-500'>
+                                        8% UPGARADE
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        5500 + 550 = 6050 USDT
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        8,591,000 원(vat포함)
+                                    </span>
+                                </div>
+                            )}
+                            {masterBot?.id === 4 && (
+                                <div className='w-full flex flex-col gap-2'>
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        마스터 봇 6개월
+                                    </span>
+                                    <span className='text-lg font-semibold text-red-500'>
+                                        10% UPGARADE
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        11000 + 1100 = 12100 USDT
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        17,182,000 원(vat포함)
+                                    </span>
+                                </div>
+                            )}
+                            
+
+
+                        </div>
+                    )}
                            
 
                 </div>

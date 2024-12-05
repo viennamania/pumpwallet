@@ -336,6 +336,44 @@ export async function updateSellerStatus(data: any) {
 
 
 
+
+
+export async function updateMasterBot(data: any) {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+
+  // update and return updated user
+
+  if (!data.walletAddress || !data.masterBot) {
+    return null;
+  }
+
+
+  
+
+
+  const result = await collection.updateOne(
+    { walletAddress: data.walletAddress },
+    { $set: { masterBot: data.masterBot } }
+  );
+
+  if (result) {
+    const updated = await collection.findOne<UserProps>(
+      { walletAddress: data.walletAddress },
+      { projection: { _id: 0, emailVerified: 0 } }
+    );
+
+    return updated;
+  } else {
+    return null;
+  }
+
+
+}
+
+
+
 export async function getOneByWalletAddress(
   walletAddress: string,
 ): Promise<UserProps | null> {
