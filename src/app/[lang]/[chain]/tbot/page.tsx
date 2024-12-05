@@ -1837,6 +1837,7 @@ export default function AIPage({ params }: any) {
                     userType: userType,
                     mobile: userPhoneNumber,
                     telegramId: userTelegramId,
+                    center: center,
                 }),
             });
 
