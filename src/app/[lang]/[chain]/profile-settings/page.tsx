@@ -467,10 +467,6 @@ export default function SettingsPage({ params }: any) {
     const [usdtPrice, setUsdtPrice] = useState(0);
     useEffect(() => {
 
-        if (!address) {
-            return;
-        }
-
         const fetchData = async () => {
 
             setEditingUsdtPrice(true);
@@ -496,7 +492,7 @@ export default function SettingsPage({ params }: any) {
             setEditingUsdtPrice(false);
         };
 
-        fetchData();
+        address && fetchData();
     }
 
     , [address]);
@@ -515,10 +511,6 @@ export default function SettingsPage({ params }: any) {
     const [userPhoneNumber, setUserPhoneNumber] = useState("");
     const [userType, setUserType] = useState("");
     const [userTelegramId, setUserTelegramId] = useState("");
-    //const [userAvatar, setUserAvatar] = useState("");
-    //const [userNickname, setUserNickname] = useState("");
-
-
 
     useEffect(() => {
 
@@ -547,10 +539,9 @@ export default function SettingsPage({ params }: any) {
     
         }
     
+        address && fetchData();
     
-        client && fetchData();
-    
-      }, []);
+      }, [address]);
 
 
 

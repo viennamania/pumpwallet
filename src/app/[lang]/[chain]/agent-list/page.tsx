@@ -1628,7 +1628,7 @@ export default function AIPage({ params }: any) {
                             >
                                 <div className='flex flex-row items-center gap-2'>
                                     <Image
-                                        src="/logo-exchange-htx.png"
+                                        src="/logo-exchange-okx.png"
                                         alt="HTX"
                                         width={20}
                                         height={20}

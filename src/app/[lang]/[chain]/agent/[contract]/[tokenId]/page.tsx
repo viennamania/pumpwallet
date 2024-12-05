@@ -1120,7 +1120,7 @@ export default function AgentPage({ params }: any) {
 
             <div className='flex flex-row items-center gap-2'>
                 <Image
-                    src='/logo-exchange-htx.png'
+                    src='/logo-exchange-okx.png'
                     width={60}
                     height={60}
                     alt='htx'

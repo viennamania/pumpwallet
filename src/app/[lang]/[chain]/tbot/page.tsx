@@ -1058,7 +1058,7 @@ export default function AIPage({ params }: any) {
     const [myAgentNFT, setMyAgentNFT] = useState({} as any);
 
     // apply to mint NFT
-    // 닉네임, 핸드폰번호, 이메일주소, HTX UID, HTX USDT(TRON) 지갑주소, API Access Key, API Secret Key
+    // 닉네임, 핸드폰번호, 이메일주소, OKX UID, OKX USDT(TRON) 지갑주소, API Access Key, API Secret Key
 
     const [userName, setUserName] = useState("");
     useEffect(() => {
@@ -1110,13 +1110,13 @@ export default function AIPage({ params }: any) {
         }
 
         if (htxUserId === "") {
-            toast.error("HTX UserId 입력해 주세요.");
+            toast.error("OKX UserId 입력해 주세요.");
             return;
         }
 
         /*
         if (htxUsdtWalletAddress === "") {
-            toast.error("HTX USDT(TRON) 지갑주소를 입력해 주세요.");
+            toast.error("OKX USDT(TRON) 지갑주소를 입력해 주세요.");
             return;
         }
         */
@@ -1370,12 +1370,12 @@ export default function AIPage({ params }: any) {
 
        
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1408,9 +1408,9 @@ export default function AIPage({ params }: any) {
 
             setHtxUserId(data.result?.data[0]?.id);
 
-            toast.success("HTX API Key가 확인되었습니다.");
+            toast.success("OKX API Key가 확인되었습니다.");
         } else {
-            toast.error("HTX API Key를 확인할 수 없습니다.");
+            toast.error("OKX API Key를 확인할 수 없습니다.");
         }
 
         setCheckingHtxApiKey(false);
@@ -1430,12 +1430,12 @@ export default function AIPage({ params }: any) {
     ) => {
 
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1468,9 +1468,9 @@ export default function AIPage({ params }: any) {
             setIsValidBalance(true);
 
 
-            toast.success("HTX 계정 잔고가 확인되었습니다.");
+            toast.success("OKX 계정 잔고가 확인되었습니다.");
         } else {
-            toast.error("HTX 계정 잔고를 확인할 수 없습니다.");
+            toast.error("OKX 계정 잔고를 확인할 수 없습니다.");
         }
 
         setCheckingAccountBalance(false);
@@ -1488,12 +1488,12 @@ export default function AIPage({ params }: any) {
     ) => {
 
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1521,9 +1521,9 @@ export default function AIPage({ params }: any) {
         console.log("data.result", data.result);
 
         if (data.result?.status === "ok") {
-            toast.success("HTX 선물 계정으로 이체되었습니다.");
+            toast.success("OKX 선물 계정으로 이체되었습니다.");
         } else {
-            toast.error("HTX 선물 계정으로 이체할 수 없습니다.");
+            toast.error("OKX 선물 계정으로 이체할 수 없습니다.");
         }
 
         setTransferringToFuturesAccount(false);
@@ -1543,12 +1543,12 @@ export default function AIPage({ params }: any) {
     ) => {
 
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1575,9 +1575,9 @@ export default function AIPage({ params }: any) {
                 data.result?.assetValuation
             );
 
-            toast.success("HTX 자산 가치가 확인되었습니다.");
+            toast.success("OKX 자산 가치가 확인되었습니다.");
         } else {
-            toast.error("HTX 자산 가치를 확인할 수 없습니다.");
+            toast.error("OKX 자산 가치를 확인할 수 없습니다.");
         }
 
         setCheckingHtxAssetValuation(false);
@@ -1599,12 +1599,12 @@ export default function AIPage({ params }: any) {
     ) => {
 
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1635,9 +1635,9 @@ export default function AIPage({ params }: any) {
 
 
 
-            toast.success("HTX 매치 결과가 확인되었습니다.");
+            toast.success("OKX 매치 결과가 확인되었습니다.");
         } else {
-            toast.error("HTX 매치 결과를 확인할 수 없습니다.");
+            toast.error("OKX 매치 결과를 확인할 수 없습니다.");
         }
 
         setSearchingMatchResults(false);
@@ -1680,12 +1680,12 @@ export default function AIPage({ params }: any) {
     ) => {
 
         if (htxAccessKey === "") {
-            toast.error("HTX Access Key를 입력해 주세요.");
+            toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
         if (htxSecretKey === "") {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+            toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
@@ -1704,7 +1704,7 @@ export default function AIPage({ params }: any) {
 
         if (!response.ok) {
             setGettingRebateInfo(false);
-            toast.error("HTX 리베이트 정보를 확인할 수 없습니다.");
+            toast.error("OKX 리베이트 정보를 확인할 수 없습니다.");
             return;
         }
 
@@ -1716,9 +1716,9 @@ export default function AIPage({ params }: any) {
 
             setRebateInfo(data.result?.data);
 
-            toast.success("HTX 리베이트 정보가 확인되었습니다.");
+            toast.success("OKX 리베이트 정보가 확인되었습니다.");
         } else {
-            toast.error("HTX 리베이트 정보를 확인할 수 없습니다.");
+            toast.error("OKX 리베이트 정보를 확인할 수 없습니다.");
         }
 
         setGettingRebateInfo(false);
@@ -2009,7 +2009,7 @@ export default function AIPage({ params }: any) {
 
                     > 100 TBOT을 무료로 제공합니다. 
                     1. 100 TBOT을 무료 구매하고, 
-                    2. HTX를 가입하면  HTX 본인계죄로 100 USDT를 무상으로 지급 !
+                    2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
                     3. 100 MASTER BOT 무료 민팅 !
                     */}
                     {/* impact text */}
@@ -2042,7 +2042,7 @@ export default function AIPage({ params }: any) {
                                     font-semibold
                                     bg-yellow-200 p-2 rounded-lg
                                 '>
-                                    2. HTX를 가입하면  HTX 본인계죄로 100 USDT를 무상으로 지급 !
+                                    2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
                                 </span>
                                 <span className='text-sm text-green-800
                                     font-semibold
@@ -2246,7 +2246,7 @@ export default function AIPage({ params }: any) {
 
                     {/* TBOT Image */}
                     {/*
-                    100 TBOT for HTX
+                    100 TBOT for OKX
                     1,000 TBOT for OKEX
                     10,000 TBOT for BYBIT
                     */}
@@ -2512,7 +2512,7 @@ export default function AIPage({ params }: any) {
                                         {/* https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223 */}
                                         <div className='flex flex-col gap-2'>
                                             <span className='text-sm font-semibold text-gray-500'>
-                                                HTX 계정이 없으신가요?
+                                                OKX 계정이 없으신가요?
                                             </span>
                                             <button
                                                 className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
@@ -2522,7 +2522,7 @@ export default function AIPage({ params }: any) {
                                                     window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
                                                 }}
                                             >
-                                                HTX 계정 만들기
+                                                OKX 계정 만들기
                                             </button>
                                         </div>
 
@@ -2577,7 +2577,7 @@ export default function AIPage({ params }: any) {
                                                 
                                                 <div className='flex flex-row items-center justify-between gap-2'>
                                                     <span className='text-sm font-semibold text-gray-500'>
-                                                        HTX UID: {myAgent.htxUid}
+                                                        OKX UID: {myAgent.htxUid}
                                                     </span>
                                                     <Image
                                                         src="/verified.png"
@@ -2613,7 +2613,7 @@ export default function AIPage({ params }: any) {
 
                                                 <div className='hidden flex-row items-center justify-between gap-2'>
                                                     <span className='text-sm font-semibold text-gray-500'>
-                                                        HTX USDT(TRON) 지갑주소: {myAgent.htxUsdtWalletAddress.substring(0, 10) + "..."}
+                                                        OKX USDT(TRON) 지갑주소: {myAgent.htxUsdtWalletAddress.substring(0, 10) + "..."}
                                                     </span>
                                                     <Image
                                                         src="/verified.png"
@@ -2651,18 +2651,18 @@ export default function AIPage({ params }: any) {
                                                             checkHtxAssetValuation(myAgent.apiAccessKey, myAgent.apiSecretKey);
                                                         }}
                                                     >
-                                                        HTX 자산 가치 확인
+                                                        OKX 자산 가치 확인
                                                     </button>
                                                     {checkingHtxAssetValuation && (
                                                         <span className='text-sm font-semibold text-blue-500'>
-                                                            HTX 자산 가치 확인중...
+                                                            OKX 자산 가치 확인중...
                                                         </span>
                                                     )}
                                                 </div>
                                                 {htxAssetValuation?.balance && (
                                                     <div className='flex flex-col gap-2'>
                                                         <span className='text-sm font-semibold text-gray-500'>
-                                                            HTX 자산 가치: {htxAssetValuation?.balance} USDT
+                                                            OKX 자산 가치: {htxAssetValuation?.balance} USDT
                                                         </span>
                                                         {/* timestamp */}
                                                         <span className='text-sm font-semibold text-gray-500'>
@@ -2710,21 +2710,21 @@ export default function AIPage({ params }: any) {
                                     <div className='w-full flex flex-col items-center gap-2
                                         border border-gray-300 p-1 rounded-lg
                                     '>
-                                        {/* HTX 가입 */}
+                                        {/* OKX 가입 */}
                                         {/* new window
                                             https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223
                                         */}
 
-                                        {/* HTX 거래소에 가입하고 아래 정보를 입력하세요. */}
+                                        {/* OKX 거래소에 가입하고 아래 정보를 입력하세요. */}
                                         <div className='flex flex-row items-center gap-2'>
                                             <Image
-                                                src="/logo-exchange-htx.png"
-                                                alt="HTX"
+                                                src="/logo-exchange-okx.png"
+                                                alt="OKX"
                                                 width={50}
                                                 height={50}
                                             />
                                             <span className='text-lg font-semibold text-gray-500'>
-                                                HTX 거래소에 가입하고 아래 정보를 입력하세요.
+                                                OKX 거래소에 가입하고 아래 정보를 입력하세요.
                                             </span>
                                         </div>
 
@@ -2735,9 +2735,9 @@ export default function AIPage({ params }: any) {
                                                     window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
                                                 }}
                                             >
-                                                HTX 가입하러 가기
+                                                OKX 가입하러 가기
                                             </button>
-                                            {/* HTX 가입 메뉴얼 */}
+                                            {/* OKX 가입 메뉴얼 */}
                                             {/* https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view */}
 
                                             <button
@@ -2746,7 +2746,7 @@ export default function AIPage({ params }: any) {
                                                     window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
                                                 }}
                                             >
-                                                HTX 가입 메뉴얼 보러 가기
+                                                OKX 가입 메뉴얼 보러 가기
                                             </button>
                                         </div>
 
@@ -3028,7 +3028,7 @@ export default function AIPage({ params }: any) {
 
 
                                         {/* input for apply */}
-                                        {/* 닉네임, 핸드폰번호, 이메일주소, HTX UID, HTX USDT(TRON) 지갑주소 */}
+                                        {/* 닉네임, 핸드폰번호, 이메일주소, OKX UID, OKX USDT(TRON) 지갑주소 */}
                                         {/* API Access Key, API Secret Key */}
 
 
@@ -3037,12 +3037,12 @@ export default function AIPage({ params }: any) {
                                             border border-gray-300 p-4 rounded-lg
                                         '>
                                             <span className='text-lg font-semibold text-blue-500'>
-                                                HTX API 정보를 입력하세요.
+                                                OKX API 정보를 입력하세요.
                                             </span>
 
 
                                             <span className='text-sm font-semibold text-gray-500'>
-                                                HTX API Access Key
+                                                OKX API Access Key
                                             </span>
                                             <input
                                                 disabled={!address || applyingMintNFT}
@@ -3052,7 +3052,7 @@ export default function AIPage({ params }: any) {
                                                 className="w-full p-2 rounded-lg border border-gray-300"
                                             />
                                             <span className='text-sm font-semibold text-gray-500'>
-                                                HTX API Secret Key
+                                                OKX API Secret Key
                                             </span>
                                             <input
                                                 disabled={!address || applyingMintNFT}
@@ -3071,14 +3071,14 @@ export default function AIPage({ params }: any) {
                                                     checkHtxApiKey(apiAccessKey, apiSecretKey);
                                                 }}
                                             >
-                                                HTX API 정보 확인하기
+                                                OKX API 정보 확인하기
                                             </button>
 
 
 
                                             {checkingHtxApiKey && (
                                                 <span className='text-sm font-semibold text-blue-500'>
-                                                    HTX API Key 확인중...
+                                                    OKX API Key 확인중...
                                                 </span>
                                             )}
 
@@ -3091,7 +3091,7 @@ export default function AIPage({ params }: any) {
                                                         height={20}
                                                     />
                                                     <span className='text-sm font-semibold text-green-500'>
-                                                        HTX API Key가 확인되었습니다.
+                                                        OKX API Key가 확인되었습니다.
                                                     </span>
                                                 </div>
 
@@ -3099,7 +3099,7 @@ export default function AIPage({ params }: any) {
 
                                             {!checkingHtxApiKey && !isValidAPIKey && (
                                                 <span className='text-sm font-semibold text-red-500'>
-                                                    HTX API Key가 확인되지 않았습니다. 다시 확인해서 입력해주세요.
+                                                    OKX API Key가 확인되지 않았습니다. 다시 확인해서 입력해주세요.
                                                 </span>
                                             )}
 
@@ -3107,14 +3107,14 @@ export default function AIPage({ params }: any) {
 
                                         <div className='w-full hidden flex-col gap-2 border border-gray-300 p-4 rounded-lg'>
                                             <span className='text-sm font-semibold text-gray-500'>
-                                                HTX UserId
+                                                OKX UserId
                                             </span>
                                             <input
                                                 disabled={true}
                                                 value={htxUserId}
                                                 onChange={(e) => setHtxUserId(e.target.value)}
                                                 type="text"
-                                                placeholder="HTX UserId"
+                                                placeholder="OKX UserId"
                                                 className="w-full p-2 rounded-lg border border-gray-300"
                                             />
                                         </div>
@@ -3124,17 +3124,17 @@ export default function AIPage({ params }: any) {
 
 
 
-                                        {/* HTX USDT(TRON) 지갑주소 */}
+                                        {/* OKX USDT(TRON) 지갑주소 */}
 
                                         <div className='mt-5 w-full flex-col gap-2 hidden'>
                                             <span className='text-sm font-semibold text-gray-500'>
-                                                HTX USDT(TRON) 입금용 지갑주소
+                                                OKX USDT(TRON) 입금용 지갑주소
                                             </span>
                                             <input
                                                 disabled={!address || applyingMintNFT}
                                                 onChange={(e) => setHtxUsdtWalletAddress(e.target.value)}
                                                 type="text"
-                                                placeholder="HTX USDT(TRON) 지갑주소"
+                                                placeholder="OKX USDT(TRON) 지갑주소"
                                                 className="w-full p-2 rounded-lg border border-gray-300"
                                             />
                                         </div>
@@ -3206,8 +3206,8 @@ export default function AIPage({ params }: any) {
                                 >
                                     <div className='flex flex-row items-center gap-2'>
                                         <Image
-                                            src="/logo-exchange-htx.png"
-                                            alt="HTX"
+                                            src="/logo-exchange-okx.png"
+                                            alt="OKX"
                                             width={20}
                                             height={20}
                                             className='rounded-full bg-white p-1'
@@ -3279,7 +3279,7 @@ export default function AIPage({ params }: any) {
                         Ai 트레이딩 1000 TBOT
                         • AI 자동매매 트레이딩 서비스 이용권
                         NFT 입니다.
-                        • HTX 거래소 전용
+                        • OKX 거래소 전용
                         계정 운영 방식
                         • 본인 거래소 계정에서 직접 자금 관리
                         • 최소 운영자금: 100 USDT
@@ -3395,7 +3395,7 @@ export default function AIPage({ params }: any) {
                         Ai 트레이딩 1000 TBOT
                         • AI 자동매매 트레이딩 서비스 이용권
                         NFT 입니다.
-                        • HTX 거래소 전용
+                        • OKX 거래소 전용
                         계정 운영 방식
                         • 본인 거래소 계정에서 직접 자금 관리
                         • 최소 운영자금: 100 USDT
