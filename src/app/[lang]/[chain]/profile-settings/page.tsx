@@ -138,6 +138,8 @@ export default function SettingsPage({ params }: any) {
     //console.log("params", params);
     
     const searchParams = useSearchParams();
+
+    const center = searchParams.get('center');
  
     const wallet = searchParams.get('wallet');
 
@@ -1479,6 +1481,7 @@ export default function SettingsPage({ params }: any) {
                 <AppBarComponent />
 
                 <Header
+                    center={center ? center : ""}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
@@ -2603,9 +2606,11 @@ export default function SettingsPage({ params }: any) {
 
 function Header(
     {
+        center,
         agent,
         tokenId,
     } : {
+        center: string
         agent: string
         tokenId: string
     }
@@ -2624,7 +2629,9 @@ function Header(
             {/* logo */}
             <button
                 onClick={() => {
-                    router.push('/kr/polygon/?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push(
+                        '/kr/polygon/?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
+                    );
                 }}
             >            
                 <div className="flex flex-row gap-2 items-center">
@@ -2645,7 +2652,7 @@ function Header(
                 <button
                 onClick={() => {
                     router.push(
-                        "/kr/polygon/tbot?agent=" + agent + "&tokenId=" + tokenId
+                        "/kr/polygon/tbot?agent=" + agent + "&tokenId=" + tokenId + "&center=" + center
                     );
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
@@ -2654,7 +2661,9 @@ function Header(
                 </button>
                 <button
                 onClick={() => {
-                    router.push('/kr/polygon/profile-settings?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push(
+                        '/kr/polygon/profile-settings?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
+                    );
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
                 >
