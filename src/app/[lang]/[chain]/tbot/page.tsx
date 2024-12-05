@@ -1075,6 +1075,7 @@ export default function AIPage({ params }: any) {
     const [htxUsdtWalletAddress, setHtxUsdtWalletAddress] = useState("");
     const [apiAccessKey, setApiAccessKey] = useState("");
     const [apiSecretKey, setApiSecretKey] = useState("");
+    const [apiPassword, setApiPassword] = useState("");
 
 
 
@@ -1134,6 +1135,11 @@ export default function AIPage({ params }: any) {
             return;
         }
 
+        if (apiPassword === "") {
+            toast.error("API Password를 입력해 주세요.");
+            return;
+        }
+
         setApplyingMintNFT(true);
 
         // api call
@@ -1156,6 +1162,7 @@ export default function AIPage({ params }: any) {
                 htxUsdtWalletAddress: htxUsdtWalletAddress,
                 apiAccessKey: apiAccessKey,
                 apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
             }),
         });
 
@@ -2264,7 +2271,10 @@ export default function AIPage({ params }: any) {
                         <button
                             className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
                             onClick={() => {
-                                window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
+                                ///window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
+
+                                // https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view
+                                window.open("https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view", "_blank");
                             }}
                         >
                             OKX 가입 메뉴얼 보러 가기
@@ -3071,9 +3081,22 @@ export default function AIPage({ params }: any) {
                                                 className="w-full p-2 rounded-lg border border-gray-300"
                                             />
 
+                                            <span className='text-sm font-semibold text-gray-500'>
+                                                OKX API Password
+                                            </span>
+                                            <input
+                                                disabled={!address || applyingMintNFT}
+                                                onChange={(e) => setApiPassword(e.target.value)}
+                                                type="text"
+                                                placeholder="API Password"
+                                                className="w-full p-2 rounded-lg border border-gray-300"
+                                            />
+
+
+
                                             {/* button for api call /api/agent/getAccount */}
                                             <button
-                                                disabled={!address || checkingHtxApiKey || !apiAccessKey || !apiSecretKey || isValidAPIKey}
+                                                disabled={!address || checkingHtxApiKey || !apiAccessKey || !apiSecretKey || !apiPassword || isValidAPIKey}
                                                 className={` ${checkingHtxApiKey || !apiAccessKey || !apiSecretKey || isValidAPIKey
                                                     ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold`}
                                                 onClick={() => {

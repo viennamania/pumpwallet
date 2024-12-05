@@ -27,32 +27,9 @@ export async function POST(request: NextRequest) {
   apiSecretKey: apiSecretKey,
   */
 
-  const { center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey } = body;
+  const { center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, htxUserId, htxUsdtWalletAddress, apiAccessKey, apiSecretKey, apiPassword } = body;
 
 
-  /*
-
-  const result = await insertOne({
-    walletAddress: walletAddress,
-    agentBot: agentBot,
-    agentBotNumber: agentBotNumber,
-    userName: userName,
-    userPhoneNumber: userPhoneNumber,
-    userEmail: userEmail,
-    htxUserId: htxUserId,
-    htxUsdtWalletAddress: htxUsdtWalletAddress,
-    apiAccessKey: apiAccessKey,
-    apiSecretKey: apiSecretKey,
-  });
-
-  if (!result) {
-    return NextResponse.error();
-  }
-
-  //console.log("result", result);
-
-  const applicationId = result.id;
-  */
 
 
   const response = await fetch("https://owinwallet.com/api/agent/applyMintNFT", {
@@ -73,6 +50,7 @@ export async function POST(request: NextRequest) {
       htxUsdtWalletAddress: htxUsdtWalletAddress,
       apiAccessKey: apiAccessKey,
       apiSecretKey: apiSecretKey,
+      apiPassword: apiPassword,
     }),
   });
 
