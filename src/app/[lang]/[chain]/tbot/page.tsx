@@ -2247,6 +2247,31 @@ export default function AIPage({ params }: any) {
 
      
 
+                    <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
+                        <button
+                            className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                            onClick={() => {
+                                //window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
+                                // https://www.okx.com/join/69963198
+                                window.open("https://www.okx.com/join/69963198", "_blank");
+                            }}
+                        >
+                            OKX 가입하러 가기
+                        </button>
+                        {/* OKX 가입 메뉴얼 */}
+                        {/* https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view */}
+
+                        <button
+                            className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                            onClick={() => {
+                                window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
+                            }}
+                        >
+                            OKX 가입 메뉴얼 보러 가기
+                        </button>
+                    </div>
+
+
 
                     {/* TBOT Image */}
                     {/*
@@ -2734,31 +2759,6 @@ export default function AIPage({ params }: any) {
                                                 OKX 거래소에 가입하고 아래 정보를 입력하세요.
                                             </span>
                                         </div>
-
-                                        <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
-                                            <button
-                                                className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
-                                                onClick={() => {
-                                                    //window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
-                                                    // https://www.okx.com/join/69963198
-                                                    window.open("https://www.okx.com/join/69963198", "_blank");
-                                                }}
-                                            >
-                                                OKX 가입하러 가기
-                                            </button>
-                                            {/* OKX 가입 메뉴얼 */}
-                                            {/* https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view */}
-
-                                            <button
-                                                className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
-                                                onClick={() => {
-                                                    window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
-                                                }}
-                                            >
-                                                OKX 가입 메뉴얼 보러 가기
-                                            </button>
-                                        </div>
-
 
 
                                         {!isValidReferralLoading && isValidReferral && (
