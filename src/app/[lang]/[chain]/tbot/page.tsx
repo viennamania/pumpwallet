@@ -1153,7 +1153,7 @@ export default function AIPage({ params }: any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                center: "ppump",
+                center: center,
                 walletAddress: address,
                 agentBot: agentBot,
                 agentBotNumber: selectedBotNumber,
@@ -1393,7 +1393,7 @@ export default function AIPage({ params }: any) {
 
         setCheckingHtxApiKey(true);
 
-        const response = await fetch("/api/agent/getAccount", {
+        const response = await fetch("/api/agent/getAccountOkx", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -1418,7 +1418,10 @@ export default function AIPage({ params }: any) {
 
             setIsValidAPIKey(true);
 
-            setHtxUserId(data.result?.data[0]?.id);
+            
+            //setHtxUserId(data.result?.data[0]?.id);
+            setHtxUserId("1234");
+
 
             toast.success("OKX API Key가 확인되었습니다.");
         } else {
@@ -2711,6 +2714,19 @@ export default function AIPage({ params }: any) {
                                                 <div className='flex flex-row items-center justify-between gap-2'>
                                                     <span className='text-sm font-semibold text-gray-500'>
                                                         API Secret Key: {myAgent.apiSecretKey.substring(0, 10) + "..."}
+                                                    </span>
+                                                    <Image
+                                                        src="/verified.png"
+                                                        alt="verified"
+                                                        width={20}
+                                                        height={20}
+                                                    />
+                                                </div>
+
+                                                {/* apiPassword */}
+                                                <div className='flex flex-row items-center justify-between gap-2'>
+                                                    <span className='text-sm font-semibold text-gray-500'>
+                                                        API Password: {myAgent?.apiPassword?.substring(0, 10) + "..."}
                                                     </span>
                                                     <Image
                                                         src="/verified.png"
