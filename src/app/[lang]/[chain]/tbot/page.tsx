@@ -2519,7 +2519,10 @@ export default function AIPage({ params }: any) {
                                                     hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
                                                 '
                                                 onClick={() => {
-                                                    window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
+                                                    ///window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
+
+                                                    // https://www.okx.com/join/69963198
+                                                    window.open('https://www.okx.com/join/69963198', "_blank");
                                                 }}
                                             >
                                                 OKX 계정 만들기
@@ -2732,7 +2735,9 @@ export default function AIPage({ params }: any) {
                                             <button
                                                 className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
                                                 onClick={() => {
-                                                    window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
+                                                    //window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
+                                                    // https://www.okx.com/join/69963198
+                                                    window.open("https://www.okx.com/join/69963198", "_blank");
                                                 }}
                                             >
                                                 OKX 가입하러 가기
@@ -3197,7 +3202,7 @@ export default function AIPage({ params }: any) {
  
                             <div className='flex flex-col gap-2'>
 
-
+                                {/*
                                 <button
                                     onClick={() => {
                                     window.open('https://futures.htx.com.pk/futures/copy_trading/following/trader/NTA1MDk1Njk');
@@ -3217,6 +3222,7 @@ export default function AIPage({ params }: any) {
                                         </span>
                                     </div>
                                 </button>
+                                */}
 
 
 
