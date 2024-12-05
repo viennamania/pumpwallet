@@ -3419,7 +3419,7 @@ export default function AIPage({ params }: any) {
 
                         <div
                         className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2
+                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                             ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
                         `}
                         onClick={() => {
@@ -3445,9 +3445,9 @@ export default function AIPage({ params }: any) {
                             <span className='text-sm font-semibold text-gray-500'>
                                 515,460 원(vat 포함)
                             </span>
-                        </div>
+                        </div> 
                         <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2
+                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                             ${selectedMasterBot === 1 ? 'border-blue-500' : 'border-gray-300'}
                         `}
                         onClick={() => {
@@ -3475,7 +3475,7 @@ export default function AIPage({ params }: any) {
                             </span>
                         </div>
                         <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2
+                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                             ${selectedMasterBot === 2 ? 'border-blue-500' : 'border-gray-300'}
                         `}
                         onClick={() => {
@@ -3503,7 +3503,7 @@ export default function AIPage({ params }: any) {
                             </span>
                         </div>
                         <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2
+                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                             ${selectedMasterBot === 3 ? 'border-blue-500' : 'border-gray-300'}
                         `}
                         onClick={() => {
@@ -3531,7 +3531,7 @@ export default function AIPage({ params }: any) {
                             </span>
                         </div>
                         <div className={`flex flex-col gap-2
-                            p-4 rounded-lg border-2
+                            p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                             ${selectedMasterBot === 4 ? 'border-blue-500' : 'border-gray-300'}
                         `}
                         onClick={() => {
