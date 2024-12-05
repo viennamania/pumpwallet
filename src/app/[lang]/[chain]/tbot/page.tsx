@@ -1902,7 +1902,7 @@ export default function AIPage({ params }: any) {
                             height={40}
                         />
                         <span className="text-sm font-semibold text-gray-500">
-                            PPUMP AI 로봇 트레이딩&아카데미 센터
+                            AGENT AI 로봇 트레이딩&아카데미 센터
                         </span>
                     </div>
                     <div className='flex flex-row items-center gap-4'>
@@ -2098,7 +2098,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     theme={"light"}
                                     connectButton={{
-                                        label: "Sign in with PPUMP Wallet",
+                                        label: "Sign in with AGENT Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide", 
@@ -3570,7 +3570,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PPUMP
+                    AGENT
                     </span>
                 </div>
             </button>

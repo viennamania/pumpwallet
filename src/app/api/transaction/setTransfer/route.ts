@@ -58,11 +58,11 @@ export async function POST(request: NextRequest) {
         let body = '';
 
         if (lang === 'en') {
-          body = `[PPUMP] You have received ${amount} USDT from ${fromUserNickname}!`;
+          body = `[AGENT] You have received ${amount} USDT from ${fromUserNickname}!`;
         } else if (lang === 'kr') {
-          body = `[PPUMP] ${fromUserNickname}님으로부터 ${amount} USDT를 받았습니다!`;
+          body = `[AGENT] ${fromUserNickname}님으로부터 ${amount} USDT를 받았습니다!`;
         } else {
-          body = `[PPUMP] You have received ${amount} USDT from ${fromUserNickname}!`;
+          body = `[AGENT] You have received ${amount} USDT from ${fromUserNickname}!`;
         }
 
         message = await client.messages.create({

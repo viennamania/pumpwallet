@@ -811,7 +811,7 @@ export default function AgentPage({ params }: any) {
                 }}
                 theme={"light"}
                 connectButton={{
-                  label: "Sign in with PPUMP Wallet",
+                  label: "Sign in with AGENT Wallet",
                 }}
                 connectModal={{
                   size: "wide", 

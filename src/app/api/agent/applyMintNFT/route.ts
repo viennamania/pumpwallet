@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
 
     if (mobile && mobile.length > 10) {
 
-      const msgBody = `[PPUMP] [TID:#${applicationId}] You have a new agent application from [${userName}]`;
+      const msgBody = `[AGENT] [TID:#${applicationId}] You have a new agent application from [${userName}]`;
 
       const message = await client.messages.create({
         body: msgBody,
@@ -131,7 +131,7 @@ export async function POST(request: NextRequest) {
   if (userPhoneNumber && userPhoneNumber.length > 10) {
 
     // send sms to userPhoneNumber
-    const msgBody = `[PPUMP] [TID:#${applicationId}] Your master bot application has been submitted successfully!`;
+    const msgBody = `[AGENT] [TID:#${applicationId}] Your master bot application has been submitted successfully!`;
 
     const message = await client.messages.create({
       body: msgBody,
