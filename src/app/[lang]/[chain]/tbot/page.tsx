@@ -3309,8 +3309,224 @@ export default function AIPage({ params }: any) {
                         </div>
 
 
+                        {/* 마스터 봇 6개월, 2% UPGARADE
+                        330 + 33 = 363 USDT 
+                        515,460 원(vat 포함)
+                        */}
+              
+
+
+
                     </div>
 
+                    {/*
+                    image=/logo-mbot-upgrade.png
+                    마스터 봇 6개월
+                    2% UPGARADE
+                    330 + 33 = 363 USDT 
+                    515,460 원(vat 포함)
+                    */}
+                    {/*
+                    image
+                    마스터 봇 6개월
+                    4% UPGARADE
+                    550 + 55 = 605 USDT 
+                    859,100원(vat포함)
+                    */}
+                    {/*
+                    마스터 봇 6개월
+                    6% UPGARADE
+                    1100 + 110 = 1210 USDT
+                    1,718,200 원(vat포함)
+                    */}
+                    {/*
+                    마스터 봇 6개월
+                    8% UPGARADE
+                    5500 + 550 = 6050 USDT 
+                    8,591,000 원(vat포함)
+                    */}
+                    {/*
+                    마스터 봇 6개월
+                    10% UPGARADE
+                    11000 + 1100 = 12100 USDT 
+                    17,182,000 원(vat포함)
+                    */}
+                 
+
+
+                    {/* 제목: 업그레이드 */}
+                    <div className='w-full flex flex-col gap-2 mt-5'>
+                        <div className='flex flex-row items-center gap-2'>
+                            {/* dot */}
+                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                            {/* title */}
+                            <span className='text-xl font-semibold text-black'>
+                                마스터 봇 업그레이드
+                            </span>
+                        </div>
+                        <span className='text-sm text-gray-500'>
+                            • 마스터 봇 6개월 이용권을 업그레이드 합니다.
+                        </span>
+                    </div>
+
+                    <div className='w-full grid grid-cols-1 xl:grid-cols-5 gap-2
+                        border border-red-300 p-4 rounded-lg
+                    '>
+
+                        <div className='flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <Image
+                                src="/logo-mbot-upgrade.png"
+                                alt="Master Bot Upgrade"
+                                width={200}
+                                height={200}
+                                className='rounded-lg w-full'
+                            />
+                            <span className='text-sm font-semibold text-blue-500'>
+                                마스터 봇 6개월
+                            </span>
+                            <span className='text-lg font-semibold text-red-500'>
+                                2% UPGARADE
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                330 + 33 = 363 USDT
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                515,460 원(vat 포함)
+                            </span>
+                            <button
+                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                '
+                            >
+                                구매하기
+                            </button>
+                        </div>
+                        <div className='flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <Image
+                                src="/logo-mbot-upgrade.png"
+                                alt="Master Bot Upgrade"
+                                width={200}
+                                height={200}
+                                className='rounded-lg w-full'
+                            />
+                            <span className='text-sm font-semibold text-blue-500'>
+                                마스터 봇 6개월
+                            </span>
+                            <span className='text-lg font-semibold text-red-500'>
+                                4% UPGARADE
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                550 + 55 = 605 USDT
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                859,100원(vat포함)
+                            </span>
+                            <button
+                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                '
+                            >
+                                구매하기
+                            </button>
+                        </div>
+                        <div className='flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <Image
+                                src="/logo-mbot-upgrade.png"
+                                alt="Master Bot Upgrade"
+                                width={200}
+                                height={200}
+                                className='rounded-lg w-full'
+                            />
+                            <span className='text-sm font-semibold text-blue-500'>
+                                마스터 봇 6개월
+                            </span>
+                            <span className='text-lg font-semibold text-red-500'>
+                                6% UPGARADE
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                1100 + 110 = 1210 USDT
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                1,718,200 원(vat포함)
+                            </span>
+                            <button
+                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                '
+                            >
+                                구매하기
+                            </button>
+                        </div>
+                        <div className='flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <Image
+                                src="/logo-mbot-upgrade.png"
+                                alt="Master Bot Upgrade"
+                                width={200}
+                                height={200}
+                                className='rounded-lg w-full'
+                            />
+                            <span className='text-sm font-semibold text-blue-500'>
+                                마스터 봇 6개월
+                            </span>
+                            <span className='text-lg font-semibold text-red-500'>
+                                8% UPGARADE
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                5500 + 550 = 6050 USDT
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                8,591,000 원(vat포함)
+                            </span>
+                            <button
+                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                '
+                            >
+                                구매하기
+                            </button>
+                        </div>
+                        <div className='flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <Image
+                                src="/logo-mbot-upgrade.png"
+                                alt="Master Bot Upgrade"
+                                width={200}
+                                height={200}
+                                className='rounded-lg w-full'
+                            />
+                            <span className='text-sm font-semibold text-blue-500'>
+                                마스터 봇 6개월
+                            </span>
+                            <span className='text-lg font-semibold text-red-500'>
+                                10% UPGARADE
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                11000 + 1100 = 12100 USDT
+                            </span>
+                            <span className='text-sm font-semibold text-gray-500'>
+                                17,182,000 원(vat포함)
+                            </span>
+                            <button
+                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                '
+                            >
+                                구매하기
+                            </button>
+                        </div>
+
+                    </div>
+
+                           
 
                 </div>
 
