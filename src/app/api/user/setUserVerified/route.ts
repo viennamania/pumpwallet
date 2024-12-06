@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
   } = body;
 
 
-
   const result = await insertOneVerified({
     walletAddress: walletAddress,
     nickname: nickname,
