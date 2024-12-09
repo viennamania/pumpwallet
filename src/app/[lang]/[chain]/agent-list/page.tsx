@@ -1180,6 +1180,8 @@ export default function AIPage({ params }: any) {
 
    const [selectedHolderWalletAddress, setSelectedHolderWalletAddress] = useState("");
 
+   const [selectedCenter, setSelectedCenter] = useState("");
+
    //const changeAgentBot = async (agentBot: string) => {
    const changeHolder = async (holderWalletAddress: string) => {
 
@@ -1200,6 +1202,8 @@ export default function AIPage({ params }: any) {
 
 
         setAgentBot(agentBot);
+
+
 
         /////////////setSelectedBotNumber(0);
 
@@ -1884,38 +1888,41 @@ export default function AIPage({ params }: any) {
                                                         {agents.map((agent) => (
                                                             <div
                                                                 key={agent.erc721ContractAddress}
-                                                                className='flex flex-row items-center gap-2
+                                                                className='flex flex-col items-center gap-2
                                                                     border border-gray-300 p-2 rounded-lg
                                                                     hover:shadow-lg cursor-pointer
                                                                     '>
                                     
 
-                                                                <input
-                                                                    type="radio"
-                                                                    value={agent.walletAddress}
-                                                                    name="agent"
-                                                                    checked={agent.walletAddress === selectedHolderWalletAddress}
-                                                                    onChange={(e) => {
-                                                                        console.log(e.target.value);
+                                                                <div className='flex flex-row items-center gap-2'>
+                                                                    <input
+                                                                        type="radio"
+                                                                        value={agent.walletAddress}
+                                                                        name="agent"
+                                                                        checked={agent.walletAddress === selectedHolderWalletAddress}
+                                                                        onChange={(e) => {
+                                                                            console.log(e.target.value);
 
-                                                                        //setAgentBot(e.target.value);
-                                                                        
-                                                                        //changeAgentBot(e.target.value);
+                                                                            //setAgentBot(e.target.value);
+                                                                            
+                                                                            //changeAgentBot(e.target.value);
 
-                                                                        changeHolder(e.target.value);
+                                                                            changeHolder(e.target.value);
+
+                                                                            setSelectedCenter(agent?.center);
 
 
+                                                                        }}
+                                                                    />
 
-                                                                    }}
-                                                                />
-
-                                                                <Image
-                                                                    src={agent.avatar || "/icon-anonymous.png"}
-                                                                    alt={agent.nickname}
-                                                                    width={50}
-                                                                    height={50}
-                                                                    className='rounded-full h-8 w-8'
-                                                                />
+                                                                    <Image
+                                                                        src={agent.avatar || "/icon-anonymous.png"}
+                                                                        alt={agent.nickname}
+                                                                        width={50}
+                                                                        height={50}
+                                                                        className='rounded-full h-8 w-8'
+                                                                    />
+                                                                </div>
 
                                                                 <div className='flex flex-col items-start gap-2'>
                                                                     <span className='text-xs font-semibold text-gray-500'>
@@ -2092,7 +2099,7 @@ export default function AIPage({ params }: any) {
                                                                         <button
                                                                             onClick={() => {
                                                                                 navigator.clipboard.writeText(
-                                                                                    'https://ppump.me/kr/polygon/tbot/?agent=' +
+                                                                                    'https://ppump.me/kr/polygon/tbot/?center=' + selectedCenter + '&agent=' +
                                                                                     nft.contract.address + '&tokenId=' + nft.tokenId
                                                                                 );
                                                                                 toast.success('레퍼럴 URL 복사 완료');

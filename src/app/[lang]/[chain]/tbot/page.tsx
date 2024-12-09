@@ -2870,7 +2870,9 @@ export default function AIPage({ params }: any) {
 
                                                 <div className='flex flex-row items-start gap-5'>
                                                     
-                                                    <div className='flex flex-col items-center gap-2'>
+                                                    <div className='flex flex-col items-center gap-2
+                                                        border border-gray-300 p-4 rounded-lg
+                                                    '>
                                                         <Image
                                                             src={referralUserInfo.avatar || "/icon-anonymous.png"}
                                                             alt={referralUserInfo.nickname}
@@ -2885,6 +2887,13 @@ export default function AIPage({ params }: any) {
                                                                 referralUserInfo.nickname
                                                             }
                                                         </span>
+
+                                                        {/* referralUserIno.center */}
+                                                        <span className='text-sm font-semibold text-gray-500'>
+                                                            {referralUserInfo.center}
+                                                        </span>
+
+
                                                     </div>
 
                                                     {/* referralAgentNFT */}

@@ -1,6 +1,7 @@
 import clientPromise from '../mongodb';
 
 
+
 export interface UserProps {
   /*
   name: string;
@@ -44,8 +45,22 @@ export interface UserProps {
   tronWalletAddress: string,
   tronWalletPrivateKey: string,
 
+  tronEscrowWalletAddress: string,
+  tronEscrowWalletPrivateKey: string,
+
+
   erc721ContractAddress: string,
+
+  userType: string,
+
+  telegramId: string,
+
+  center: string,
+
+
 }
+
+
 
 export interface ResultProps {
   totalCount: number;
@@ -1215,7 +1230,7 @@ export async function getAllAgents(
 
 
 
-  const users = await collection
+    const users = await collection
     .find<UserProps>(
       {
 
@@ -1225,10 +1240,17 @@ export async function getAllAgents(
 
         
         erc721ContractAddress: { $exists: true, $ne: null },
-        
-        // exclude nickname is 'solongos'
-        nickname: { $ne: 'solongos' },
 
+        // center is owin_kingkong_bot or owin_kkk_bot
+
+        $or: [
+          { center: 'ppump_orry_bot' },
+          { center: 'ppump_koko_bot' },
+          { center: 'ppump_bigrich_bot' },
+        ]
+        
+
+        
       },
       {
         limit: limit,
@@ -1248,8 +1270,11 @@ export async function getAllAgents(
       walletAddress: user.walletAddress,
       nickname: user.nickname,
       avatar: user.avatar,
+      userType: user.userType,
       mobile: user.mobile,
+      telegramId: user.telegramId,
       email: user.email,
+      center: user.center,
       tronWalletAddress: user.tronWalletAddress,
       erc721ContractAddress: user.erc721ContractAddress,
     };
@@ -1267,7 +1292,6 @@ export async function getAllAgents(
     totalCount,
     users: resultUsers,
   };
-
   
 }
 
