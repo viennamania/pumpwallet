@@ -1128,14 +1128,6 @@ export default function AgentPage({ params }: any) {
                 />
                 
                 <div className='flex flex-col items-start justify-center gap-2'>
-                  <button
-                    onClick={() => {
-                      window.open('https://futures.htx.com.pk/futures/copy_trading/following/trader/NTA1MDk1Njk');
-                    }}
-                    className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                  >
-                    트레이더 퍼포먼스 보러가기
-                  </button>
                   <span className='text-lg font-semibold text-gray-800'>
                       HTX 신청목록
                   </span>

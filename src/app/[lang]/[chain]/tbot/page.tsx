@@ -3318,29 +3318,6 @@ export default function AIPage({ params }: any) {
  
                             <div className='flex flex-col gap-2'>
 
-                                {/*
-                                <button
-                                    onClick={() => {
-                                    window.open('https://futures.htx.com.pk/futures/copy_trading/following/trader/NTA1MDk1Njk');
-                                    }}
-                                    className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                                >
-                                    <div className='flex flex-row items-center gap-2'>
-                                        <Image
-                                            src="/logo-exchange-okx.png"
-                                            alt="OKX"
-                                            width={20}
-                                            height={20}
-                                            className='rounded-full bg-white p-1'
-                                        />
-                                        <span className='text-lg font-semibold'>
-                                            트레이더 퍼포먼스 보러가기
-                                        </span>
-                                    </div>
-                                </button>
-                                */}
-
-
 
                                 <span className='text-lg font-semibold text-blue-500'>
                                     AI 트레이딩 100 TBOT
