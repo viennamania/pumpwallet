@@ -97,7 +97,6 @@ const wallets = [
     auth: {
       options: [
         "phone",
-        "telegram",
       ],
     },
   }),
