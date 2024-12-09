@@ -1697,7 +1697,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://aiagentbot.vercel.app/icon-pump-bot.png",                           
+                                        titleIcon: "https://ppump.me/icon-pump-bot.png",                           
                                         showThirdwebBranding: false,
 
                                     }}
@@ -1962,7 +1962,7 @@ export default function AIPage({ params }: any) {
                                                                         <button
                                                                             onClick={() => {
                                                                                 navigator.clipboard.writeText(
-                                                                                    'https://aiagentbot.vercel.app/kr/polygon/tbot/?agent=' +
+                                                                                    'https://ppump.me/kr/polygon/tbot/?agent=' +
                                                                                     nft.contract.address + '&tokenId=' + nft.tokenId
                                                                                 );
                                                                                 toast.success('레퍼럴 URL 복사 완료');

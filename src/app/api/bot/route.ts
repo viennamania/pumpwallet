@@ -437,7 +437,7 @@ bot.on('message:text', async (ctx) => {
     /*
     await bot.api.sendMessage(
         ctx.message.chat.id,
-        'https://aiagentbot.vercel.app',
+        'https://ppump.me',
         {
             parse_mode: "HTML",
         },

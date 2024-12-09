@@ -724,7 +724,7 @@ export default function SettingsPage({ params }: any) {
                             }}
                             connectModal={{
                             size: "wide", 
-                            titleIcon: "https://aiagentbot.vercel.app/icon-pump-bot.png",                           
+                            titleIcon: "https://ppump.me/icon-pump-bot.png",                           
                             showThirdwebBranding: false,
 
                             }}
