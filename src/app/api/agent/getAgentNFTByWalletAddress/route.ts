@@ -26,6 +26,8 @@ export async function POST(request: NextRequest) {
     ///erc721ContractAddress,
   } = body;
 
+  //console.log("getAgentNFTByWalletAddress walletAddress", walletAddress);
+
 
   ///console.log("getAgentNFTByWalletAddress walletAddress", walletAddress);
 

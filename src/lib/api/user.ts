@@ -1239,15 +1239,17 @@ export async function getAllAgents(
         verified: true,
 
         
-        erc721ContractAddress: { $exists: true, $ne: null },
+        //erc721ContractAddress: { $exists: true, $ne: null },
 
         // center is owin_kingkong_bot or owin_kkk_bot
-
+        /*
         $or: [
           { center: 'ppump_orry_bot' },
           { center: 'ppump_koko_bot' },
+          { center: 'ppump_joajoa_bot'},
           { center: 'ppump_bigrich_bot' },
         ]
+          */
         
 
         
@@ -1284,7 +1286,7 @@ export async function getAllAgents(
     {
       walletAddress: { $exists: true, $ne: null },
       verified: true,
-      erc721ContractAddress: { $exists: true, $ne: null },
+      ///erc721ContractAddress: { $exists: true, $ne: null },
     }
   );
 

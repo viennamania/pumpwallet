@@ -402,10 +402,12 @@ export default function AIPage({ params }: any) {
             console.log("agentTokenId", agentTokenId);
 
             // 0x50985B6974bFE7bFCCE313dfB59abd58EF4310fA 0 default
+            /*
             if (agentContractAddress === "" || agentTokenId === "") {
                 agentContractAddress = "0x50985B6974bFE7bFCCE313dfB59abd58EF4310fA";
                 agentTokenId = "0";
             }
+            */
 
 
 
@@ -1323,6 +1325,7 @@ export default function AIPage({ params }: any) {
 
             // api /api/agent/getAgentNFTByWalletAddress
 
+            /*
             const response = await fetch("/api/agent/getAgentNFTByContractAddress", {
                 method: "POST",
                 headers: {
@@ -1345,6 +1348,37 @@ export default function AIPage({ params }: any) {
             } else {
                 setAgentBotList([]);
             }
+            */
+
+            ///api /api/agent/getAgentNFTByWalletAddress
+            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to get NFTs');
+            }
+
+            const data = await response.json();
+
+            console.log("data.result", data.result);
+
+
+            if (data.result) {
+                ///setAgentBotList(data.result.nfts);
+                setAgentBotList(data.result.ownedNfts);
+            } else {
+                setAgentBotList([]);
+            }
+
+
+
             
 
         } catch (error) {
