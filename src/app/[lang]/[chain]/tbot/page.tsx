@@ -1149,7 +1149,13 @@ export default function AIPage({ params }: any) {
         // api call
 
         let marketingCenter = "owin";
-        if (center === "ppump_orry_bot") {
+        // if center is 5 characters
+        if (center === "ppump_orry_bot"
+            || center === "ppump_koko_bot"
+            || center === "ppump_joajoa_bot"
+            || center === "ppump_bigrich_bot"
+            || center === "ppump_5515_bot"
+        ) {
             marketingCenter = "ppump";
         }
 
