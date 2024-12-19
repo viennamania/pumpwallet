@@ -973,8 +973,13 @@ export default function AIPage({ params }: any) {
         //console.log("updateHtxUID data", data);
 
         if (data.result?.status === "ok") {
-            toast.success("API Access Key가 확인되었습니다.");
 
+            if (data.result?.okxUid === "0") {
+                toast.error("API Access Key를 확인할 수 없습니다.");
+            } else {
+
+                toast.success("API Access Key가 확인되었습니다.");
+            }
 
             // update application
             setApplications(
@@ -990,10 +995,10 @@ export default function AIPage({ params }: any) {
                 })
             );
 
-
         } else {
             toast.error("API Access Key를 확인할 수 없습니다.");
         }
+        
 
         setCheckingApiAccessKeyList(
             checkingApiAccessKeyList.map((item) => {
