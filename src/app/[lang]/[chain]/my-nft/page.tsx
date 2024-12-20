@@ -27,7 +27,8 @@ import { deployERC721Contract } from 'thirdweb/deploys';
 
 import {
     getOwnedNFTs,
-    mintTo
+    mintTo,
+    transferFrom,
 } from "thirdweb/extensions/erc721";
 
 
@@ -152,11 +153,12 @@ export default function SettingsPage({ params }: any) {
           auth: {
             options: [
                 "phone",
-                "telegram",
             ],
           },
         }),
     ];
+
+
 
 
 
@@ -332,13 +334,13 @@ export default function SettingsPage({ params }: any) {
 
 
 
-    const activeAccount = useActiveAccount();
+    const account = useActiveAccount();
 
 
-    ///console.log("activeAccount===", activeAccount);
+    ///console.log("account===", account);
 
 
-    const address = activeAccount?.address;
+    const address = account?.address;
   
   
 
@@ -1005,7 +1007,7 @@ export default function SettingsPage({ params }: any) {
                 });
                 
                 const { transactionHash } = await sendTransaction({
-                    account: activeAccount as any,
+                    account: account as any,
                     transaction,
                 });
 
@@ -1022,7 +1024,7 @@ export default function SettingsPage({ params }: any) {
                 const erc721ContractAddress = await deployERC721Contract({
                     chain: polygon,
                     client: client,
-                    account: activeAccount as any,
+                    account: account as any,
             
                     /*  type ERC721ContractType =
                     | "DropERC721"
@@ -1160,10 +1162,17 @@ export default function SettingsPage({ params }: any) {
 
                 const data = await response.json();
 
-                ///console.log("myOwnedNfts====", data.result);
+                //console.log("myOwnedNfts====", data.result);
+
+                // exclude constract.isSpam = true;
 
                 if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
+
+                    setMyNfts(
+                        data.result.ownedNfts.filter((nft: any) => !nft.contract.isSpam)
+                    )
+
+                    ////setMyNfts(data.result.ownedNfts);
                 } else {
                     setMyNfts([]);
                 }
@@ -1188,7 +1197,7 @@ export default function SettingsPage({ params }: any) {
    
 
 
-   //console.log("myNfts", myNfts);
+   ///console.log("myNfts", myNfts);
 
 
 
@@ -1309,7 +1318,7 @@ export default function SettingsPage({ params }: any) {
                 },
             });
 
-            //await sendTransaction({ transaction, account: activeAccount as any });
+            //await sendTransaction({ transaction, account: account as any });
 
 
 
@@ -1317,7 +1326,7 @@ export default function SettingsPage({ params }: any) {
 
             const transactionResult = await sendAndConfirmTransaction({
                 transaction: transaction,
-                account: activeAccount,
+                account: account,
 
                 ///////account: smartConnectWallet as any,
             });
@@ -1347,7 +1356,12 @@ export default function SettingsPage({ params }: any) {
             if (response.ok) {
                 const data = await response.json();
                 if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
+
+                    setMyNfts(
+                        data.result.ownedNfts.filter((nft: any) => !nft.contract.isSpam)
+                    )
+
+                    //setMyNfts(data.result.ownedNfts);
                 } else {
                     setMyNfts([]);
                 }
@@ -1433,7 +1447,7 @@ export default function SettingsPage({ params }: any) {
             
 
             const { transactionHash } = await sendTransaction({
-                account: activeAccount as any,
+                account: account as any,
                 transaction,
             });
 
@@ -1469,6 +1483,157 @@ export default function SettingsPage({ params }: any) {
 
 
 
+
+    // transfer NFT
+    const [transferingNftList, setTransferingNftList] = useState([] as any[]);
+
+    // initailize transferingNftList for myNfts
+    useEffect(() => {
+        if (myNfts) {
+            setTransferingNftList(myNfts.map((nft) => {
+                return {
+                    contractAddress: nft.contract.address,
+                    tokenId: nft.tokenId,
+                    transferring: false,
+                };
+            }));
+        }
+    }, [myNfts]);
+
+
+    ///console.log("transferingNftList", transferingNftList);
+
+
+    // toAddress array
+    const [toAddressList, setToAddressList] = useState([] as any[]);
+    useEffect(() => {
+        if (myNfts) {
+            setToAddressList(myNfts.map((nft) => {
+                return {
+                    contractAddress: nft.contract.address,
+                    tokenId: nft.tokenId,
+                    to: "",
+                };
+            }));
+        }
+    } , [myNfts]);
+
+
+
+    const transferNft = async (contractAddress: string, tokenId: string) => {
+
+        if (transferingNftList.find((item) =>
+            item.contractAddress === contractAddress && item.tokenId === tokenId
+        ).transferring) {
+            return;
+        }
+
+        
+
+
+        if (confirm(
+            "AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?"
+        ) === false) {
+            return;
+        }
+
+
+
+        setTransferingNftList(transferingNftList.map((item) => {
+            if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
+                return {
+                    ...item,
+                    transferring: true,
+                };
+            }
+        }));
+
+        const to = toAddressList.find((item) => 
+            item.contractAddress === contractAddress && item.tokenId === tokenId
+        ).to;
+
+        try {
+
+            const contract = getContract({
+                client,
+                chain: polygon,
+                address: contractAddress,
+            });
+
+            const transaction = transferFrom({
+                contract: contract,
+                from: address as string,
+                to: to,
+                tokenId: BigInt(tokenId),
+            });
+
+            const transactionResult = await sendAndConfirmTransaction({
+                transaction: transaction,
+                account: account as any,
+            });
+
+            if (!transactionResult) {
+                throw new Error('Failed to transfer NFT');
+            }
+
+            toast.success('AI 에이전트 NFT 전송 완료');
+
+            setTransferingNftList(transferingNftList.map((item) => {
+                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
+                    return {
+                        ...item,
+                        transferring: false,
+                    };
+                }
+            }));
+
+
+            // fetch the NFTs again
+            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.result) {
+                    setMyNfts(
+                        data.result.ownedNfts.filter((nft: any) => !nft.contract.isSpam)
+                    )
+
+                    //setMyNfts(data.result.ownedNfts);
+                } else {
+                    setMyNfts([]);
+                }
+            }
+
+        } catch (error) {
+            console.error("transferNft error", error);
+
+            toast.error('Failed to transfer NFT');
+
+            setTransferingNftList(transferingNftList.map((item) => {
+                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
+                    return {
+                        ...item,
+                        transferring: false,
+                    };
+                }
+            }));
+        }
+
+
+
+    };
+
+
+
+
     return (
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
@@ -1493,14 +1658,14 @@ export default function SettingsPage({ params }: any) {
 
                     <div className='flex flex-row items-center space-x-4'>
                         <Image
-                            src="/logo-tbot.webp"
-                            alt="Profile Picture"
+                            src="/logo-tbot-10000.png"
+                            alt="T-Bot"
                             width={50}
                             height={50}
                             className="rounded-full"  
                         />
                         <div className="text-2xl font-semibold">
-                            {Profile_Settings}
+                            My NFTs
                         </div>
 
 
@@ -1518,18 +1683,16 @@ export default function SettingsPage({ params }: any) {
                                     wallets={wallets}
                                     accountAbstraction={{
                                         chain: polygon,
-                                        
                                         sponsorGas: true
                                     }}
                                     theme={"light"}
                                     connectButton={{
-                                        label: "Sign in with AGENT Wallet",
+                                        label: "Sign in with Wallet",
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://ppump.me/icon-pump-bot.png",                           
+                                        titleIcon: "https://owinwallet.com/icon-tbot.png",                           
                                         showThirdwebBranding: false,
-
                                     }}
                                     locale={"ko_KR"}
                                     //locale={"en_US"}
@@ -1569,118 +1732,52 @@ export default function SettingsPage({ params }: any) {
 
                         {address && (
 
-                            <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                                <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            
+                                <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-5">
+                                    <Image
+                                    src="/icon-wallet-live.gif"
+                                    alt="Wallet"
+                                    width={65}
+                                    height={25}
+                                    className="rounded"
+                                    />
+                                    <div className="flex flex-col gap-2">
+                                        {/* disconnect button */}
+                                        <button
+                                            onClick={() => {
+                                            confirm("지갑 연결을 해제하시겠습니까?") && 
+                                                activeWallet?.disconnect();
+                                            }}
+                                            className="bg-zinc-800 text-white p-2 rounded-lg"
+                                        >
+                                            지갑 연결 해제
+                                        </button>
+                                    </div>
+
+                                    {/* wallet address */}
+                                    <div className="text-xs xl:text-sm font-semibold">
+                                        {address}
+                                    </div>
+
+                                    {/* copy button */}
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(address);
+                                            toast.success('지갑 주소 복사 완료');
+                                        }}
+                                        className="bg-zinc-800 text-white p-2 rounded-lg"
+                                    >
+                                        복사하기
+                                    </button>
+
+                                </div>
+
+
                                 
-                                    <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                        <Image
-                                        src="/icon-wallet-live.gif"
-                                        alt="Wallet"
-                                        width={65}
-                                        height={25}
-                                        className="rounded"
-                                        />
-                                        <div className="flex flex-col gap-2">
-                                            {/* disconnect button */}
-                                            <button
-                                                onClick={() => {
-                                                confirm("지갑 연결을 해제하시겠습니까?") && 
-                                                    activeWallet?.disconnect();
-                                                }}
-                                                className="bg-zinc-800 text-white p-2 rounded-lg"
-                                            >
-                                                지갑 연결 해제
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            My_Balance
-                                        }
-                                    </div>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            Number(balance).toFixed(2)
-                                        } USDT
-                                    </div>
-                                </div>
-
-                                {/* send USDT */}
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_USDT}
-                                    </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="0.00"
-                                            type='number'
-                                            onChange={(e) => {
-                                                setAmount(Number(e.target.value));
-                                            }}
-                                        />
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
-                                            type='text'
-                                            onChange={(e) => {
-                                                setRecipient({
-                                                    ...recipient,
-                                                    walletAddress: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    {Pay_USDT}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* wallet address and copy button */}
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        입금용 지갑주소(Polygon)
-                                    </div>
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {address.substring(0, 6)}...{address.substring(address.length - 4, address.length)}
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(address);
-                                                toast.success('지갑주소가 복사되었습니다');
-                                            }}
-                                            className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                        >
-                                            Copy
-                                        </button>
-                                    </div>
-                                </div>
-
-
                             </div>
+
 
                         )}
 
@@ -1691,527 +1788,262 @@ export default function SettingsPage({ params }: any) {
 
                     <div className='w-full  flex flex-col gap-5 '>
 
-                        {/* profile picture */}
-                    
 
 
-
-                        {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    {My_Nickname}
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    {nickname}
-                                </div>
-
-                                
-                                <button
-                                    onClick={() => {
-
-                                        nicknameEdit ? setNicknameEdit(false) : setNicknameEdit(true);
-
-                                    } }
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {nicknameEdit ? Cancel : Edit}
-                                </button>
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
-
-
-                                
-                            </div>
-                        )}
-
-
-                        { (address && (nicknameEdit || !userCode)) && (
-                            <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div
-                                    className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
-                                >
-                                    {!userCode ? Enter_your_nickname :
-                                        nicknameEdit ? "수정할 내 닉네임" : Enter_your_nickname
-                                    }
-                                </div>
-
-                                <div className='flex flex-col gap-2 items-start justify-between'>
-                                    <input
-                                        disabled={!address}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-                                        placeholder={Enter_your_nickname}
-                                        
-                                        //value={nickname}
-                                        value={editedNickname}
-
-                                        type='text'
-                                        onChange={(e) => {
-                                            // check if the value is a number
-                                            // check if the value is alphanumeric and lowercase
-
-                                            if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                toast.error(Nickname_should_be_alphanumeric_lowercase);
-                                                return;
-                                            }
-                                            if ( e.target.value.length > 10) {
-                                                toast.error(Nickname_should_be_at_least_5_characters_and_at_most_10_characters);
-                                                return;
-                                            }
-
-                                            //setNickname(e.target.value);
-
-                                            setEditedNickname(e.target.value);
-
-                                            checkNicknameIsDuplicate(e.target.value);
-
-                                        } }
-                                    />
-
-                                    {editedNickname && isNicknameDuplicate && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-red-500'>
-                                                이미 사용중인 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
-
-                                    {editedNickname
-                                    && !isNicknameDuplicate
-                                    && editedNickname.length >= 5
-                                    && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-green-500'>
-                                                사용가능한 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
-                                </div>
-
-
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-xs font-semibold'>
-                                        {Nickname_should_be_5_10_characters}
-                                    </span>
-                                </div>
-                                <button
-                                    disabled={
-                                        !address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                    }
-                                    className={`
-                                        ${!address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                        ? 'bg-gray-300 text-gray-400'
-                                        : 'bg-blue-500 text-zinc-100'}
-
-                                        p-2 rounded-lg text-sm font-semibold
-                                    `}
-                                    onClick={() => {
-                                        setUserData();
-                                    }}
-                                >
-                                    {loadingSetUserData ? "저장중..." : Save}
-                                    
-                                </button>
-
-                                
-
-                            </div>
-                        )}
-
-
-                        {userCode && (
-                            <div className='flex flex-row xl:flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    {My_Profile_Picture}
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    <Uploader
-                                        lang={params.lang}
-                                        walletAddress={address as string}
-                                    />
-                                </div>
-
-                            </div>
-                        )}
-
-
-
-                        {/*
-                        {userCode && (
-
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div className="bg-red-800 text-sm text-zinc-100 p-2 rounded">
-                                    My Referral Code
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    {userCode}
-                                </div>
-
- 
-
-                                <button
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(userCode);
-                                        toast.success('Referral code copied to clipboard');
-                                    }}
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    Copy
-                                </button>
-
-                                <Image
-                                src="/verified.png"
-                                alt="Verified"
-                                width={20}
-                                height={20}
-                                className="rounded-lg"
-                                />
-
-
+                        {/* My AI 에이전트 NFT */}
+                        <div className='w-full flex flex-col gap-2 items-start justify-between
+                        border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                My AI 에이전트 NFT
                             </div>
 
-                        )}
-                        */}
+                            {address && myNfts && myNfts.length > 0 && (
+
+                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+
+                                    <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
+                                        {myNfts?.map((nft, index) => (
+                                            <div
+                                                key={index}
+                                                className='w-full flex flex-col gap-2 items-start justify-start border border-gray-300 p-4 rounded-lg
+                                                bg-yellow-100'
+                                            >
+
+                                                <div className='w-full flex flex-row gap-2 items-start justify-between'>
+                                                    {/* goto button for detail page */}
+                                                    {/*
+                                                    <button
+                                                        onClick={() => {
+
+                                                            //router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+
+                                                            // open new window
+
+                                                            window.open(
+                                                                'https://ppump.me/kr/polygon/tbot/?center=' + params.center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                            );
+
+
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                    >
+                                                        <span className='text-xs xl:text-lg font-semibold'>
+                                                            상세보기
+                                                        </span>
+                                                    </button>
+                                                    */}
+
+                                                    {/* referral link button */}
+                                                    <button
+                                                        onClick={() => {
+                                                            /*
+                                                            navigator.clipboard.writeText(
+                                                                referralUrl + '/?center=' + params.center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                            );
+                                                            */
+                                                            //toast.success('레퍼럴 URL 복사 완료');
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                    >
+                                                        레퍼럴 URL 복사하기
+                                                    </button>
+
+                                                </div>
+
+                                                {/* transfer NFT */}
+                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                    <input
+                                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                        placeholder="받는 사람 지갑주소"
+                                                        type='text'
+
+                                                        value={toAddressList.find((item) =>
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.to}
+
+                                                        onChange={(e) => {
+                                                            setToAddressList(toAddressList.map((item) => {
+
+                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                    return {
+                                                                        ...item,
+                                                                        to: e.target.value,
+                                                                    };
+                                                                } else {
+                                                                    return item;
+                                                                }
+                                                            }));
+                                                        }}
+                                                    />
+                                                    <button
+                                                        
+                                                        disabled={transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring}
+
+                                                        onClick={() => {
+                                                            transferNft(nft.contract.address, nft.tokenId);
+                                                        }}
+                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        ${transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring ? 'opacity-50' : ''}
+                                                        `}
+                                                    >
+                                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                                            {transferingNftList.find((item) =>
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring && (
+
+                                                                <Image
+                                                                    src="/loading.png"
+                                                                    alt="Send"
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="animate-spin"
+                                                                />
+                                                            )}
+                                                            <span className='text-lg font-semibold'>
+                                                                NFT 전송하기
+                                                            </span>
+                                                        </div>
+                                                    </button>
+
+                                                </div>
+
+
+                                                <div className='w-full grid grid-cols-2 gap-2 items-start justify-between'>
+
+
+                                                    <div className="flex flex-col gap-2 items-center justify-center">
+
+
+                                                        {/*
+                                                        <button
+                                                            onClick={() => {
+                                                                window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
+                                                            }}
+                                                            className="p-2 rounded hover:bg-gray-300"
+                                                        >
+                                                            <Image
+                                                                src="/logo-opensea.png"
+                                                                alt="OpenSea"
+                                                                width={30}
+                                                                height={30}
+                                                                className="rounded-lg"
+                                                            />
+                                                        </button>
+                                                        */}
+
+                                                        <Image
+                                                            src={nft.image.thumbnailUrl ? nft.image.thumbnailUrl : "/icon-anonymous.png"}
+                                                            alt="NFT"
+                                                            width={200}
+                                                            height={200}
+                                                            className="rounded-lg w-32 xl:w-40 border border-gray-300"
+                                                            
+                                                        />
+
+                                                        {/* 누적 배당수익 */}
+                                                        <div className='flex flex-col gap-2 items-start justify-between
+                                                            border border-gray-300 p-4 rounded-lg'>
+                                                            <span className='text-xs xl:text-lg font-semibold'>
+                                                                Total Dividend
+                                                            </span>
+                                                            <span className='text-xl xl:text-2xl font-semibold text-green-500'>
+                                                                0.00 USDT
+                                                            </span>
+                                                            {/* 배당 수령 */}
+                                                            {/*
+                                                            <button
+                                                                className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                                hover:bg-blue-600"
+                                                            >
+                                                                Claim Dividend
+                                                            </button>
+                                                            */}
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div className='flex flex-col gap-2 items-start justify-between'>
+                                                        {/* contract address */}
+                                                        <div className='text-xs font-semibold'>
+                                                            계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
+                                                        </div>
+                                                        <div className='text-2xl font-semibold text-blue-500'>
+                                                            계약번호: #{nft.tokenId}
+                                                        </div>
+                                                        <div className='text-sm font-semibold text-green-500'>
+                                                            {nft.name}
+                                                        </div>
+                                                        <div className='text-xs font-semibold'>
+                                                            {nft.description}
+                                                        </div>
+
+                                                        <div className='flex flex-col gap-2 items-start justify-between'>
+                                                            {/* // from now to mint in hours minutes seconds
+                                                            // now - mint */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Start{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
+                                                                    ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days ago`
+                                                                    : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours ago`
+                                                                }
+                                                            </span>
+                                                            
+                                                            {/* Accounts */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Accounts: 0
+                                                            </span>
+
+                                                            {/* Funds */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Funds: 0 USDT
+                                                            </span>
+
+                                                            {/* 수익률 */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                ROI: ??%
+                                                            </span>
 
 
 
-                        {userCode && seller && (
+                                                        </div>
 
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    {Seller}
-                                </div>
 
-                                <div className="flex flex-col p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    
-                                    <div className="text-lg font-semibold">
-                                        {seller?.bankInfo?.bankName}
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className="text-lg font-semibold">
-                                        {seller?.bankInfo?.accountNumber}
-                                    </div>
-                                    <div className="text-lg font-semibold">
-                                        {seller?.bankInfo?.accountHolder}
-                                    </div>
-
-                                </div>
-
-                                {/*
-                                <button
-                                    onClick={() => {
-                                        setEditSeller(!editSeller);
-                                    }}
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {editSeller ? Cancel : Edit}
-                                </button>
-                                */}
-
-                                {/* goto seller page /sell-usdt */}
-                                
-                                <button
-                                    onClick={() => {
-                                        router.push('/' + params.lang + '/' + params.chain + '/sell-usdt');
-
-                                    }}
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {Sell_USDT}
-                                </button>
-                                
-
-
-                                <Image
-                                src="/verified.png"
-                                alt="Verified"
-                                width={20}
-                                height={20}
-                                className="rounded-lg"
-                                />
 
 
                             </div>
-                        )}
-
-                        {
-                            //(userCode && !seller) || (userCode && seller && editSeller) && (
-                            address && (
-
-                            <div className='flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                
-                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
-
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Seller}
-                                    </div>
-
-                                    {!seller && (
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-sm font-semibold">
-                                            {Not_a_seller}
-                                        </div>
-                                    )}
-
-                                    {applying ? (
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {Applying}...
-                                        </div>
-                                    ) : (
-                                        <button
-                                            disabled={applying || !verifiedOtp}
-
-                                            onClick={() => {
-                                                // apply to be a seller
-                                                // set seller to true
-                                                // set seller to false
-                                                // set seller to pending
-
-                                                apply();
-
-                                            }}
-                                            className={`
-                                                ${!verifiedOtp ? 'bg-gray-300 text-gray-400'
-                                                : 'bg-green-500 text-zinc-100'}
-
-                                                p-2 rounded-lg text-sm font-semibold
-                                            `}
-                                        >
-                                            {Apply}
-                                        </button>
-                                    )}
-
-                                </div>
-
-                                {/* 은행명, 계좌번호, 예금주 */}
-                                <div className='flex flex-col gap-2 items-start justify-between'>
-                                                                        
-                                    <input 
-                                        disabled={applying}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder={Enter_your_bank_name}
-                                        value={bankName}
-                                        type='text'
-                                        onChange={(e) => {
-                                            setBankName(e.target.value);
-                                        }}
-                                    />
-                                    <input 
-                                        disabled={applying}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder={Enter_your_account_number}
-                                        value={accountNumber}
-                                        type='number'
-                                        onChange={(e) => {
-
-                                            // check if the value is a number
-
-                                            e.target.value = e.target.value.replace(/[^0-9]/g, '');
-
-                                            setAccountNumber(e.target.value);
-                                        }}
-                                    />
-                                    <input 
-                                        disabled={applying}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder={Enter_your_account_holder}
-                                        value={accountHolder}
-                                        type='text'
-                                        onChange={(e) => {
-                                            setAccountHolder(e.target.value);
-                                        }}
-                                    />
-                                </div>
-                                {/*
-                                <div className="text-xs font-semibold">
-                                    To become a seller, you need to send 1 USDT to the contract address
-                                </div>
-                                */}
 
 
+                            )}
 
-                            
 
-                                {/* otp verification */}
-
-                                {verifiedOtp ? (
-                                    <div className="w-full flex flex-row gap-2 items-center justify-center">
-                                    <Image
-                                        src="/verified.png"
-                                        alt="check"
-                                        width={30}
-                                        height={30}
-                                    />
-                                    <div className="text-white">
-                                        {OTP_verified}
-                                    </div>
-                                    </div>
-                                ) : (
-                                
-                            
-                                    <div className="w-full flex flex-row gap-2 items-start">
-
-                                    <button
-                                        disabled={!address || isSendingOtp}
-                                        onClick={sendOtp}
-                                        className={`
-                                        
-                                        ${isSendedOtp && 'hidden'}
-
-                                        w-32 p-2 rounded-md text-sm font-semibold
-
-                                            ${
-                                            !address || isSendingOtp
-                                            ?'bg-gray-300 text-gray-400'
-                                            : 'bg-blue-500 text-white'
-                                            }
-                                        
-                                        `}
-                                    >
-                                        {Send_OTP}
-                                    </button>
-
-                                    <div className={`flex flex-row gap-2 items-center justify-center ${!isSendedOtp && 'hidden'}`}>
-                                        <input
-                                        type="text"
-                                        placeholder={Enter_OTP}
-                                        className=" w-40 p-2 border border-gray-300 rounded text-black text-sm font-semibold"
-                                        value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        />
-
-                                        <button
-                                        disabled={!otp || isVerifingOtp}
-                                        onClick={verifyOtp}
-                                        className={`w-32 p-2 rounded-lg text-sm font-semibold
-
-                                            ${
-                                            !otp || isVerifingOtp
-                                            ?'bg-gray-300 text-gray-400'
-                                            : 'bg-green-500 text-white'
-                                            }
-                                            
-                                            `}
-                                        >
-                                            {Verify_OTP}
-                                        </button>
-                                    </div>
-
-                                    </div>
-
-                                )}
+                        </div>
 
 
 
 
-                            </div>
-                        )}
 
-
-                        {/* update USDT Price */}
-                        {address && (
-                            address === '0x68B4F181d97AF97d8b111Ad50A79AfeB33CF6be6'
-                            || address === '0x91CA2566C3345026647aBbACB56093144eAA4c16'
-                        )
-                            && (
-                            <div className='flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        Update USDT Price
-                                    </div>
-
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        1 USDT = {usdtPrice} KRW
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setUsdtPriceEdit(!usdtPriceEdit);
-                                        }}
-                                        className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                    >
-                                        {usdtPriceEdit ? Cancel : Edit}
-                                    </button>
-
-
-                                </div>
-
-                                {usdtPriceEdit && (
-                                    <div className='flex flex-col gap-2 items-center justify-between'>
-
-                                        <input 
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="Enter USDT Price"
-                                            type='number'
-                                            value={editUsdtPrice}
-                                            onChange={(e) => {
-                                                setEditUsdtPrice(e.target.value as any);
-                                            }}
-                                        />
-                                        <button
-                                            disabled={editingUsdtPrice}
-
-                                            className={`
-                                                ${editingUsdtPrice ? 'bg-gray-300 text-gray-400' : 'bg-green-500 text-zinc-100'}
-                                                p-2 rounded-lg text-sm font-semibold
-                                            `}
-
-                                            onClick={async () => {
-                                                // api call /api/order/updatePrice
-
-                                                const response = await fetch("/api/order/updatePrice", {
-                                                    method: "POST",
-                                                    headers: {
-                                                        "Content-Type": "application/json",
-                                                    },
-                                                    body: JSON.stringify({
-                                                        walletAddress: address,
-                                                        price: editUsdtPrice,
-                                                    }),
-                                                })
-                                                .then((response) => (
-
-                                                    toast.success('USDT price updated successfully'),
-                                                    
-                                                    setUsdtPrice(editUsdtPrice)
-                                                
-                                                ))
-
-                                            } }
-                                                
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-                                )}
-
-                            </div>
-                        )}
-
-                    
 
                     </div>
-
 
 
 
@@ -2266,31 +2098,22 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    AGENT
+                    OWIN
                     </span>
                 </div>
             </button>
 
             <div className="flex flex-row gap-2 items-center">
+
                 <button
                 onClick={() => {
                     router.push(
-                        "/kr/polygon/tbot?agent=" + agent + "&tokenId=" + tokenId + "&center=" + center
+                        '/kr/polygon/my-nft?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
                     );
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
                 >
-                TBOT
-                </button>
-                <button
-                onClick={() => {
-                    router.push(
-                        '/kr/polygon/profile-settings?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
-                    );
-                }}
-                className="text-gray-600 hover:underline text-xs xl:text-lg"
-                >
-                SETTINGS
+                    NFT
                 </button>
             </div>
 
