@@ -1074,7 +1074,9 @@ export default function AIPage({ params }: any) {
 
     const [userEmail, setUserEmail] = useState("");
     
-    const [htxUserId, setHtxUserId] = useState("");
+    ///const [htxUserId, setHtxUserId] = useState("");
+
+    const [okxUid, setOkxUid] = useState("");
 
     const [htxUsdtWalletAddress, setHtxUsdtWalletAddress] = useState("");
     const [apiAccessKey, setApiAccessKey] = useState("");
@@ -1116,8 +1118,8 @@ export default function AIPage({ params }: any) {
             return;
         }
 
-        if (htxUserId === "") {
-            toast.error("OKX UserId 입력해 주세요.");
+        if (okxUid === "") {
+            toast.error("OKX UID 입력해 주세요.");
             return;
         }
 
@@ -1175,7 +1177,7 @@ export default function AIPage({ params }: any) {
                 userTelegramId: userTelegramId,
                 userEmail: userEmail,
                 exchange: "okx",
-                htxUserId: htxUserId,
+                okxUid: okxUid,
                 htxUsdtWalletAddress: htxUsdtWalletAddress,
                 apiAccessKey: apiAccessKey,
                 apiSecretKey: apiSecretKey,
@@ -1422,37 +1424,44 @@ export default function AIPage({ params }: any) {
     // check htx api key
     const [checkingHtxApiKey, setCheckingHtxApiKey] = useState(false);
     const checkHtxApiKey = async (
-        htxAccessKey: string,
-        htxSecretKey: string,
+        apiAccessKey: string,
+        apiSecretKey: string,
+        apiPassword: string,
     ) => {
 
        
-        if (htxAccessKey === "") {
+        if (apiAccessKey === "") {
             toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
-        if (htxSecretKey === "") {
+        if (apiSecretKey === "") {
             toast.error("OKX Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (apiPassword === "") {
+            toast.error("OKX Password를 입력해 주세요.");
             return;
         }
 
         setCheckingHtxApiKey(true);
 
-        const response = await fetch("/api/agent/getAccountOkx", {
+        const response = await fetch("/api/okx/checkUID", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                htxAccessKey: htxAccessKey,
-                htxSecretKey: htxSecretKey,
+                apiAccessKey: apiAccessKey,
+                apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
             }),
         });
         /*
         {
             status: 'ok',
-            data: [ { id: 63912897, type: 'spot', subtype: '', state: 'working' } ]
+            okxUid: '1234',
         }
         */
 
@@ -1464,9 +1473,7 @@ export default function AIPage({ params }: any) {
 
             setIsValidAPIKey(true);
 
-            
-            //setHtxUserId(data.result?.data[0]?.id);
-            setHtxUserId("1234");
+            setOkxUid(data.result?.okxUid);
 
 
             toast.success("OKX API Key가 확인되었습니다.");
@@ -1477,6 +1484,7 @@ export default function AIPage({ params }: any) {
         setCheckingHtxApiKey(false);
 
     };
+
 
 
 
@@ -3237,10 +3245,14 @@ export default function AIPage({ params }: any) {
                                             {/* button for api call /api/agent/getAccount */}
                                             <button
                                                 disabled={!address || checkingHtxApiKey || !apiAccessKey || !apiSecretKey || !apiPassword || isValidAPIKey}
-                                                className={` ${checkingHtxApiKey || !apiAccessKey || !apiSecretKey || isValidAPIKey
+                                                className={` ${checkingHtxApiKey || !apiAccessKey || !apiSecretKey || !apiPassword || isValidAPIKey
                                                     ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold`}
                                                 onClick={() => {
-                                                    checkHtxApiKey(apiAccessKey, apiSecretKey);
+                                                    checkHtxApiKey(
+                                                        apiAccessKey,
+                                                        apiSecretKey,
+                                                        apiPassword,
+                                                    );
                                                 }}
                                             >
                                                 OKX API 정보 확인하기
@@ -3283,8 +3295,8 @@ export default function AIPage({ params }: any) {
                                             </span>
                                             <input
                                                 disabled={true}
-                                                value={htxUserId}
-                                                onChange={(e) => setHtxUserId(e.target.value)}
+                                                value={okxUid}
+                                                onChange={(e) => setOkxUid(e.target.value)}
                                                 type="text"
                                                 placeholder="OKX UserId"
                                                 className="w-full p-2 rounded-lg border border-gray-300"

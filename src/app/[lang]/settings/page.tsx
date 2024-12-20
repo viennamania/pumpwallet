@@ -531,7 +531,7 @@ export default function SettingsPage({ params }: any) {
                                     onClick={() => {
                                         activeWallet?.disconnect();
 
-                                        window.location.reload();
+                                        //window.location.reload();
                                     }}
                                     className="p-2 bg-red-500 text-zinc-100 rounded"
                                 >
