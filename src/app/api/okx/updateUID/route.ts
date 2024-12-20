@@ -51,14 +51,9 @@ export async function POST(request: NextRequest) {
 
     //console.log("jsonObj=", jsonObj);
 
-
     return NextResponse.json({
-      result: {
-        status: "ok",
-        okxUid: jsonObj.result.okxUid,
-      }
+      result: jsonObj.result,
     });
-
 
   
 }

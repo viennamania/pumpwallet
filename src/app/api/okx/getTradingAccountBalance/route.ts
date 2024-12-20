@@ -51,13 +51,18 @@ export async function POST(request: NextRequest) {
 
     //console.log("jsonObj=", jsonObj);
 
+    return NextResponse.json({
+      result: jsonObj.result,
+    });
 
+    /*
     return NextResponse.json({
       result: {
         status: "ok",
         tradingAccountBalance: jsonObj.result.tradingAccountBalance,
       }
     });
+    */
 
 
   
