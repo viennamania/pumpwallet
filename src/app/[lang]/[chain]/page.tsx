@@ -1153,7 +1153,7 @@ export default function Index({ params }: any) {
 
 
 
-        {true && (
+        {!address && (
 
           <div className="w-full flex flex-col justify-center items-start gap-2 p-2">
 
@@ -1190,7 +1190,7 @@ export default function Index({ params }: any) {
               }}
               theme={"light"}
               connectButton={{
-                label: "Sign in with AGENT Wallet",
+                label: "Sign in with Wallet",
               }}
               connectModal={{
                 size: "wide", 
@@ -2007,7 +2007,7 @@ function Header(
             className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
           />
           <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-            AGENT
+            PPUMP
           </span>
         </div>
         {/* menu */}

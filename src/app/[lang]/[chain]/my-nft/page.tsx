@@ -1103,48 +1103,13 @@ export default function SettingsPage({ params }: any) {
 
    /* my NFTs */
    const [myNfts, setMyNfts] = useState([] as any[]);
+   const [loadingMyNfts, setLoadingMyNfts] = useState(false);
 
 
-   
-   useEffect(() => {
+   const getMyNFTs = async () => {
 
-
-       const getMyNFTs = async () => {
-
-            
-           try {
-
-                /*
-                const contract = getContract({
-                     client,
-                     chain: polygon,
-                     address: erc721ContractAddress,
-                });
-
-
-                
-                const nfts = await getOwnedNFTs({
-                    contract: contract,
-                    owner: address as string,
-                });
-
-                console.log("nfts=======", nfts);
-
-                setMyNfts( nfts );
-                */
-
-                /*
-                setMyNfts([
-                    {
-                         name: "AI Agent",
-                         description: "This is AI Agent",
-                         image: "https://owinwallet.com/logo-aiagent.png",
-                    },
-                ]);
-                */
-
-
-                // api /api/agent/getAgentNFTByWalletAddress
+        setLoadingMyNfts(true);
+        try {
 
                 const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
                     method: "POST",
@@ -1176,24 +1141,70 @@ export default function SettingsPage({ params }: any) {
                 } else {
                     setMyNfts([]);
                 }
-                
-                   
-   
+
+        } catch (error) {
+            console.error("Error getting NFTs", error);
+        }
+
+        setLoadingMyNfts(false);
+
+    };
 
 
-           } catch (error) {
-               console.error("Error getting NFTs", error);
-           }
-           
+   useEffect(() => {
 
-       };
 
-       if (address ) {
-           getMyNFTs();
-       }
+    const getMyNFTs = async () => {
 
-   }
-   , [ address ]);
+        setLoadingMyNfts(true);
+        try {
+
+                const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        walletAddress: address,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get NFTs');
+                }
+
+                const data = await response.json();
+
+                //console.log("myOwnedNfts====", data.result);
+
+                // exclude constract.isSpam = true;
+
+                if (data.result) {
+
+                    setMyNfts(
+                        data.result.ownedNfts.filter((nft: any) => !nft.contract.isSpam)
+                    )
+
+                    ////setMyNfts(data.result.ownedNfts);
+                } else {
+                    setMyNfts([]);
+                }
+
+        } catch (error) {
+            console.error("Error getting NFTs", error);
+        }
+
+        setLoadingMyNfts(false);
+
+    };
+
+
+    if (address) getMyNFTs();
+            
+
+
+
+    } , [address]);
    
 
 
@@ -1675,9 +1686,10 @@ export default function SettingsPage({ params }: any) {
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                        <div className='flex flex-col gap-2'>
+                        {!address && (
+                            <div className='flex flex-col gap-2'>
 
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            
                                 <ConnectButton
                                     client={client}
                                     wallets={wallets}
@@ -1697,35 +1709,17 @@ export default function SettingsPage({ params }: any) {
                                     locale={"ko_KR"}
                                     //locale={"en_US"}
                                 />
-                                {/* userType */}
-                                {address && userType === "telegram" && (
-                                    <button
-                                        onClick={() => {
-                                            window.open("https://t.me/ppump_bot", "_blank");
-                                        }}
-                                        className="p-2 bg-zinc-800 text-white rounded"
-                                        >
-                                        <div className="flex flex-row gap-2 items-center">
-                                            <Image
-                                            src="/logo-telegram.webp"
-                                            alt="Telegram"
-                                            width={50}
-                                            height={50}
-                                            className="rounded-lg w-10 h-10"
-                                            />
-                                            <span>Go to Telegram</span>
-                                        </div>
-                                    </button>
-                                )}
-                            </div>
 
-                            {!address && (
+
+                            
                                 <div className="text-xs xl:text-sm font-semibold">
                                     {Please_connect_your_wallet_first}
                                 </div>
-                            )}
+                           
 
-                        </div>
+                            </div>
+
+                        )}
 
 
 
@@ -1735,7 +1729,7 @@ export default function SettingsPage({ params }: any) {
 
                             <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
                             
-                                <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-5">
+                                <div className="w-full flex flex-col xl:flex-row items-center justify-start gap-5">
                                     <Image
                                     src="/icon-wallet-live.gif"
                                     alt="Wallet"
@@ -1756,21 +1750,25 @@ export default function SettingsPage({ params }: any) {
                                         </button>
                                     </div>
 
-                                    {/* wallet address */}
-                                    <div className="text-xs xl:text-sm font-semibold">
-                                        {address}
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        {/* wallet address */}
+                                        <div className="text-sm xl:text-lg font-semibold">
+                                            {address.slice(0, 6) + "..." + address.slice(-4)}
+                                        </div>
+
+                                        {/* copy button */}
+                                        <button
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(address);
+                                                toast.success('지갑 주소 복사 완료');
+                                            }}
+                                            className="bg-zinc-800 text-white p-2 rounded-lg"
+                                        >
+                                            지갑주소 복사하기
+                                        </button>
                                     </div>
 
-                                    {/* copy button */}
-                                    <button
-                                        onClick={() => {
-                                            navigator.clipboard.writeText(address);
-                                            toast.success('지갑 주소 복사 완료');
-                                        }}
-                                        className="bg-zinc-800 text-white p-2 rounded-lg"
-                                    >
-                                        복사하기
-                                    </button>
+
 
                                 </div>
 
@@ -1793,9 +1791,30 @@ export default function SettingsPage({ params }: any) {
                         {/* My AI 에이전트 NFT */}
                         <div className='w-full flex flex-col gap-2 items-start justify-between
                         border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                My AI 에이전트 NFT
+
+                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                    My AI 에이전트 NFT
+                                </div>
+                                {/* refresh button */}
+                                {address && (
+                                    <button
+                                        disabled={loadingMyNfts}
+                                        onClick={() => {
+                                            getMyNFTs();
+                                        }}
+                                        className={
+                                            loadingMyNfts
+                                            ? "bg-gray-300 text-gray-500 p-2 rounded"
+                                            : "bg-zinc-800 text-white p-2 rounded"
+                                        }
+                                    >
+                                        {loadingMyNfts ? "로딩중..." : "새로고침"}
+                                    </button>
+                                )}
+
                             </div>
+
 
                             {address && myNfts && myNfts.length > 0 && (
 
@@ -1840,80 +1859,19 @@ export default function SettingsPage({ params }: any) {
                                                     {/* referral link button */}
                                                     <button
                                                         onClick={() => {
-                                                            /*
+                                                            
                                                             navigator.clipboard.writeText(
-                                                                referralUrl + '/?center=' + params.center +
+                                                                'https://ppump.me/kr/polygon/tbot' + '/?center=' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
-                                                            */
-                                                            //toast.success('레퍼럴 URL 복사 완료');
+                                                            
+                                                            toast.success('레퍼럴 URL 복사 완료');
                                                         }}
                                                         className="p-2 bg-blue-500 text-zinc-100 rounded
                                                         hover:bg-blue-600 text-xs xl:text-lg font-semibold"
                                                     >
                                                         레퍼럴 URL 복사하기
-                                                    </button>
-
-                                                </div>
-
-                                                {/* transfer NFT */}
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                                    <input
-                                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                                        placeholder="받는 사람 지갑주소"
-                                                        type='text'
-
-                                                        value={toAddressList.find((item) =>
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.to}
-
-                                                        onChange={(e) => {
-                                                            setToAddressList(toAddressList.map((item) => {
-
-                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                    return {
-                                                                        ...item,
-                                                                        to: e.target.value,
-                                                                    };
-                                                                } else {
-                                                                    return item;
-                                                                }
-                                                            }));
-                                                        }}
-                                                    />
-                                                    <button
-                                                        
-                                                        disabled={transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring}
-
-                                                        onClick={() => {
-                                                            transferNft(nft.contract.address, nft.tokenId);
-                                                        }}
-                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                        ${transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring ? 'opacity-50' : ''}
-                                                        `}
-                                                    >
-                                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                                            {transferingNftList.find((item) =>
-                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                            )?.transferring && (
-
-                                                                <Image
-                                                                    src="/loading.png"
-                                                                    alt="Send"
-                                                                    width={25}
-                                                                    height={25}
-                                                                    className="animate-spin"
-                                                                />
-                                                            )}
-                                                            <span className='text-lg font-semibold'>
-                                                                NFT 전송하기
-                                                            </span>
-                                                        </div>
                                                     </button>
 
                                                 </div>
@@ -2025,6 +1983,69 @@ export default function SettingsPage({ params }: any) {
                                                 </div>
 
 
+                                                {/* transfer NFT */}
+                                                <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                                    <input
+                                                        className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                        placeholder="받는 사람 지갑주소"
+                                                        type='text'
+
+                                                        value={toAddressList.find((item) =>
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.to}
+
+                                                        onChange={(e) => {
+                                                            setToAddressList(toAddressList.map((item) => {
+
+                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                    return {
+                                                                        ...item,
+                                                                        to: e.target.value,
+                                                                    };
+                                                                } else {
+                                                                    return item;
+                                                                }
+                                                            }));
+                                                        }}
+                                                    />
+                                                    <button
+                                                        
+                                                        disabled={transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring}
+
+                                                        onClick={() => {
+                                                            transferNft(nft.contract.address, nft.tokenId);
+                                                        }}
+                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        ${transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring ? 'opacity-50' : ''}
+                                                        `}
+                                                    >
+                                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                                            {transferingNftList.find((item) =>
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring && (
+
+                                                                <Image
+                                                                    src="/loading.png"
+                                                                    alt="Send"
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="animate-spin"
+                                                                />
+                                                            )}
+                                                            <span className='text-lg font-semibold'>
+                                                                NFT 전송하기
+                                                            </span>
+                                                        </div>
+                                                    </button>
+
+                                                </div>
+
+
+
                                             </div>
                                         ))}
                                     </div>
@@ -2098,7 +2119,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    OWIN
+                    PPUMP
                     </span>
                 </div>
             </button>
