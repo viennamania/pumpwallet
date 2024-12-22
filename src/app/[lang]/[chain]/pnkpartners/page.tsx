@@ -417,7 +417,7 @@ export default function AIPage({ params }: any) {
 
             const nftData = await fetchedNFT.json();
 
-            console.log("nftData.result.mint.transactionHash", nftData.result?.mint?.transactionHash);
+            //console.log("nftData.result.mint.transactionHash", nftData.result?.mint?.transactionHash);
 
 
             if (nftData.result?.mint?.transactionHash) {

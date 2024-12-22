@@ -152,7 +152,7 @@ const contractErc1155 = getContract({
 export default function AIPage({ params }: any) {
 
 
-    console.log("SettingsPage params", params);
+    //console.log("SettingsPage params", params);
     
     
     // get params from the URL
@@ -398,8 +398,8 @@ export default function AIPage({ params }: any) {
             let agentTokenId = agentNumber as string || "";
 
 
-            console.log("agentContractAddress", agentContractAddress);
-            console.log("agentTokenId", agentTokenId);
+            //console.log("agentContractAddress", agentContractAddress);
+            //console.log("agentTokenId", agentTokenId);
 
             // 0x50985B6974bFE7bFCCE313dfB59abd58EF4310fA 0 default
             /*
@@ -439,7 +439,7 @@ export default function AIPage({ params }: any) {
                 return;
             }
 
-            console.log("agentUserInfo", agentUserInfo);
+            //console.log("agentUserInfo", agentUserInfo);
 
             setReferralUserInfo(agentUserInfo.result);
 
@@ -465,7 +465,7 @@ export default function AIPage({ params }: any) {
 
             const nftData = await fetchedNFT.json();
 
-            console.log("nftData.result.mint.transactionHash", nftData.result?.mint?.transactionHash);
+            //console.log("nftData.result.mint.transactionHash", nftData.result?.mint?.transactionHash);
 
 
             if (nftData.result?.mint?.transactionHash) {
@@ -488,8 +488,8 @@ export default function AIPage({ params }: any) {
 
     } , [agent, agentNumber]);
 
-    console.log("isValidReferralLoading", isValidReferralLoading);
-    console.log("isValidReferral", isValidReferral);
+    //console.log("isValidReferralLoading", isValidReferralLoading);
+    //console.log("isValidReferral", isValidReferral);
 
     
 
@@ -739,7 +739,7 @@ export default function AIPage({ params }: any) {
     const [masterBot, setMasterBot] = useState({} as any);
 
 
-    console.log("address", address);
+    ////console.log("address", address);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -784,8 +784,8 @@ export default function AIPage({ params }: any) {
 
 
 
-    console.log("nickname", nickname);
-    console.log("userCode", userCode);
+    //console.log("nickname", nickname);
+    //console.log("userCode", userCode);
 
 
   
@@ -891,7 +891,7 @@ export default function AIPage({ params }: any) {
                     transaction: transaction,
                 });
 
-                console.log("result", result);
+                //console.log("result", result);
 
                 toast.success(Alert_NFT_minted);
 
@@ -965,8 +965,8 @@ export default function AIPage({ params }: any) {
 
 
 
-    console.log("address", address);
-    console.log("agent", agent);
+    //console.log("address", address);
+    //console.log("agent", agent);
     
 
 
@@ -1193,7 +1193,6 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        //console.log("data", data);
 
         if (data.result) {
             setApplyingMintNFT(false);
@@ -1260,7 +1259,9 @@ export default function AIPage({ params }: any) {
 
             const data = await response.json();
 
-            //////console.log("getMyAgent data=========", data);
+            //console.log("getMyAgent data=========", data);
+
+
 
             if (data.result) {
 
@@ -1413,7 +1414,7 @@ export default function AIPage({ params }: any) {
     } , [agentNumber]);
 
 
-    console.log("selectedBotNumber", selectedBotNumber);
+    ///console.log("selectedBotNumber", selectedBotNumber);
 
 
 
@@ -1587,7 +1588,7 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result", data.result);
+        //console.log("data.result", data.result);
 
         if (data.result?.status === "ok") {
             toast.success("OKX 선물 계정으로 이체되었습니다.");
@@ -1603,7 +1604,8 @@ export default function AIPage({ params }: any) {
 
 
     // check trading account balance
-    const [tradingAccountBalance, setTradingAccountBalance] = useState({} as any);
+    //const [tradingAccountBalance, setTradingAccountBalance] = useState({} as any);
+
     const [checkingTradingAccountBalance, SetCheckingTradingAccountBalance] = useState(false);
 
 
@@ -1647,7 +1649,7 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result========", data.result);
+        //console.log("data.result========", data.result);
         /*
         {
             "status": "ok",
@@ -1667,7 +1669,15 @@ export default function AIPage({ params }: any) {
             );
             */
 
-            setTradingAccountBalance(data.result?.tradingAccountBalance);
+            //setTradingAccountBalance(data.result?.tradingAccountBalance);
+
+            // update myAgent trading account balance
+
+            setMyAgent({
+                ...myAgent,
+                tradingAccountBalance: data.result?.tradingAccountBalance,
+            });
+
 
 
             toast.success("OKX 자산 가치가 확인되었습니다.");
@@ -1718,7 +1728,7 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result====", data.result);
+        ///console.log("data.result====", data.result);
 
         if (data.result?.status === "ok") {
 
@@ -1805,7 +1815,7 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result====", data.result);
+        ///console.log("data.result====", data.result);
 
         if (data.result?.status === "ok") {
 
@@ -1844,7 +1854,7 @@ export default function AIPage({ params }: any) {
         const data = await response?.json();
 
 
-        console.log("checkNicknameIsDuplicate data", data);
+        //console.log("checkNicknameIsDuplicate data", data);
 
         if (data.result) {
             setIsNicknameDuplicate(true);
@@ -2886,19 +2896,22 @@ export default function AIPage({ params }: any) {
                                                         </span>
                                                     )}
                                                 </div>
-                                                {tradingAccountBalance && (
+                                                
                                                     <div className='flex flex-col gap-2'>
                                                         <span className='text-sm font-semibold text-gray-500'>
                                                             OKX 자산 가치: {
-                                                            tradingAccountBalance?.balance && Number(tradingAccountBalance?.balance).toFixed(2)
+                                                            //tradingAccountBalance?.balance && Number(tradingAccountBalance?.balance).toFixed(2)
+
+                                                            myAgent?.tradingAccountBalance?.balance && Number(myAgent?.tradingAccountBalance?.balance).toFixed(2)
                                                         } USD
                                                         </span>
                                                         {/* timestamp */}
                                                         <span className='text-sm font-semibold text-gray-500'>
-                                                            {new Date(tradingAccountBalance?.timestamp).toLocaleString()}
+                                                            {/*new Date(tradingAccountBalance?.timestamp).toLocaleString()*/}
+                                                            {new Date(myAgent?.tradingAccountBalance?.timestamp).toLocaleString()}
                                                         </span>
                                                     </div>
-                                                )}
+                                                
 
                                             </div>
 
@@ -3096,8 +3109,7 @@ export default function AIPage({ params }: any) {
                                                                     name="agent"
                                                                     checked={agent.erc721ContractAddress === agentBot}
                                                                     onChange={(e) => {
-                                                                        console.log(e.target.value);
-
+                                                       
                                                                         //setAgentBot(e.target.value);
                                                                         changeAgentBot(e.target.value);
 
