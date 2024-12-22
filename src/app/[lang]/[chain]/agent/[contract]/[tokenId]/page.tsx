@@ -1030,6 +1030,7 @@ export default function AgentPage({ params }: any) {
                         </div>
 
                         {/* button for transfer owner */}
+                        {/*
                         {address && ownerInfo?.walletAddress && address === ownerInfo?.walletAddress && (
                           <div className='w-full flex flex-col items-center justify-between gap-2'>
                             
@@ -1075,6 +1076,7 @@ export default function AgentPage({ params }: any) {
                             </button>
                           </div>
                         )}
+                        */}
 
 
 
