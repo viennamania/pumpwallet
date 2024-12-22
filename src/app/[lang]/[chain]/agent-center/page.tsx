@@ -2645,6 +2645,22 @@ export default function AIPage({ params }: any) {
                                                 )}
                                             </div>
 
+
+                                            {/* accountConfig */}
+                                            {application?.accountConfig && (
+                                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className='text-xs text-yellow-800'>
+                                                            KYC Level
+                                                        </span>
+                                                        <span className='text-sm text-gray-800'>
+                                                            {application.accountConfig.data.kycLv}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>

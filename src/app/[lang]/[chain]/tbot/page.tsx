@@ -1423,7 +1423,7 @@ export default function AIPage({ params }: any) {
 
     // check htx api key
     const [checkingHtxApiKey, setCheckingHtxApiKey] = useState(false);
-    const checkHtxApiKey = async (
+    const checkOkxApiKey = async (
         apiAccessKey: string,
         apiSecretKey: string,
         apiPassword: string,
@@ -1602,54 +1602,80 @@ export default function AIPage({ params }: any) {
 
 
 
-    // check htx asset valuation
-    const [checkingHtxAssetValuation, setCheckingHtxAssetValuation] = useState(false);
+    // check trading account balance
+    const [tradingAccountBalance, setTradingAccountBalance] = useState({} as any);
+    const [checkingTradingAccountBalance, SetCheckingTradingAccountBalance] = useState(false);
 
 
-    const checkHtxAssetValuation = async (
-        htxAccessKey: string,
-        htxSecretKey: string,
+    const checkTradingAccountBalance = async (
+        applicationId: string,
+        apiAccessKey: string,
+        apiSecretKey: string,
+        apiPassword: string,
+
     ) => {
 
-        if (htxAccessKey === "") {
+        if (apiAccessKey === "") {
             toast.error("OKX Access Key를 입력해 주세요.");
             return;
         }
 
-        if (htxSecretKey === "") {
+        if (apiSecretKey === "") {
             toast.error("OKX Secret Key를 입력해 주세요.");
             return;
         }
 
-        setCheckingHtxAssetValuation(true);
+        if (apiPassword === "") {
+            toast.error("OKX Password를 입력해 주세요.");
+            return;
+        }
 
-        const response = await fetch("/api/agent/getAssetValuation", {
+        SetCheckingTradingAccountBalance(true);
+
+        const response = await fetch("/api/okx/getTradingAccountBalance", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                htxAccessKey: htxAccessKey,
-                htxSecretKey: htxSecretKey,
+                applicationId: applicationId,
+                apiAccessKey: apiAccessKey,
+                apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
             }),
         });
 
         const data = await response.json();
 
         console.log("data.result========", data.result);
+        /*
+        {
+            "status": "ok",
+            "tradingAccountBalance": {
+                "balance": "0.9994902144753992",
+                "timestamp": 1734850234810
+            }
+        }
+        */
+        
 
         if (data.result?.status === "ok") {
 
+            /*
             setHtxAssetValuation(
                 data.result?.assetValuation
             );
+            */
+
+            setTradingAccountBalance(data.result?.tradingAccountBalance);
+
 
             toast.success("OKX 자산 가치가 확인되었습니다.");
         } else {
             toast.error("OKX 자산 가치를 확인할 수 없습니다.");
         }
 
-        setCheckingHtxAssetValuation(false);
+        SetCheckingTradingAccountBalance(false);
 
     };
 
@@ -2743,9 +2769,9 @@ export default function AIPage({ params }: any) {
 
                                             <div className='flex flex-col gap-2'>
                                                 
-                                                <div className='flex flex-row items-center justify-between gap-2'>
+                                            <div className='flex flex-row items-center justify-between gap-2'>
                                                     <span className='text-sm font-semibold text-gray-500'>
-                                                        OKX UID: {myAgent.htxUid}
+                                                        OKX UID: {myAgent?.okxUid}
                                                     </span>
                                                     <Image
                                                         src="/verified.png"
@@ -2792,17 +2818,32 @@ export default function AIPage({ params }: any) {
                                                     />
                                                 </div>
 
-                                                <div className='hidden flex-row items-center justify-between gap-2'>
+                                                {/* KYC Level */}
+                                                {/* myAgent.accountConfig.data.kycLv */}
+                                                <div className='flex flex-row items-center justify-between gap-2'>
                                                     <span className='text-sm font-semibold text-gray-500'>
-                                                        OKX USDT(TRON) 지갑주소: {myAgent.htxUsdtWalletAddress.substring(0, 10) + "..."}
+                                                        KYC Level: {myAgent?.accountConfig?.data?.kycLv}
                                                     </span>
-                                                    <Image
-                                                        src="/verified.png"
-                                                        alt="verified"
-                                                        width={20}
-                                                        height={20}
-                                                    />
+
+                                                    {myAgent?.accountConfig?.data?.kycLv < 2 ? (
+                                                        <div className='flex flex-row items-center gap-2'>
+                                                            <span className='text-sm font-semibold text-red-500'>
+                                                                KYC 레벨이 낮습니다.
+                                                            </span>
+                                                        </div>
+
+                                                    ) : (
+                                                        <Image
+                                                            src="/verified.png"
+                                                            alt="verified"
+                                                            width={20}
+                                                            height={20}
+                                                        />
+                                                    )}
                                                 </div>
+
+
+
 
                                                 <span className='text-sm font-semibold text-gray-500'>
                                                     닉네임: {myAgent.userName}
@@ -2817,41 +2858,47 @@ export default function AIPage({ params }: any) {
                                             </div>
 
 
-                                            {/* checkHtxAssetValuation */}
+                                            {/* checkTradingAccountBalance */}
                                             <div className='flex flex-col gap-2'>
                                                 
                                                 <div className='flex flex-row items-center gap-2'>
                                                     <button
                                                         disabled={
-                                                            !myAgent?.apiAccessKey || !myAgent?.apiSecretKey || checkingHtxAssetValuation
+                                                            !myAgent?.apiAccessKey || !myAgent?.apiSecretKey || !myAgent?.apiPassword || checkingTradingAccountBalance
                                                         }
                                                         className={`
-                                                            ${!myAgent?.apiAccessKey || !myAgent?.apiSecretKey || checkingHtxAssetValuation ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold
+                                                            ${!myAgent?.apiAccessKey || !myAgent?.apiSecretKey || !myAgent?.apiPassword || checkingTradingAccountBalance ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold
                                                         `}
                                                         onClick={() => {
-                                                            checkHtxAssetValuation(myAgent.apiAccessKey, myAgent.apiSecretKey);
+                                                            checkTradingAccountBalance(
+                                                                myAgent.id,
+                                                                myAgent.apiAccessKey,
+                                                                myAgent.apiSecretKey,
+                                                                myAgent.apiPassword
+                                                            );
                                                         }}
                                                     >
                                                         OKX 자산 가치 확인
                                                     </button>
-                                                    {checkingHtxAssetValuation && (
+                                                    {checkingTradingAccountBalance && (
                                                         <span className='text-sm font-semibold text-blue-500'>
                                                             OKX 자산 가치 확인중...
                                                         </span>
                                                     )}
                                                 </div>
-                                                {htxAssetValuation?.balance && (
+                                                {tradingAccountBalance && (
                                                     <div className='flex flex-col gap-2'>
                                                         <span className='text-sm font-semibold text-gray-500'>
-                                                            OKX 자산 가치: {htxAssetValuation?.balance} USDT
+                                                            OKX 자산 가치: {
+                                                            tradingAccountBalance?.balance && Number(tradingAccountBalance?.balance).toFixed(2)
+                                                        } USD
                                                         </span>
                                                         {/* timestamp */}
                                                         <span className='text-sm font-semibold text-gray-500'>
-                                                            {new Date(htxAssetValuation?.timestamp).toLocaleString()}
+                                                            {new Date(tradingAccountBalance?.timestamp).toLocaleString()}
                                                         </span>
                                                     </div>
                                                 )}
-                                            
 
                                             </div>
 
@@ -3248,7 +3295,7 @@ export default function AIPage({ params }: any) {
                                                 className={` ${checkingHtxApiKey || !apiAccessKey || !apiSecretKey || !apiPassword || isValidAPIKey
                                                     ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold`}
                                                 onClick={() => {
-                                                    checkHtxApiKey(
+                                                    checkOkxApiKey(
                                                         apiAccessKey,
                                                         apiSecretKey,
                                                         apiPassword,
