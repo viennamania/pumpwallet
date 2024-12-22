@@ -15,19 +15,14 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  /*
-  walletAddress: address,
-  agentBot: agentBot,
-  userName: userName,
-  userPhoneNumber: userPhoneNumber,
-  userEmail: userEmail,
-  htxUid: htxUid,
-  htxUsdtWalletAddress: htxUsdtWalletAddress,
-  apiAccessKey: apiAccessKey,
-  apiSecretKey: apiSecretKey,
-  */
 
-  const { marketingCenter, center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, exchange, okxUid, htxUsdtWalletAddress, apiAccessKey, apiSecretKey, apiPassword } = body;
+
+
+  
+
+
+
+  const { marketingCenter, center, walletAddress, agentBot, agentBotNumber, userName, userPhoneNumber, userEmail, userTelegramId, exchange, htxUsdtWalletAddress, apiAccessKey, apiSecretKey, apiPassword } = body;
 
 
 
@@ -48,7 +43,7 @@ export async function POST(request: NextRequest) {
       userEmail: userEmail,
       userTelegramId: userTelegramId,
       exchange: exchange,
-      okxUid: okxUid,
+ 
       htxUsdtWalletAddress: htxUsdtWalletAddress,
       apiAccessKey: apiAccessKey,
       apiSecretKey: apiSecretKey,

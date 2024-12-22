@@ -425,6 +425,10 @@ export default function AIPage({ params }: any) {
                 }),
             });
 
+            //console.log("fetchAgentUserInfo", fetchAgentUserInfo);
+
+
+
             if (!fetchAgentUserInfo.ok) {
                 console.error("Error fetching agent");
                 setIsValidReferralLoading(false);
@@ -433,6 +437,9 @@ export default function AIPage({ params }: any) {
 
 
             const agentUserInfo = await fetchAgentUserInfo.json();
+
+            //console.log("agentUserInfo", agentUserInfo);
+
 
             if (!agentUserInfo.result) {
                 setIsValidReferralLoading(false);
@@ -465,10 +472,15 @@ export default function AIPage({ params }: any) {
 
             const nftData = await fetchedNFT.json();
 
+            //console.log("nftData", nftData);
+
             //console.log("nftData.result.mint.transactionHash", nftData.result?.mint?.transactionHash);
 
 
-            if (nftData.result?.mint?.transactionHash) {
+            //if (nftData.result?.mint?.transactionHash) {
+            if (nftData.result) {
+
+
 
                 setIsValidReferral(true);
 
