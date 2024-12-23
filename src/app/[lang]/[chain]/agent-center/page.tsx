@@ -2418,12 +2418,6 @@ export default function AIPage({ params }: any) {
                                             총 {applications.length}개의 신청이 있습니다.
                                         </span>
 
-                                        {/* startTrading is exist count */}
-                                        <span className='text-lg text-gray-800'>
-                                            시작된 Bot: {applications.filter((item) => item.startTrading).length}개
-                                        </span>
-
-
                                     </div>
 
                                 )}
@@ -2448,7 +2442,14 @@ export default function AIPage({ params }: any) {
 
                                 {/* totalTradingAccountBalance */}
                                 {totalTradingAccountBalance > 0 && (
-                                    <div className='w-full flex flex-col gap-2'>
+                                    <div className='w-full flex flex-row gap-2'>
+                                        {/* startTrading is exist count */}
+                                        <span className='text-2xl text-gray-800 font-semibold'>
+                                            시작된 Bot: {
+                                                applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                                            }개
+                                        </span>
+                                        {' '}/{' '}
                                         <span className='text-2xl font-semibold text-gray-800'>
                                             총 거래 계정 잔고: {
                                             Number(totalTradingAccountBalance).toLocaleString('en-US', {
@@ -2456,8 +2457,6 @@ export default function AIPage({ params }: any) {
                                                 currency: 'USD'
                                             })
                                             }
-
-
                                         </span>
                                     </div>
                                 )}
@@ -2470,23 +2469,41 @@ export default function AIPage({ params }: any) {
                                     {address && !loadingApplications && applications.map((application) => (
                                         <div
                                             key={application._id}
-                                            className='w-full flex flex-col gap-5
+                                            className={`w-full flex flex-col gap-5
                                             border border-gray-300 p-4 rounded-lg bg-gray-100
-                                        '>
 
-                                            {/* 신청번호, 신청일자 */}
-                                            <div className='w-full flex flex-col items-start justify-between gap-2
+                                            ${application?.accountConfig?.data.roleType === "2" ? "border border-green-500" : ""}
+
+                                            `}
+                                        >
+
+                                           {/* 신청번호, 신청일자 */}
+                                           <div className='w-full flex flex-col items-start justify-between gap-2
                                                 border-b border-gray-300 pb-2
                                             '>
-                                                
-                                                <span className='text-lg font-semibold text-gray-800'>
-                                                    신청번호: #{application.id}
-                                                </span>
+                                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                    <span className='text-lg font-semibold text-gray-800'>
+                                                        신청번호: #{application.id}
+                                                    </span>
+
+                                                    {application?.accountConfig?.data.roleType === "2" && (
+                                                        <Image
+                                                            src="/icon-trading-live.gif"
+                                                            alt="Trading"
+                                                            width={80}
+                                                            height={30}
+                                                        />
+                                                    )}
+
+
+                                                </div>
+                                                {/*
                                                 <span className='text-sm text-gray-800'>
                                                     신청일자: {
                                                         new Date(application.createdAt).toLocaleString()
                                                     }
                                                 </span>  
+                                                */}
 
                                                 {/* time ago */}
                                                 <span className='text-xs text-gray-800'>
@@ -2503,6 +2520,7 @@ export default function AIPage({ params }: any) {
                                                 </span>                                              
 
                                             </div>
+
 
                                             {/* application?.center */}
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
@@ -2711,15 +2729,132 @@ export default function AIPage({ params }: any) {
 
                                             {/* accountConfig */}
                                             {application?.accountConfig && (
-                                                <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                <div className='w-full flex flex-col items-start justify-between gap-2'>
                                                     <div className='flex flex-col gap-2'>
                                                         <span className='text-xs text-yellow-800'>
                                                             KYC Level
                                                         </span>
-                                                        <span className='text-sm text-gray-800'>
-                                                            {application.accountConfig.data.kycLv}
-                                                        </span>
+                                                        <div className='flex flex-row items-center gap-2'>
+                                                            <span className='text-sm text-gray-800'>
+                                                                {application.accountConfig.data.kycLv}
+                                                            </span>
+                                                            {application.accountConfig.data.kycLv === "0" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    본인 인증 필요
+                                                                </span>
+                                                            ) : (
+                                                                <div className='flex flex-row items-center gap-2'>
+                                                                    <span className='text-lg text-green-800 font-semibold'>
+                                                                        본인 인증 완료
+                                                                    </span>
+                                                                    <Image
+                                                                        src="/verified.png"
+                                                                        alt="Verified"
+                                                                        width={20}
+                                                                        height={20}
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
+
+                                                    {/* acctLv */}
+                                                    {/*
+                                                    1: Spot mode
+                                                    2: Spot and futures mode
+                                                    3: Multi-currency margin
+                                                    4: Portfolio margin
+                                                    */}
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className='text-xs text-yellow-800'>
+                                                            Account mode
+                                                        </span>
+                                                        <div className='flex flex-row items-center gap-2'>
+                                                            <span className='text-sm text-gray-800'>
+                                                                {application.accountConfig.data.acctLv}
+                                                            </span>
+                                                            {application.accountConfig.data.acctLv === "1" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Spot mode
+                                                                </span>
+                                                            ) : application.accountConfig.data.acctLv === "2" ? (
+                                                                <div className='flex flex-row items-center gap-2'>
+                                                                    <span className='text-lg text-green-800 font-semibold'>
+                                                                        Spot and futures mode
+                                                                    </span>
+                                                                    <Image
+                                                                        src="/verified.png"
+                                                                        alt="Verified"
+                                                                        width={20}
+                                                                        height={20}
+                                                                    />
+                                                                </div>
+                                                            ) : application.accountConfig.data.acctLv === "3" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Multi-currency margin
+                                                                </span>
+                                                            ) : application.accountConfig.data.acctLv === "4" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Portfolio margin
+                                                                </span>
+                                                            ) : (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Unknown
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/*
+                                                    roleType
+                                                    0: General user
+                                                    1: Leading trader
+                                                    2: Copy trader
+                                                    3: API trader
+                                                    */}
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className='text-xs text-yellow-800'>
+                                                            Role type
+                                                        </span>
+                                                        <div className='flex flex-row items-center gap-2'>
+                                                            <span className='text-sm text-gray-800'>
+                                                                {application.accountConfig.data.roleType}
+                                                            </span>
+                                                            {application.accountConfig.data.roleType === "0" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    General user
+                                                                </span>
+                                                            ) : application.accountConfig.data.roleType === "1" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Leading trader
+                                                                </span>
+                                                            ) : application.accountConfig.data.roleType === "2" ? (
+                                                                <div className='flex flex-row items-center gap-2'>
+                                                                    <span className='text-lg text-green-800 font-semibold'>
+                                                                        Copy trader
+                                                                    </span>
+                                                                    <Image
+                                                                        src="/verified.png"
+                                                                        alt="Verified"
+                                                                        width={20}
+                                                                        height={20}
+                                                                    />
+                                                                </div>
+                                                            ) : application.accountConfig.data.roleType === "3" ? (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    API trader
+                                                                </span>
+                                                            ) : (
+                                                                <span className='text-lg text-red-800 font-semibold'>
+                                                                    Unknown
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+
+
+
                                                 </div>
                                             )}
 
@@ -3101,115 +3236,6 @@ export default function AIPage({ params }: any) {
                                             
 
 
-
-
-
-                                            
-
-
-                                                    
-                                            <div className='w-full flex flex-row items-center justify-between gap-2
-                                                border-t border-gray-300 pt-2
-                                            '>
-                                                {application?.startTrading?.status ? (
-                                                    <div className='flex flex-col gap-2'>
-                                                        <span className='text-xs text-yellow-800'>
-                                                            AI 트레이딩 상태
-                                                        </span>
-
-                                                        <div className='flex flex-row items-center gap-2'>
-                                                            <span className='text-sm text-gray-800'>
-                                                                러닝타임:
-                                                            </span>                                            
-                                                            <span className='text-sm text-gray-800'>
-                                                                {
-                                                                    new Date().getTime() - new Date(application?.startTrading?.timestamp).getTime() < 1000 * 60 ? (
-                                                                    ' ' + Math.floor((new Date().getTime() - new Date(application?.startTrading?.timestamp).getTime()) / 1000) + ' ' + '초'
-                                                                    ) :
-                                                                    new Date().getTime() - new Date(application?.startTrading?.timestamp).getTime() < 1000 * 60 * 60 ? (
-                                                                    ' ' + Math.floor((new Date().getTime() - new Date(application?.startTrading?.timestamp).getTime()) / 1000 / 60) + ' ' + '분'
-                                                                    ) : (
-                                                                    ' ' + Math.floor((new Date().getTime() - new Date(application?.startTrading?.timestamp).getTime()) / 1000 / 60 / 60) + ' ' + '시간'
-                                                                    )
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                        <div className='flex flex-row items-center gap-2'>
-                                                            <span className='text-sm text-gray-800'>
-                                                                시작시간:
-                                                            </span>
-                                                            <span className='text-sm text-gray-800'>
-                                                                {application?.startTrading?.timestamp
-                                                                ? new Date(application?.startTrading?.timestamp).toLocaleString()
-                                                                : ""
-                                                                }
-                                                            </span>
-                                                        </div>
-
-                                                        {/* mintMasterBotNft */}
-
-                                                        {application?.masterBotInfo ? (
-
-                                                            <div className='flex flex-col gap-2'>
-                                                                <span className='text-xs text-yellow-800'>
-                                                                    MasterBot NFT
-                                                                </span>
-                                                                <Image
-                                                                    src={application?.masterBotInfo?.imageUrl}
-                                                                    alt="MasterBot NFT"
-                                                                    width={200}
-                                                                    height={200}
-                                                                    className='rounded-lg'
-                                                                />
-                                                            </div>
-
-                                                        ) : (
-
-                                                            <>
-                                                            {/*
-
-                                                            {userMasterBotContractAddress && (
-                                                                
-                                                                <button
-                                                                    onClick={() => {
-                                                                        mintMasterBotNft(application?.id);
-                                                                    }}
-                                                                    disabled={mintingMasterBotNft.find((item) => item.applicationId === application.id)?.minting}
-                                                                    className={`${mintingMasterBotNft.find((item) => item.applicationId === application.id)?.minting ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
-                                                                        hover:bg-blue-600
-                                                                    `}
-                                                                >
-                                                                    {mintingMasterBotNft.find((item) => item.applicationId === application.id)?.minting ? "Minting..." : "Mint MasterBot NFT"}
-                                                                </button>
-                                                                
-                                                            )}
-                                                            */}
-
-                                                            </>
-                                                        )}
-
-                                                    </div>
-                                                ) : (
-                                                    <div className='flex flex-col gap-2'>
-                                                        <span className='text-xs text-yellow-800'>
-                                                            AI 트레이딩 상태
-                                                        </span>
-                                                        <span className='text-sm text-gray-800'>
-                                                            준비중...
-                                                        </span>
-                                                    </div>
-                                                )}
-    
-                                                {/*
-                                                <button
-                                                    className="bg-blue-500 text-white p-2 rounded-lg
-                                                        hover:bg-blue-600
-                                                    "
-                                                >
-                                                    승인하기
-                                                </button>
-                                                */}
-                                            </div>
                 
                                         </div>
                                     ))}
