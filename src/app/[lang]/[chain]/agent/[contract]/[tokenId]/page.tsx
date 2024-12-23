@@ -1075,7 +1075,7 @@ export default function AgentPage({ params }: any) {
                             {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
                         </span>
                       </div>
-                      <div className='flex flex-row items-start justify-center gap-2'>
+                      <div className='flex flex-col items-start justify-center gap-2'>
                         <span className='text-sm text-yellow-500'>
                             AI 에이전트 NFT 계약번호
                         </span>
