@@ -1075,7 +1075,7 @@ export default function AgentPage({ params }: any) {
                             {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
                         </span>
                       </div>
-                      <div className='flex flex-col items-start justify-center gap-2'>
+                      <div className='flex flex-col items-center justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
                             AI 에이전트 NFT 계약번호
                         </span>
@@ -1128,7 +1128,7 @@ export default function AgentPage({ params }: any) {
                             AI 에이전트 NFT 소유자 정보
                         </span>
                         <span className='text-xs text-gray-800'>
-                            소유자 지갑주소: {ownerWalletAddress.slice(0, 10) + '...' + ownerWalletAddress.slice(-10)}
+                            소유자 지갑주소: {ownerWalletAddress?.slice(0, 10) + '...' + ownerWalletAddress?.slice(-10)}
                         </span>
 
                         <div className='w-full flex flex-row items-center justify-start gap-2
