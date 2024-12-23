@@ -2655,7 +2655,7 @@ export default function AIPage({ params }: any) {
                                                     {
                                                         application?.okxUid === "0"
                                                         ? (
-                                                            <span className='text-sm text-red-800'>
+                                                            <span className='text-lg text-red-800 font-semibold'>
                                                                 API Access Key 오류
                                                             </span>
                                                         )
