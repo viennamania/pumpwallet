@@ -40,8 +40,7 @@ export async function POST(request: NextRequest) {
       }),
     });
   
-    //console.log("updateApplicationAgentBotNft res: ", res);
-  
+   
     
     if (!response.ok) {
       return NextResponse.error();

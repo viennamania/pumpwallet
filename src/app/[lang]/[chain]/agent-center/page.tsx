@@ -984,6 +984,8 @@ export default function AIPage({ params }: any) {
                 toast.success("API Access Key가 확인되었습니다.");
             }
 
+            //console.log("data.result", data.result);
+
             // update application
             setApplications(
                 applications.map((item) => {
@@ -991,7 +993,7 @@ export default function AIPage({ params }: any) {
                         return {
                             ...item,
                             okxUid: data.result?.okxUid,
-                            acountConfig: data.result?.accountConfig,
+                            accountConfig: data.result?.accountConfig,
                         }
                     } else {
                         return item;
@@ -3277,7 +3279,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    AI Agent Center
+                    PPUMP AI Agent Center
                     </span>
                 </div>
                 
