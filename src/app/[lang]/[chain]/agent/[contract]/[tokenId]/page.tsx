@@ -480,123 +480,6 @@ export default function AgentPage({ params }: any) {
 
 
 
-    // check htx asset valuation for each applicationId
-    const [checkingHtxAssetValuationForAgent, setCheckingHtxAssetValuationForAgent] = useState([] as any[]);
-    const [htxAssetValuationForAgent, setHtxAssetValuationForAgent] = useState([] as any[]);
-
-    useEffect(() => {
-        setCheckingHtxAssetValuationForAgent(
-            applications.map((item) => {
-                return {
-                    applicationId: item.id,
-                    checking: false,
-                }
-            })
-        );
-
-        setHtxAssetValuationForAgent(
-            applications.map((item) => {
-                return {
-                    applicationId: item.id,
-                    assetValuation: item.assetValuation,
-                };
-            })
-        );
-    } , [applications]);
-
-    const checkHtxAssetValuation = async (
-        applicationId: number,
-        htxAccessKey: string,
-        htxSecretKey: string,
-    ) => {
-
-        if (!htxAccessKey) {
-            toast.error("HTX Access Key를 입력해 주세요.");
-            return;
-        }
-
-        if (!htxSecretKey) {
-            toast.error("HTX Secret Key를 입력해 주세요.");
-            return;
-        }
-
-        if (!applicationId) {
-            toast.error("신청 ID를 입력해 주세요.");
-            return;
-        }
-
-        setCheckingHtxAssetValuationForAgent(
-            checkingHtxAssetValuationForAgent.map((item) => {
-                if (item.applicationId === applicationId) {
-                    return {
-                        applicationId: applicationId,
-                        checking: true,
-                    }
-                } else {
-                    return item;
-                }
-            }
-        ));
-
-
-        const response = await fetch("/api/agent/getAssetValuation", {
-        ///const response = await fetch("/api/htx/copytrading_account_transfer", {
-
-
-
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                htxAccessKey: htxAccessKey,
-                htxSecretKey: htxSecretKey,
-                applicationId: applicationId,
-            }),
-        });
-
-        const data = await response.json();
-
-        
-
-        ///console.log("getAssetValuation data.result", data.result);
-
-
-        if (data.result?.status === "ok") {
-
-            setHtxAssetValuationForAgent(
-                htxAssetValuationForAgent.map((item) => {
-                    if (item.applicationId === applicationId) {
-                        return {
-                            applicationId: applicationId,
-                            assetValuation: data.result?.assetValuation,
-                        }
-                    } else {
-                        return item;
-                    }
-                })
-            );
-
-            toast.success("HTX 자산 가치가 확인되었습니다.");
-        } else {
-            toast.error("HTX 자산 가치를 확인할 수 없습니다.");
-        }
-
-        setCheckingHtxAssetValuationForAgent(
-            checkingHtxAssetValuationForAgent.map((item) => {
-                if (item.applicationId === applicationId) {
-                    return {
-                        applicationId: applicationId,
-                        checking: false,
-                    }
-                } else {
-                    return item;
-                }
-            }
-        ));
-
-    };
-
 
 
 
@@ -722,6 +605,258 @@ export default function AgentPage({ params }: any) {
         );
 
     }
+
+
+
+
+
+
+    // check tradingAccountBalance for each application
+    const [checkingTradingAccountBalanceList, setCheckingTradingAccountBalanceList] = useState([] as any[]);
+    const [tradingAccountBalanceList, setTradingAccountBalanceList] = useState([] as any[]);
+
+    useEffect(() => {
+        setCheckingTradingAccountBalanceList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setTradingAccountBalanceList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    tradingAccountBalance: item.tradingAccountBalance,
+                };
+            })
+        );
+    } , [applications]);
+
+    const checkTradingAccountBalance = async (
+        applicationId: number,
+        apiAccessKey: string,
+        apiSecretKey: string,
+        apiPassword: string,
+    ) => {
+
+        if (!apiAccessKey) {
+            toast.error("API Access Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!apiSecretKey) {
+            toast.error("API Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!apiPassword) {
+            toast.error("API Password를 입력해 주세요.");
+            return;
+        }
+
+        if (!applicationId) {
+            toast.error("신청 ID를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingTradingAccountBalanceList(
+            checkingTradingAccountBalanceList.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: true,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+        const response = await fetch("/api/okx/getTradingAccountBalance", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                apiAccessKey: apiAccessKey,
+                apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
+                applicationId: applicationId,
+            }),
+        });
+
+        const data = await response.json();
+
+        console.log("data.result", data.result);
+
+        if (data.result?.status === "ok") {
+
+            setTradingAccountBalanceList(
+                tradingAccountBalanceList.map((item) => {
+                    if (item.applicationId === applicationId) {
+                        return {
+                            applicationId: applicationId,
+                            tradingAccountBalance: data.result?.tradingAccountBalance,
+                        }
+                    } else {
+                        return item;
+                    }
+                })
+            );
+
+            toast.success("거래 계정 잔고가 확인되었습니다.");
+        } else {
+            toast.error("거래 계정 잔고를 확인할 수 없습니다.");
+        }
+
+        setCheckingTradingAccountBalanceList(
+            checkingTradingAccountBalanceList.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: false,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+    // check htx asset valuation for each htxUid
+    const [checkingHtxAssetValuationForAgent, setCheckingHtxAssetValuationForAgent] = useState([] as any[]);
+    const [htxAssetValuationForAgent, setHtxAssetValuationForAgent] = useState([] as any[]);
+
+    useEffect(() => {
+        setCheckingHtxAssetValuationForAgent(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setHtxAssetValuationForAgent(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    assetValuation: item.assetValuation,
+                };
+            })
+        );
+    } , [applications]);
+
+    const checkOkxAssetValuation = async (
+        applicationId: number,
+        okxAccessKey: string,
+        okxSecretKey: string,
+        okxPassword: string,
+    ) => {
+
+        if (!okxAccessKey) {
+            toast.error("OKXAccess Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!okxSecretKey) {
+            toast.error("OKXSecret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!okxPassword) {
+            toast.error("OKXPassword를 입력해 주세요.");
+            return;
+        }
+
+        if (!applicationId) {
+            toast.error("신청 ID를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingHtxAssetValuationForAgent(
+            checkingHtxAssetValuationForAgent.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: true,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+
+        const response = await fetch("/api/okx/getAssetValuation", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                apiAccessKey: okxAccessKey,
+                apiSecretKey: okxSecretKey,
+                apiPassword: okxPassword,
+                applicationId: applicationId,
+            }),
+        });
+
+        const data = await response.json();
+
+        
+
+        ///console.log("getAssetValuation data.result", data.result);
+
+
+        if (data.result?.status === "ok") {
+
+            setHtxAssetValuationForAgent(
+                htxAssetValuationForAgent.map((item) => {
+                    if (item.applicationId === applicationId) {
+                        return {
+                            applicationId: applicationId,
+                            assetValuation: data.result?.assetValuation,
+                        }
+                    } else {
+                        return item;
+                    }
+                })
+            );
+
+            toast.success("OKX자산 가치가 확인되었습니다.");
+        } else {
+            toast.error("OKX자산 가치를 확인할 수 없습니다.");
+        }
+
+        setCheckingHtxAssetValuationForAgent(
+            checkingHtxAssetValuationForAgent.map((item) => {
+                if (item.applicationId === applicationId) {
+                    return {
+                        applicationId: applicationId,
+                        checking: false,
+                    }
+                } else {
+                    return item;
+                }
+            }
+        ));
+
+    };
 
 
 
@@ -932,7 +1067,7 @@ export default function AgentPage({ params }: any) {
                     />
 
                   <div className='w-full flex flex-col xl:flex-row items-start justify-start gap-2'>
-                      <div className='flex flex-col items-center justify-between gap-2'>
+                      <div className='flex flex-col items-start justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
                           AI 에이전트 NFT 계약주소
                         </span>
@@ -940,7 +1075,7 @@ export default function AgentPage({ params }: any) {
                             {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
                         </span>
                       </div>
-                      <div className='flex flex-col items-center justify-between gap-2'>
+                      <div className='flex flex-row items-start justify-center gap-2'>
                         <span className='text-sm text-yellow-500'>
                             AI 에이전트 NFT 계약번호
                         </span>
@@ -1113,13 +1248,13 @@ export default function AgentPage({ params }: any) {
                     src='/logo-exchange-okx.png'
                     width={60}
                     height={60}
-                    alt='htx'
+                    alt='OKX'
                     className='rounded-lg animate-pulse'
                 />
                 
                 <div className='flex flex-col items-start justify-center gap-2'>
                   <span className='text-lg font-semibold text-gray-800'>
-                      HTX 신청목록
+                      OKX 신청목록
                   </span>
                 </div>
 
@@ -1214,8 +1349,14 @@ export default function AgentPage({ params }: any) {
                         '>
                           <div className='w-full flex flex-row items-center justify-between gap-2'>
                               <span className='text-sm text-gray-800'>
-                                  HTX UID: {application.htxUid}
+                                  OKX UID: {application.okxUid}
                               </span>
+                              <Image
+                                src="/verified.png"
+                                width={20}
+                                height={20}
+                                alt="Verified"
+                              />
                           </div>
 
                           <div className='w-full flex flex-row items-center justify-between gap-2'>
@@ -1267,46 +1408,88 @@ export default function AgentPage({ params }: any) {
                         </div>
                         
 
-                        {/* assetValuation */}
 
+                        {/* tradingAccountBalance */}
                         <div className='w-full flex flex-row items-center justify-between gap-2'>
-                          <div className='flex flex-col gap-2'>
-                              <span className='text-xs text-yellow-800'>
-                                  HTX 자산 가치(SPOT)
-                              </span>
-                              <span className='text-sm text-gray-800'>
-                                  {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
-                              </span>
-                              {/* convert timestamp to date */}
-                              <span className='text-xs text-gray-800'>
-                                  {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp
-                                  ? new Date(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp).toLocaleString()
-                                  : ""
-                                  }
-                              </span>
-                          </div>
-                          <button
-                              onClick={() => {
-                                  checkHtxAssetValuation(
-                                      application.id,
-                                      application.apiAccessKey,
-                                      application.apiSecretKey,
-                                  );
-                              }}
-                              disabled={
-                                  checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking
-                              }
-                              className={`${checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
-                                  hover:bg-blue-600
-                              `}
-                          >
-                              {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Checking..." : "Check"}
-                          </button>
+                            <div className='flex flex-col gap-2'>
+                                <span className='text-xs text-yellow-800'>
+                                    OKX Trading Balance
+                                </span>
+                                <span className='text-sm text-gray-800'>
+                                    {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance} $(USD)
+                                </span>
+                                {/* convert timestamp to date */}
+                                <span className='text-xs text-gray-800'>
+                                    {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp
+                                    ? new Date(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp).toLocaleString()
+                                    : ""
+                                    }
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    checkTradingAccountBalance(
+                                        application.id,
+                                        application.apiAccessKey,
+                                        application.apiSecretKey,
+                                        application.apiPassword,
+                                    );
+                                }}
+                                disabled={
+                                    checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking
+                                }
+                                className={`${checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                    hover:bg-blue-600
+                                `}
+                            >
+                                {checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update"}
+                            </button>
                         </div>
 
 
+
+                        {/* asset valuation */}
+                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+                            <div className='flex flex-col gap-2'>
+                                <span className='text-xs text-yellow-800'>
+                                    OKX Funding Balance
+                                </span>
+                                <span className='text-sm text-gray-800'>
+                                    {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
+                                </span>
+                                {/* convert timestamp to date */}
+                                <span className='text-xs text-gray-800'>
+                                    {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp
+                                    ? new Date(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp).toLocaleString()
+                                    : ""
+                                    }
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    checkOkxAssetValuation(
+                                        application.id,
+                                        application.apiAccessKey,
+                                        application.apiSecretKey,
+                                        application.apiPassword,
+                                    );
+                                }}
+                                disabled={
+                                    checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking
+                                }
+                                className={`${checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                    hover:bg-blue-600
+                                `}
+                            >
+                                {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Updating..." : "Update"}
+                            </button>
+                        </div>
                   
+
+
+
                         {/* getPositionList */}
+                        {/*
                         <div className='w-full flex flex-col items-start justify-between gap-2'>
                             
                             <div className='w-full flex flex-row items-center justify-between gap-2'>
@@ -1333,7 +1516,6 @@ export default function AgentPage({ params }: any) {
 
                             </div>
 
-                            {/* timestamp */}
                             <span className='text-xs text-gray-800'>
                                 {positionList.find((item) => item.applicationId === application.id)?.timestamp
                                 ? new Date(positionList.find((item) => item.applicationId === application.id)?.timestamp).toLocaleString()
@@ -1341,7 +1523,6 @@ export default function AgentPage({ params }: any) {
                                 }
                             </span>
 
-                            {/* check status */}
                             {positionList.find((item) => item.applicationId === application.id)?.status
                             ? (
 
@@ -1439,6 +1620,7 @@ export default function AgentPage({ params }: any) {
                             )}
 
                         </div>
+                        */}
                                             
 
                         {/* masterBot */}

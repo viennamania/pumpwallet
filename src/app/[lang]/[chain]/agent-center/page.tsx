@@ -599,6 +599,7 @@ export default function AIPage({ params }: any) {
 
 
 
+    const [totalTradingAccountBalance, setTotalTradingAccountBalance] = useState(0);
 
     // get all applications
     const [isAdmin, setIsAdmin] = useState(false);
@@ -631,6 +632,8 @@ export default function AIPage({ params }: any) {
 
 
             setApplications(data.result.applications);
+
+            setTotalTradingAccountBalance( data.result.totalTradingAccountBalance );
 
             setLoadingApplications(false);
 
@@ -988,6 +991,7 @@ export default function AIPage({ params }: any) {
                         return {
                             ...item,
                             okxUid: data.result?.okxUid,
+                            acountConfig: data.result?.accountConfig,
                         }
                     } else {
                         return item;
@@ -2400,21 +2404,6 @@ export default function AIPage({ params }: any) {
                             <div className='w-full flex flex-col gap-5'>
 
 
-                                {/* goto copy trading account */}
-                                {/* https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1 */}
-                                <div className='w-full flex flex-col gap-2'>
-                                    <span className='text-lg text-gray-800'>
-                                        <a
-                                            href="https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1"
-                                            target="_blank"
-                                            className='text-blue-500'
-                                        >
-                                            Copy Trading Account 바로가기
-                                        </a>
-                                    </span>
-                                </div>
-
-
                                 {address && !loadingApplications && applications.length === 0 ? (
                                     <div className='w-full flex flex-col items-center justify-center gap-2'>
                                         <span className='text-lg text-gray-800'>
@@ -2436,6 +2425,42 @@ export default function AIPage({ params }: any) {
                                     </div>
 
                                 )}
+
+
+
+
+                                {/* goto copy trading account */}
+                                {/* https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1 */}
+                                <div className='w-full flex flex-col gap-2'>
+                                    <span className='text-lg text-gray-800'>
+                                        <a
+                                            href="https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1"
+                                            target="_blank"
+                                            className='text-blue-500'
+                                        >
+                                            Copy Trading Account 바로가기
+                                        </a>
+                                    </span>
+                                </div>
+
+
+                                {/* totalTradingAccountBalance */}
+                                {totalTradingAccountBalance > 0 && (
+                                    <div className='w-full flex flex-col gap-2'>
+                                        <span className='text-2xl font-semibold text-gray-800'>
+                                            총 거래 계정 잔고: {
+                                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                                style: 'currency',
+                                                currency: 'USD'
+                                            })
+                                            }
+
+
+                                        </span>
+                                    </div>
+                                )}
+
+
 
 
                                 <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-5'>
@@ -2600,6 +2625,7 @@ export default function AIPage({ params }: any) {
 
                                             </div>
 
+
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>
@@ -2621,7 +2647,6 @@ export default function AIPage({ params }: any) {
                       
                                                         
                                                     }
-
 
                                                 </div>
 
@@ -2647,17 +2672,37 @@ export default function AIPage({ params }: any) {
                                                 )
                                                 :
                                                 (
-                                                    <button
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(application?.okxUid);
-                                                            toast.success("Copied to clipboard");
-                                                        }}
-                                                        className="bg-gray-500 text-white p-2 rounded-lg
-                                                            hover:bg-gray-600
-                                                        "
-                                                    >
-                                                        Copy
-                                                    </button>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <button
+                                                            onClick={() => {
+                                                                navigator.clipboard.writeText(application?.okxUid);
+                                                                toast.success("Copied to clipboard");
+                                                            }}
+                                                            className="bg-gray-500 text-white p-2 rounded-lg
+                                                                hover:bg-gray-600
+                                                            "
+                                                        >
+                                                            Copy
+                                                        </button>
+                                                        <button
+                                                            onClick={() => {
+                                                                checkApiAccessKey(
+                                                                    application.id,
+                                                                    application.apiAccessKey,
+                                                                    application.apiSecretKey,
+                                                                    application.apiPassword,
+                                                                );
+                                                            }}
+                                                            disabled={checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking}
+                                                            className={`${checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                                                hover:bg-blue-600
+                                                            `}
+                                                        >
+                                                            {checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update UID"}
+                                                        </button>
+
+
+                                                    </div>
                                                 )}
                                             </div>
 

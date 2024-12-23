@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   
     const jsonObj = await response.json();
 
-    console.log("jsonObj=", jsonObj);
+    ///console.log("jsonObj=", jsonObj);
 
     return NextResponse.json({
       result: jsonObj.result,
