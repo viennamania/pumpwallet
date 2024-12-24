@@ -6,7 +6,15 @@ import React, { use, useEffect, useState } from 'react';
 
 import { toast } from 'react-hot-toast';
 
-import { client } from "../../../client";
+import {
+    client,
+} from "../../../client";
+
+/*
+import {
+    marketingCenter,
+} from "../../../config";
+*/
 
 
 import {
@@ -79,12 +87,8 @@ import {
 import { getContractMetadata } from "thirdweb/extensions/common";
 
 
-import { Alert, useForkRef } from '@mui/material';
+const marketingCenter = "ppump";
 
-
-import thirdwebIcon from "@public/thirdweb.svg";
-import { time } from 'console';
-import { min } from 'moment';
 
 
 const wallets = [
@@ -616,7 +620,7 @@ export default function AIPage({ params }: any) {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    marketingCenter: 'ppump',
+                    marketingCenter: marketingCenter,
                 }),
             });
 
@@ -641,11 +645,12 @@ export default function AIPage({ params }: any) {
 
         };
 
-        if (address) {
+        if (address && marketingCenter) {
             fetchData();
         }
-    }, [address]);
+    }, [address, marketingCenter]);
 
+    console.log("marketingCenter", marketingCenter);
 
     //console.log("applications", applications);
 
@@ -1815,7 +1820,7 @@ export default function AIPage({ params }: any) {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    center: 'ppump',
+                    center: marketingCenter,
                 }),
             });
 
@@ -2259,29 +2264,6 @@ export default function AIPage({ params }: any) {
                                     </button>
                                 </div>
 
-                                {address && userType === "telegram" && (
-                                    <button
-                                        onClick={() => {
-                                            window.open("https://t.me/ppump_bot", "_blank");
-                                        }}
-                                        className="p-2 bg-zinc-800 text-white rounded"
-                                        >
-                                        <div className="flex flex-row gap-2 items-center">
-                                            <Image
-                                            src="/logo-telegram.webp"
-                                            alt="Telegram"
-                                            width={50}
-                                            height={50}
-                                            className="rounded-lg w-10 h-10"
-                                            />
-                                            <span>Go to Telegram</span>
-                                        </div>
-                                    </button>
-                                )}
-
-
-
-
 
                             </div>
                         )}
@@ -2359,7 +2341,7 @@ export default function AIPage({ params }: any) {
                                                 },
                                                 body: JSON.stringify({
                                                     walletAddress: address,
-                                                    marketingCenter: "ppump",
+                                                    marketingCenter: marketingCenter,
                                                 }),
                                             });
 
@@ -2524,7 +2506,7 @@ export default function AIPage({ params }: any) {
 
                                             {/* application?.center */}
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
-                                                {/* 'https://t.me/ppump_bot' */}
+                                                {/* 'https://t.me/' */}
                                                 <button
                                                     onClick={() => {
                                                         window.open('https://t.me/' + application.center, '_blank');
