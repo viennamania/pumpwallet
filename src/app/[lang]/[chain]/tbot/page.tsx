@@ -1611,91 +1611,7 @@ export default function AIPage({ params }: any) {
 
 
 
-    // check trading account balance
-    //const [tradingAccountBalance, setTradingAccountBalance] = useState({} as any);
 
-    const [checkingTradingAccountBalance, SetCheckingTradingAccountBalance] = useState(false);
-
-
-    const checkTradingAccountBalance = async (
-        applicationId: string,
-        apiAccessKey: string,
-        apiSecretKey: string,
-        apiPassword: string,
-
-    ) => {
-
-        if (apiAccessKey === "") {
-            toast.error("OKX Access Key를 입력해 주세요.");
-            return;
-        }
-
-        if (apiSecretKey === "") {
-            toast.error("OKX Secret Key를 입력해 주세요.");
-            return;
-        }
-
-        if (apiPassword === "") {
-            toast.error("OKX Password를 입력해 주세요.");
-            return;
-        }
-
-        SetCheckingTradingAccountBalance(true);
-
-        const response = await fetch("/api/okx/getTradingAccountBalance", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                applicationId: applicationId,
-                apiAccessKey: apiAccessKey,
-                apiSecretKey: apiSecretKey,
-                apiPassword: apiPassword,
-            }),
-        });
-
-        const data = await response.json();
-
-        //console.log("data.result========", data.result);
-        /*
-        {
-            "status": "ok",
-            "tradingAccountBalance": {
-                "balance": "0.9994902144753992",
-                "timestamp": 1734850234810
-            }
-        }
-        */
-        
-
-        if (data.result?.status === "ok") {
-
-            /*
-            setHtxAssetValuation(
-                data.result?.assetValuation
-            );
-            */
-
-            //setTradingAccountBalance(data.result?.tradingAccountBalance);
-
-            // update myAgent trading account balance
-
-            setMyAgent({
-                ...myAgent,
-                tradingAccountBalance: data.result?.tradingAccountBalance,
-            });
-
-
-
-            toast.success("OKX 자산 가치가 확인되었습니다.");
-        } else {
-            toast.error("OKX 자산 가치를 확인할 수 없습니다.");
-        }
-
-        SetCheckingTradingAccountBalance(false);
-
-    };
 
  
 
@@ -2048,6 +1964,95 @@ export default function AIPage({ params }: any) {
 
     // usd / krw exchange rate
     const [usdKrwExchangeRate, setUsdKrwExchangeRate] = useState(1437);
+
+
+
+    // tradingAccountBalance
+    //const [tradingAccountBalance, setTradingAccountBalance] = useState({} as any);
+
+    const [checkingTradingAccountBalance, setCheckingTradingAccountBalance] = useState(false);
+
+
+    const checkTradingAccountBalance = async (
+        applicationId: string,
+        apiAccessKey: string,
+        apiSecretKey: string,
+        apiPassword: string,
+
+    ) => {
+
+        if (apiAccessKey === "") {
+            toast.error("OKX Access Key를 입력해 주세요.");
+            return;
+        }
+
+        if (apiSecretKey === "") {
+            toast.error("OKX Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (apiPassword === "") {
+            toast.error("OKX Password를 입력해 주세요.");
+            return;
+        }
+
+        setCheckingTradingAccountBalance(true);
+
+        const response = await fetch("/api/okx/getTradingAccountBalance", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                applicationId: applicationId,
+                apiAccessKey: apiAccessKey,
+                apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
+            }),
+        });
+
+        const data = await response.json();
+
+        //console.log("data.result========", data.result);
+        /*
+        {
+            "status": "ok",
+            "tradingAccountBalance": {
+                "balance": "0.9994902144753992",
+                "timestamp": 1734850234810
+            }
+        }
+        */
+        
+
+        if (data.result?.status === "ok") {
+
+            /*
+            setHtxAssetValuation(
+                data.result?.assetValuation
+            );
+            */
+
+            //setTradingAccountBalance(data.result?.tradingAccountBalance);
+
+            // update myAgent trading account balance
+
+            setMyAgent({
+                ...myAgent,
+                tradingAccountBalance: data.result?.tradingAccountBalance,
+            });
+
+
+
+            toast.success("OKX 자산 가치가 확인되었습니다.");
+        } else {
+            toast.error("OKX 자산 가치를 확인할 수 없습니다.");
+        }
+
+        setCheckingTradingAccountBalance(false);
+
+    };
+
 
 
 
@@ -2719,24 +2724,26 @@ export default function AIPage({ params }: any) {
 
                                         {/* got to install htx */}
                                         {/* https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223 */}
-                                        <div className='flex flex-col gap-2'>
-                                            <span className='text-sm font-semibold text-gray-500'>
-                                                OKX 계정이 없으신가요?
-                                            </span>
-                                            <button
-                                                className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
-                                                    hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
-                                                '
-                                                onClick={() => {
-                                                    ///window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
+                                        {!myAgent?.okxUid && (
+                                            <div className='flex flex-col gap-2'>
+                                                <span className='text-sm font-semibold text-gray-500'>
+                                                    OKX 계정이 없으신가요?
+                                                </span>
+                                                <button
+                                                    className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold
+                                                        hover:bg-gray-300 hover:text-gray-500 hover:shadow-lg
+                                                    '
+                                                    onClick={() => {
+                                                        ///window.open('https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223', "_blank");
 
-                                                    // https://www.okx.com/join/69963198
-                                                    window.open('https://www.okx.com/join/69963198', "_blank");
-                                                }}
-                                            >
-                                                OKX 계정 만들기
-                                            </button>
-                                        </div>
+                                                        // https://www.okx.com/join/69963198
+                                                        window.open('https://www.okx.com/join/69963198', "_blank");
+                                                    }}
+                                                >
+                                                    OKX 계정 만들기
+                                                </button>
+                                            </div>
+                                        )}
 
                                         <div className='w-full flex flex-col gap-2
                                             border border-gray-300 p-4 rounded-lg
@@ -2779,55 +2786,79 @@ export default function AIPage({ params }: any) {
                                             </span>
 
                                             {/* 신청번호 */}
-                                            <span className='text-xl font-semibold text-red-500'>
+                                            <span className='text-xl font-semibold text-red-500
+                                                bg-yellow-200 p-2 rounded-lg
+                                            '>
                                                 신청번호: #{myAgent?.id}
                                             </span>
 
 
+                                           {/* tradingAccountBalance */}
+                                           {myAgent?.okxUid && (
+                                            <div className='w-full flex flex-row items-center justify-between gap-2
+                                                    border border-gray-300 p-4 rounded-lg
+                                                '>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className='text-xs text-yellow-800'>
+                                                            OKX Trading Balance
+                                                        </span>
+                                                        <span className='text-sm text-gray-800'>
+                                                            {
+                                                                Number(myAgent?.tradingAccountBalance?.balance).toLocaleString('en-US', {
+                                                                    style: 'currency',
+                                                                    currency: 'USD',
+                                                                })
+                                                            }
+                                                        </span>
+                                                        {/* convert timestamp to date */}
+                                                        <span className='text-xs text-gray-800'>
+                                                            {myAgent?.tradingAccountBalance?.timestamp &&
+                                                                new Date(myAgent?.tradingAccountBalance?.timestamp).toLocaleString()
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => {
+                                                            checkTradingAccountBalance(
+                                                                myAgent.id,
+                                                                myAgent.apiAccessKey,
+                                                                myAgent.apiSecretKey,
+                                                                myAgent.apiPassword,
+                                                            );
+                                                        }}
+                                                        disabled={
+                                                            checkingTradingAccountBalance
+                                                        }
+                                                        className={`${checkingTradingAccountBalance ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                                            hover:bg-blue-600
+                                                        `}
+                                                    >
+                                                        {checkingTradingAccountBalance ? "Updating..." : "Update"}
+                                                    </button>
+                                                </div>
+                                            )}
 
-                                            <div className='flex flex-col gap-2'>
+
+
+                                            <div className='flex flex-col gap-2
+                                                border border-gray-300 p-4 rounded-lg
+                                            '>
                                                 
-                                            <div className='flex flex-row items-center justify-between gap-2'>
-                                                    <span className='text-sm font-semibold text-gray-500'>
-                                                        OKX UID: {myAgent?.okxUid}
-                                                    </span>
-                                                    <Image
-                                                        src="/verified.png"
-                                                        alt="verified"
-                                                        width={20}
-                                                        height={20}
-                                                    />
-                                                </div>
-
                                                 <div className='flex flex-row items-center justify-between gap-2'>
-                                                    <span className='text-sm font-semibold text-gray-500'>
-                                                        API Access Key: {myAgent.apiAccessKey.substring(0, 10) + "..."}
-                                                    </span>
-                                                    <Image
-                                                        src="/verified.png"
-                                                        alt="verified"
-                                                        width={20}
-                                                        height={20}
-                                                    />
-                                                </div>
-
-                                                <div className='flex flex-row items-center justify-between gap-2'>
-                                                    <span className='text-sm font-semibold text-gray-500'>
-                                                        API Secret Key: {myAgent.apiSecretKey.substring(0, 10) + "..."}
-                                                    </span>
-                                                    <Image
-                                                        src="/verified.png"
-                                                        alt="verified"
-                                                        width={20}
-                                                        height={20}
-                                                    />
-                                                </div>
-
-                                                {/* apiPassword */}
-                                                <div className='flex flex-row items-center justify-between gap-2'>
-                                                    <span className='text-sm font-semibold text-gray-500'>
-                                                        API Password: {myAgent?.apiPassword?.substring(0, 10) + "..."}
-                                                    </span>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className='text-sm font-semibold text-gray-500'>
+                                                            OKX UID: {myAgent?.okxUid}
+                                                        </span>
+                                                        <span className='text-sm font-semibold text-gray-500'>
+                                                            API Access Key: {myAgent.apiAccessKey.substring(0, 10) + "..."}
+                                                        </span>
+                                                        <span className='text-sm font-semibold text-gray-500'>
+                                                            API Secret Key: {myAgent.apiSecretKey.substring(0, 10) + "..."}
+                                                        </span>
+                                                        <span className='text-sm font-semibold text-gray-500'>
+                                                            API Password: {myAgent?.apiPassword?.substring(0, 10) + "..."}
+                                                        </span>
+                                                    </div>
                                                     <Image
                                                         src="/verified.png"
                                                         alt="verified"
@@ -2839,24 +2870,27 @@ export default function AIPage({ params }: any) {
                                                 {/* KYC Level */}
                                                 {/* myAgent.accountConfig.data.kycLv */}
                                                 <div className='flex flex-row items-center justify-between gap-2'>
-                                                    <span className='text-sm font-semibold text-gray-500'>
-                                                        KYC Level: {myAgent?.accountConfig?.data?.kycLv}
-                                                    </span>
+
 
                                                     {myAgent?.accountConfig?.data?.kycLv < 2 ? (
                                                         <div className='flex flex-row items-center gap-2'>
                                                             <span className='text-sm font-semibold text-red-500'>
-                                                                KYC 레벨이 낮습니다.
+                                                                본인 인증 필요
                                                             </span>
                                                         </div>
 
                                                     ) : (
-                                                        <Image
-                                                            src="/verified.png"
-                                                            alt="verified"
-                                                            width={20}
-                                                            height={20}
-                                                        />
+                                                        <div className='flex flex-row items-center justify-between gap-2'>
+                                                            <span className='text-sm font-semibold text-green-500'>
+                                                                본인 인증 완료
+                                                            </span>
+                                                            <Image
+                                                                src="/verified.png"
+                                                                alt="verified"
+                                                                width={20}
+                                                                height={20}
+                                                            />
+                                                        </div>
                                                     )}
                                                 </div>
 
@@ -2876,52 +2910,6 @@ export default function AIPage({ params }: any) {
                                             </div>
 
 
-                                            {/* checkTradingAccountBalance */}
-                                            <div className='flex flex-col gap-2'>
-                                                
-                                                <div className='flex flex-row items-center gap-2'>
-                                                    <button
-                                                        disabled={
-                                                            !myAgent?.apiAccessKey || !myAgent?.apiSecretKey || !myAgent?.apiPassword || checkingTradingAccountBalance
-                                                        }
-                                                        className={`
-                                                            ${!myAgent?.apiAccessKey || !myAgent?.apiSecretKey || !myAgent?.apiPassword || checkingTradingAccountBalance ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-zinc-100'} p-2 rounded text-lg font-semibold
-                                                        `}
-                                                        onClick={() => {
-                                                            checkTradingAccountBalance(
-                                                                myAgent.id,
-                                                                myAgent.apiAccessKey,
-                                                                myAgent.apiSecretKey,
-                                                                myAgent.apiPassword
-                                                            );
-                                                        }}
-                                                    >
-                                                        OKX 자산 가치 확인
-                                                    </button>
-                                                    {checkingTradingAccountBalance && (
-                                                        <span className='text-sm font-semibold text-blue-500'>
-                                                            OKX 자산 가치 확인중...
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                
-                                                    <div className='flex flex-col gap-2'>
-                                                        <span className='text-sm font-semibold text-gray-500'>
-                                                            OKX 자산 가치: {
-                                                            //tradingAccountBalance?.balance && Number(tradingAccountBalance?.balance).toFixed(2)
-
-                                                            myAgent?.tradingAccountBalance?.balance && Number(myAgent?.tradingAccountBalance?.balance).toFixed(2)
-                                                        } USD
-                                                        </span>
-                                                        {/* timestamp */}
-                                                        <span className='text-sm font-semibold text-gray-500'>
-                                                            {/*new Date(tradingAccountBalance?.timestamp).toLocaleString()*/}
-                                                            {new Date(myAgent?.tradingAccountBalance?.timestamp).toLocaleString()}
-                                                        </span>
-                                                    </div>
-                                                
-
-                                            </div>
 
 
                                         </div>
