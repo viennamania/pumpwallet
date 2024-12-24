@@ -1481,7 +1481,7 @@ export default function AgentPage({ params }: any) {
 
                         {/* application?.center */}
                         <div className='w-full flex flex-row items-center justify-between gap-2'>
-                            {/* 'https://t.me/ppump_bot' */}
+                            {/* 'https://t.me/' */}
                             <button
                                 onClick={() => {
                                     window.open('https://t.me/' + application.center, '_blank');
