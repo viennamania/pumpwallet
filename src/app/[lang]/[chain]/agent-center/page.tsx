@@ -2472,7 +2472,7 @@ export default function AIPage({ params }: any) {
                                             className={`w-full flex flex-col gap-5
                                             border border-gray-300 p-4 rounded-lg bg-gray-100
 
-                                            ${application?.accountConfig?.data.roleType === "2" ? "border border-green-500" : ""}
+                                            ${application?.accountConfig?.data.roleType === "2" ? "border-2 border-green-500" : ""}
 
                                             `}
                                         >
@@ -2859,6 +2859,93 @@ export default function AIPage({ params }: any) {
                                             )}
 
 
+
+                                            {/* tradingAccountBalance */}
+                                            <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                <div className='flex flex-col gap-2'>
+                                                    <span className='text-xs text-yellow-800'>
+                                                        OKX Trading Balance
+                                                    </span>
+                                                    <span className='text-sm text-gray-800'>
+                                                        {
+                                                            Number(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance)
+                                                            .toLocaleString('en-US', {
+                                                                style: 'currency',
+                                                                currency: 'USD'
+                                                            })
+                                                        }
+                                                    </span>
+                                                    {/* convert timestamp to date */}
+                                                    <span className='text-xs text-gray-800'>
+                                                        {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp
+                                                        ? new Date(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp).toLocaleString()
+                                                        : ""
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    onClick={() => {
+                                                        checkTradingAccountBalance(
+                                                            application.id,
+                                                            application.apiAccessKey,
+                                                            application.apiSecretKey,
+                                                            application.apiPassword,
+                                                        );
+                                                    }}
+                                                    disabled={
+                                                        checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking
+                                                    }
+                                                    className={`${checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                                        hover:bg-blue-600
+                                                    `}
+                                                >
+                                                    {checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update"}
+                                                </button>
+                                            </div>
+
+
+
+                                            {/* asset valuation */}
+                                            <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                <div className='flex flex-col gap-2'>
+                                                    <span className='text-xs text-yellow-800'>
+                                                        OKX Funding Balance
+                                                    </span>
+                                                    <span className='text-sm text-gray-800'>
+                                                        {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
+                                                    </span>
+                                                    {/* convert timestamp to date */}
+                                                    <span className='text-xs text-gray-800'>
+                                                        {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp
+                                                        ? new Date(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp).toLocaleString()
+                                                        : ""
+                                                        }
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    onClick={() => {
+                                                        checkOkxAssetValuation(
+                                                            application.id,
+                                                            application.apiAccessKey,
+                                                            application.apiSecretKey,
+                                                            application.apiPassword,
+                                                        );
+                                                    }}
+                                                    disabled={
+                                                        checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking
+                                                    }
+                                                    className={`${checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                                        hover:bg-blue-600
+                                                    `}
+                                                >
+                                                    {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Updating..." : "Update"}
+                                                </button>
+                                            </div>
+
+
+
+
+
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>
@@ -3021,81 +3108,6 @@ export default function AIPage({ params }: any) {
 
 
 
-                                            {/* tradingAccountBalance */}
-                                            <div className='w-full flex flex-row items-center justify-between gap-2'>
-                                                <div className='flex flex-col gap-2'>
-                                                    <span className='text-xs text-yellow-800'>
-                                                        OKX Trading Balance
-                                                    </span>
-                                                    <span className='text-sm text-gray-800'>
-                                                        {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance} $(USD)
-                                                    </span>
-                                                    {/* convert timestamp to date */}
-                                                    <span className='text-xs text-gray-800'>
-                                                        {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp
-                                                        ? new Date(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.timestamp).toLocaleString()
-                                                        : ""
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <button
-                                                    onClick={() => {
-                                                        checkTradingAccountBalance(
-                                                            application.id,
-                                                            application.apiAccessKey,
-                                                            application.apiSecretKey,
-                                                            application.apiPassword,
-                                                        );
-                                                    }}
-                                                    disabled={
-                                                        checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking
-                                                    }
-                                                    className={`${checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
-                                                        hover:bg-blue-600
-                                                    `}
-                                                >
-                                                    {checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "Checking..." : "Check"}
-                                                </button>
-                                            </div>
-
-
-
-                                            {/* asset valuation */}
-                                            <div className='w-full flex flex-row items-center justify-between gap-2'>
-                                                <div className='flex flex-col gap-2'>
-                                                    <span className='text-xs text-yellow-800'>
-                                                        OKX Funding Balance
-                                                    </span>
-                                                    <span className='text-sm text-gray-800'>
-                                                        {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
-                                                    </span>
-                                                    {/* convert timestamp to date */}
-                                                    <span className='text-xs text-gray-800'>
-                                                        {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp
-                                                        ? new Date(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.timestamp).toLocaleString()
-                                                        : ""
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <button
-                                                    onClick={() => {
-                                                        checkOkxAssetValuation(
-                                                            application.id,
-                                                            application.apiAccessKey,
-                                                            application.apiSecretKey,
-                                                            application.apiPassword,
-                                                        );
-                                                    }}
-                                                    disabled={
-                                                        checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking
-                                                    }
-                                                    className={`${checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
-                                                        hover:bg-blue-600
-                                                    `}
-                                                >
-                                                    {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Checking..." : "Check"}
-                                                </button>
-                                            </div>
 
 
 
