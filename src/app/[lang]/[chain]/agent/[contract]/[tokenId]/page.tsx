@@ -521,19 +521,59 @@ export default function AgentPage({ params }: any) {
         );
     } , [applications]);
 
-    const getPositionList = async (
+
+
+
+
+
+    // check api access key and secret key for each application
+    const [checkingApiAccessKeyList, setCheckingApiAccessKeyList] = useState([] as any[]);
+    const [apiAccessKeyList, setApiAccessKeyList] = useState([] as any[]);
+
+    useEffect(() => {
+        setCheckingApiAccessKeyList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    checking: false,
+                }
+            })
+        );
+
+        setApiAccessKeyList(
+            applications.map((item) => {
+                return {
+                    applicationId: item.id,
+                    apiAccessKey: item.apiAccessKey,
+                    apiSecretKey: item.apiSecretKey,
+                    apiPassword: item.apiPassword,
+                };
+            })
+        );
+    }
+
+    , [applications]);
+
+
+    const checkApiAccessKey = async (
         applicationId: number,
-        htxAccessKey: string,
-        htxSecretKey: string,
+        apiAccessKey: string,
+        apiSecretKey: string,
+        apiPassword: string,
     ) => {
 
-        if (!htxAccessKey) {
-            toast.error("HTX Access Key를 입력해 주세요.");
+        if (!apiAccessKey) {
+            toast.error("API Access Key를 입력해 주세요.");
             return;
         }
 
-        if (!htxSecretKey) {
-            toast.error("HTX Secret Key를 입력해 주세요.");
+        if (!apiSecretKey) {
+            toast.error("API Secret Key를 입력해 주세요.");
+            return;
+        }
+
+        if (!apiPassword) {
+            toast.error("API Password를 입력해 주세요.");
             return;
         }
 
@@ -542,8 +582,8 @@ export default function AgentPage({ params }: any) {
             return;
         }
 
-        setCheckingPositionList(
-            checkingPositionList.map((item) => {
+        setCheckingApiAccessKeyList(
+            checkingApiAccessKeyList.map((item) => {
                 if (item.applicationId === applicationId) {
                     return {
                         applicationId: applicationId,
@@ -552,35 +592,53 @@ export default function AgentPage({ params }: any) {
                 } else {
                     return item;
                 }
-            })
-        );
+            }
+        ));
 
-        const response = await fetch("/api/htx/position_list", {
+
+       // api updateUID
+       const response = await fetch("/api/okx/updateUID", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                htxAccessKey: htxAccessKey,
-                htxSecretKey: htxSecretKey,
                 applicationId: applicationId,
+                apiAccessKey: apiAccessKey,
+                apiSecretKey: apiSecretKey,
+                apiPassword: apiPassword,
+
             }),
         });
 
+        if (!response.ok) {
+            console.error("Error checking api access key");
+            return;
+        }
+
         const data = await response.json();
 
-        ///console.log("data.result", data.result);
+        //console.log("updateHtxUID data", data);
 
         if (data.result?.status === "ok") {
 
-            setPositionList(
-                positionList.map((item) => {
-                    if (item.applicationId === applicationId) {
+            if (data.result?.okxUid === "0") {
+                toast.error("API Access Key를 확인할 수 없습니다.");
+            } else {
+
+                toast.success("API Access Key가 확인되었습니다.");
+            }
+
+            //console.log("data.result", data.result);
+
+            // update application
+            setApplications(
+                applications.map((item) => {
+                    if (item.id === applicationId) {
                         return {
-                            applicationId: applicationId,
-                            positions: data.result?.data?.positions,
-                            timestamp: data.result?.timestamp,
-                            status: data.result?.status,
+                            ...item,
+                            okxUid: data.result?.okxUid,
+                            accountConfig: data.result?.accountConfig,
                         }
                     } else {
                         return item;
@@ -588,13 +646,13 @@ export default function AgentPage({ params }: any) {
                 })
             );
 
-            toast.success("HTX 포지션 리스트가 확인되었습니다.");
         } else {
-            toast.error("HTX 포지션 리스트를 확인할 수 없습니다.");
+            toast.error("API Access Key를 확인할 수 없습니다.");
         }
+        
 
-        setCheckingPositionList(
-            checkingPositionList.map((item) => {
+        setCheckingApiAccessKeyList(
+            checkingApiAccessKeyList.map((item) => {
                 if (item.applicationId === applicationId) {
                     return {
                         applicationId: applicationId,
@@ -603,8 +661,9 @@ export default function AgentPage({ params }: any) {
                 } else {
                     return item;
                 }
-            })
-        );
+            }
+        ));
+
 
     }
 
@@ -692,7 +751,7 @@ export default function AgentPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result", data.result);
+        //console.log("data.result", data.result);
 
         if (data.result?.status === "ok") {
 
@@ -728,6 +787,12 @@ export default function AgentPage({ params }: any) {
         ));
 
     };
+
+
+
+
+
+
 
 
 
@@ -1434,69 +1499,221 @@ export default function AgentPage({ params }: any) {
 
                         </div>
 
-                        <div className='w-full flex flex-col items-start justify-between gap-2
-                          border-b border-gray-300 pb-2
-                        '>
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  OKX UID: {application.okxUid}
-                              </span>
-                              <Image
-                                src="/verified.png"
-                                width={20}
-                                height={20}
-                                alt="Verified"
-                              />
-                          </div>
-
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  닉네임: {application.userName}
-                              </span>
-                          </div>
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  핸드폰번호: {application.userPhoneNumber.slice(0, 3) + '****' + application.userPhoneNumber.slice(-4)}
-                              </span>
-
-                          </div>
-
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  이메일주소: {application.userEmail.slice(0, 3) + '****' + application.userEmail.slice(-4)}
-                              </span>
-                          </div>
-
-                          <div className='w-full flex-row items-center justify-between gap-2'>
-                              <span className='text-xs text-gray-800'>
-                                  매직월렛 USDT 지갑주소: {application.walletAddress.slice(0, 5) + '****' + application.walletAddress.slice(-5)}
-                              </span>
-                          </div>
 
 
-                          {/*
-                          <div className='w-full hidden flex-row items-center justify-between gap-2'>
-                              <span className='text-xs text-gray-800'>
-                                  HTX USDT(TRON) 지갑주소: {application.htxUsdtWalletAddress}
-                              </span>
-                          </div>
 
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  API Access Key: {application.apiAccessKey.slice(0, 3) + '****' + application.apiAccessKey.slice(-4)}
-                              </span>
-                          </div>
+                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+                            <div className='flex flex-col gap-2'>
+                                <span className='text-xs text-yellow-800'>
+                                    OKX UID
+                                </span>
 
-                          <div className='w-full flex flex-row items-center justify-between gap-2'>
-                              <span className='text-sm text-gray-800'>
-                                  API Secret Key: {application.apiSecretKey.slice(0, 3) + '****' + application.apiSecretKey.slice(-4)}
-                              </span>
-                          </div>
+                                {
+                                    application?.okxUid === "0"
+                                    ? (
+                                        <span className='text-lg text-red-800 font-semibold'>
+                                            API Access Key 오류
+                                        </span>
+                                    )
+                                    : (
+                                        <span className='text-sm text-gray-800'>
+                                            {application.okxUid}
+                                        </span>
+                                    )
+    
+                                    
+                                }
 
-                          */}
-                          
+                            </div>
+
+                            {/* checkApiAccessKey */}
+                            {
+                            (!application.okxUid || application.okxUid === "0") ? (
+                                <button
+                                    onClick={() => {
+                                        checkApiAccessKey(
+                                            application.id,
+                                            application.apiAccessKey,
+                                            application.apiSecretKey,
+                                            application.apiPassword,
+                                        );
+                                    }}
+                                    disabled={checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking}
+                                    className={`${checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                        hover:bg-blue-600
+                                    `}
+                                >
+                                    {checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update UID"}
+                                </button>
+                            )
+                            :
+                            (
+                                <div className='flex flex-col gap-2'>
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(application?.okxUid);
+                                            toast.success("Copied to clipboard");
+                                        }}
+                                        className="bg-gray-500 text-white p-2 rounded-lg
+                                            hover:bg-gray-600
+                                        "
+                                    >
+                                        Copy
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            checkApiAccessKey(
+                                                application.id,
+                                                application.apiAccessKey,
+                                                application.apiSecretKey,
+                                                application.apiPassword,
+                                            );
+                                        }}
+                                        disabled={checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking}
+                                        className={`${checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                                            hover:bg-blue-600
+                                        `}
+                                    >
+                                        {checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update UID"}
+                                    </button>
+
+
+                                </div>
+                            )}
                         </div>
-                        
+
+
+                        {/* accountConfig */}
+                        {application?.accountConfig && (
+                            <div className='w-full flex flex-col items-start justify-between gap-2'>
+                                <div className='flex flex-col gap-2'>
+                                    <span className='text-xs text-yellow-800'>
+                                        KYC Level
+                                    </span>
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <span className='text-sm text-gray-800'>
+                                            {application.accountConfig.data.kycLv}
+                                        </span>
+                                        {application.accountConfig.data.kycLv === "0" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                본인 인증 필요
+                                            </span>
+                                        ) : (
+                                            <div className='flex flex-row items-center gap-2'>
+                                                <span className='text-lg text-green-800 font-semibold'>
+                                                    본인 인증 완료
+                                                </span>
+                                                <Image
+                                                    src="/verified.png"
+                                                    alt="Verified"
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* acctLv */}
+                                {/*
+                                1: Spot mode
+                                2: Spot and futures mode
+                                3: Multi-currency margin
+                                4: Portfolio margin
+                                */}
+                                <div className='flex flex-col gap-2'>
+                                    <span className='text-xs text-yellow-800'>
+                                        Account mode
+                                    </span>
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <span className='text-sm text-gray-800'>
+                                            {application.accountConfig.data.acctLv}
+                                        </span>
+                                        {application.accountConfig.data.acctLv === "1" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Spot mode
+                                            </span>
+                                        ) : application.accountConfig.data.acctLv === "2" ? (
+                                            <div className='flex flex-row items-center gap-2'>
+                                                <span className='text-lg text-green-800 font-semibold'>
+                                                    Spot and futures mode
+                                                </span>
+                                                <Image
+                                                    src="/verified.png"
+                                                    alt="Verified"
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                            </div>
+                                        ) : application.accountConfig.data.acctLv === "3" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Multi-currency margin
+                                            </span>
+                                        ) : application.accountConfig.data.acctLv === "4" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Portfolio margin
+                                            </span>
+                                        ) : (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Unknown
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/*
+                                roleType
+                                0: General user
+                                1: Leading trader
+                                2: Copy trader
+                                3: API trader
+                                */}
+                                <div className='flex flex-col gap-2'>
+                                    <span className='text-xs text-yellow-800'>
+                                        Role type
+                                    </span>
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <span className='text-sm text-gray-800'>
+                                            {application.accountConfig.data.roleType}
+                                        </span>
+                                        {application.accountConfig.data.roleType === "0" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                General user
+                                            </span>
+                                        ) : application.accountConfig.data.roleType === "1" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Leading trader
+                                            </span>
+                                        ) : application.accountConfig.data.roleType === "2" ? (
+                                            <div className='flex flex-row items-center gap-2'>
+                                                <span className='text-lg text-green-800 font-semibold'>
+                                                    Copy trader
+                                                </span>
+                                                <Image
+                                                    src="/verified.png"
+                                                    alt="Verified"
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                            </div>
+                                        ) : application.accountConfig.data.roleType === "3" ? (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                API trader
+                                            </span>
+                                        ) : (
+                                            <span className='text-lg text-red-800 font-semibold'>
+                                                Unknown
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        )}
+
 
 
                         {/* tradingAccountBalance */}
@@ -1506,7 +1723,13 @@ export default function AgentPage({ params }: any) {
                                     OKX Trading Balance
                                 </span>
                                 <span className='text-sm text-gray-800'>
-                                    {tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance} $(USD)
+                                    {
+                                        Number(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance)
+                                        .toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD'
+                                        })
+                                    }
                                 </span>
                                 {/* convert timestamp to date */}
                                 <span className='text-xs text-gray-800'>
@@ -1574,7 +1797,61 @@ export default function AgentPage({ params }: any) {
                                 {checkingHtxAssetValuationForAgent.find((item) => item?.applicationId === application.id)?.checking ? "Updating..." : "Update"}
                             </button>
                         </div>
-                  
+
+
+
+                        <div className='w-full flex flex-col items-center justify-between gap-2
+                            border-b border-gray-300 pb-2
+                        '>
+
+                          <div className='w-full flex flex-row items-center justify-between gap-2'>
+                              <span className='text-sm text-gray-800'>
+                                  닉네임: {application.userName}
+                              </span>
+                          </div>
+                          <div className='w-full flex flex-row items-center justify-between gap-2'>
+                              <span className='text-sm text-gray-800'>
+                                  핸드폰번호: {application.userPhoneNumber.slice(0, 3) + '****' + application.userPhoneNumber.slice(-4)}
+                              </span>
+
+                          </div>
+
+                          <div className='w-full flex flex-row items-center justify-between gap-2'>
+                              <span className='text-sm text-gray-800'>
+                                  이메일주소: {application.userEmail.slice(0, 3) + '****' + application.userEmail.slice(-4)}
+                              </span>
+                          </div>
+
+                          <div className='w-full flex-row items-center justify-between gap-2'>
+                              <span className='text-xs text-gray-800'>
+                                  매직월렛 USDT 지갑주소: {application.walletAddress.slice(0, 5) + '****' + application.walletAddress.slice(-5)}
+                              </span>
+                          </div>
+
+
+                          {/*
+                          <div className='w-full hidden flex-row items-center justify-between gap-2'>
+                              <span className='text-xs text-gray-800'>
+                                  HTX USDT(TRON) 지갑주소: {application.htxUsdtWalletAddress}
+                              </span>
+                          </div>
+
+                          <div className='w-full flex flex-row items-center justify-between gap-2'>
+                              <span className='text-sm text-gray-800'>
+                                  API Access Key: {application.apiAccessKey.slice(0, 3) + '****' + application.apiAccessKey.slice(-4)}
+                              </span>
+                          </div>
+
+                          <div className='w-full flex flex-row items-center justify-between gap-2'>
+                              <span className='text-sm text-gray-800'>
+                                  API Secret Key: {application.apiSecretKey.slice(0, 3) + '****' + application.apiSecretKey.slice(-4)}
+                              </span>
+                          </div>
+
+                          */}
+                          
+                        </div>
+                        
 
 
 

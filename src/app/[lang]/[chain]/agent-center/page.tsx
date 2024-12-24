@@ -1119,7 +1119,7 @@ export default function AIPage({ params }: any) {
 
         const data = await response.json();
 
-        console.log("data.result", data.result);
+        //console.log("data.result", data.result);
 
         if (data.result?.status === "ok") {
 
