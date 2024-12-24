@@ -355,7 +355,7 @@ export default function AgentPage({ params }: any) {
  
 
 
-
+    const [totalTradingAccountBalance, setTotalTradingAccountBalance] = useState(0);
   // get all applications
   const [applications, setApplications] = useState([] as any[]);
   const [loadingApplications, setLoadingApplications] = useState(false);
@@ -393,6 +393,8 @@ export default function AgentPage({ params }: any) {
           const total = data.result.totalCount;
 
           setApplications(data.result.applications);
+
+          setTotalTradingAccountBalance( data.result.totalTradingAccountBalance );
 
           setLoadingApplications(false);
 
@@ -1243,106 +1245,194 @@ export default function AgentPage({ params }: any) {
           {/* application list */}
           <div className='mt-10 w-full flex flex-col gap-5'>
 
-            <div className='flex flex-row items-center gap-2'>
-                <Image
-                    src='/logo-exchange-okx.png'
-                    width={60}
-                    height={60}
-                    alt='OKX'
-                    className='rounded-lg animate-pulse'
-                />
-                
-                <div className='flex flex-col items-start justify-center gap-2'>
-                  <span className='text-lg font-semibold text-gray-800'>
-                      OKX 신청목록
-                  </span>
-                </div>
 
+            <div className='flex flex-row items-center gap-2'>
+                
+                <Image
+                    src="/logo-exchange-okx.png"
+                    alt="OKX"
+                    width={50}
+                    height={50}
+                />
+                <span className='text-lg font-semibold text-gray-800'>
+                    OKX 신청목록
+                </span>
+
+                {/* reload button */}
+                <button
+                    onClick={() => {
+                        const fetchData = async () => {
+
+                            setLoadingApplications(true);
+                            const response = await fetch("/api/agent/getApplicationsCenter", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    walletAddress: address,
+                                    marketingCenter: "ppump",
+                                }),
+                            });
+
+                            if (!response.ok) {
+                                console.error("Error fetching agents");
+                                setLoadingApplications(false);
+                                return;
+                            }
+
+                            const data = await response.json();
+
+                            const total = data.result.totalCount;
+
+                            setApplications(data.result.applications);
+
+
+                            setLoadingApplications(false);
+
+                        };
+                        fetchData();
+                    }}
+                    disabled={loadingApplications}
+                    className={`${loadingApplications ? "bg-gray-500" : "bg-blue-500"} text-white p-2 rounded-lg
+                        hover:bg-blue-600
+                    `}
+                >
+                    {loadingApplications ? "Loading..." : "Reload"}
+                </button>
             </div>
 
             {loadingApplications && (
-              <div className='w-full flex flex-col gap-5
-                border border-gray-300 p-4 rounded-lg bg-gray-100
-              '>
-                <div className='w-full flex flex-row items-center justify-between gap-2'>
-                  <span className='text-xl font-semibold text-gray-800'>
-                    Loading...
-                  </span>
+                <div className='w-full flex flex-col items-center justify-center'>
+                    <Image
+                        src="/loading.png"
+                        alt="Loading"
+                        width={50}
+                        height={50}
+                        className='animate-spin'
+                    />
                 </div>
-              </div>
             )}
 
-              <div className='w-full flex flex-col gap-5'>
-                  {/* total count */}
-                  <span className='text-lg text-gray-800'>
-                      총 {applications.length}개의 신청이 있습니다.
-                  </span>
-              </div>
+            {/* goto copy trading account */}
+            {/* https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1 */}
+            <div className='w-full flex flex-col gap-2'>
+                <span className='text-lg text-gray-800'>
+                    <a
+                        href="https://www.okx.com/copy-trading/account/BA5BC36A6EDAB9E1"
+                        target="_blank"
+                        className='text-blue-500'
+                    >
+                        Copy Trading Account 바로가기
+                    </a>
+                </span>
+            </div>
+
+
+            {/* totalTradingAccountBalance */}
+            {totalTradingAccountBalance > 0 && (
+                <div className='w-full flex flex-row gap-2'>
+                    {/* startTrading is exist count */}
+                    <span className='text-2xl text-gray-800 font-semibold'>
+                        시작된 Bot: {
+                            applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                        }개
+                    </span>
+                    {' '}/{' '}
+                    <span className='text-2xl font-semibold text-gray-800'>
+                        총 거래 계정 잔고: {
+                        Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD'
+                        })
+                        }
+                    </span>
+                </div>
+            )}
 
               <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-5'>
 
                 {applications.map((application) => (
+
                     <div
                         key={application._id}
-                        className='w-full flex flex-col gap-2
+                        className={`w-full flex flex-col gap-5
                         border border-gray-300 p-4 rounded-lg bg-gray-100
-                    '>
-                        {/* 신청번호 */}
-                        <div className='w-full flex flex-row items-center justify-between gap-2'>
-                            <span className='text-xl font-semibold text-gray-800'>
-                                신청번호: #{application.id}
-                            </span>
-                        </div>
-                        {/* 신청일 */}
-                        <div className='w-full flex flex-row items-center justify-between gap-2
-                          border-b border-gray-300 pb-2
+
+                        ${application?.accountConfig?.data.roleType === "2" ? "border-2 border-green-500" : ""}
+
+                        `}
+                    >
+
+                        {/* 신청번호, 신청일자 */}
+                        <div className='w-full flex flex-col items-start justify-between gap-2
+                            border-b border-gray-300 pb-2
                         '>
+                            <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                <span className='text-lg font-semibold text-gray-800'>
+                                    신청번호: #{application.id}
+                                </span>
+
+                                {application?.accountConfig?.data.roleType === "2" && (
+                                    <Image
+                                        src="/icon-trading-live.gif"
+                                        alt="Trading"
+                                        width={80}
+                                        height={30}
+                                    />
+                                )}
+
+
+                            </div>
+                            {/*
                             <span className='text-sm text-gray-800'>
-                                신청일: {
-                                application.createdAt
-                                ? new Date(application.createdAt).toLocaleString()
-                                : ''}
-                            </span>
+                                신청일자: {
+                                    new Date(application.createdAt).toLocaleString()
+                                }
+                            </span>  
+                            */}
+
+                            {/* time ago */}
+                            <span className='text-xs text-gray-800'>
+                            {
+                                new Date().getTime() - new Date(application.createdAt).getTime() < 1000 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(application.createdAt).getTime()) / 1000) + ' ' + '초 전'
+                                ) :
+                                new Date().getTime() - new Date(application.createdAt).getTime() < 1000 * 60 * 60 ? (
+                                ' ' + Math.floor((new Date().getTime() - new Date(application.createdAt).getTime()) / 1000 / 60) + ' ' + '분 전'
+                                ) : (
+                                ' ' + Math.floor((new Date().getTime() - new Date(application.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + '시간 전'
+                                )
+                            }
+                            </span>                                              
+
                         </div>
 
-                        {/* is startTrading exist, if exist, show startTrading */}
-                        {application.startTrading ? (
-                            <div className='w-full flex flex-col items-start justify-between gap-2
-                              border-b border-gray-300 pb-2
-                            '>
-                                <div className='flex flex-row items-center justify-between gap-2'>
-                                  <Image
-                                    src='/icon-bot-live.gif'
-                                    width={80}
-                                    height={30}
-                                    alt='Bot'
-                                    className='rounded-lg'
-                                  />
-                                  <span className='text-lg text-green-500'>
-                                    거래시작
-                                  </span>
-                                </div>
-                                <span className='text-sm text-gray-800'>
-                                    거래시작일: {
-                                    application.startTrading
-                                    ? new Date(application.startTrading.timestamp).toLocaleString()
-                                    : ''}
-                                </span>
-                            </div>
-                        ) : (
-                            <div className='w-full flex flex-col items-start justify-between gap-2
-                              border-b border-gray-300 pb-2
-                            '>
-                                <span className='text-lg text-red-500'>
-                                  거래준비중...
-                                </span>
-                                <span className='text-sm text-gray-800'>
-                                    거래시작일: N/A
-                                </span>
-                            </div>
-                        )}
 
-                        {/* is endTrading exist, if exist, show endTrading */}
+                        {/* application?.center */}
+                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+                            {/* 'https://t.me/ppump_bot' */}
+                            <button
+                                onClick={() => {
+                                    window.open('https://t.me/' + application.center, '_blank');
+                                }}
+                                className="p-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                            >
+                                <div className='flex flex-row items-center gap-2'>
+                                    <Image
+                                        src="/logo-telegram.webp"
+                                        alt="Telegram"
+                                        width={30}
+                                        height={30}
+                                        className='rounded-lg'
+                                    />
+                                    <span className='text-sm font-semibold'>
+                                        {application.center}
+                                    </span>
+                                </div>
+                            </button>
+
+                        </div>
 
                         <div className='w-full flex flex-col items-start justify-between gap-2
                           border-b border-gray-300 pb-2
