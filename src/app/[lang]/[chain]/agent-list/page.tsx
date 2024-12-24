@@ -1681,7 +1681,7 @@ export default function AIPage({ params }: any) {
                                     }}
                                     connectModal={{
                                         size: "wide", 
-                                        titleIcon: "https://ppump.me/icon-pump-bot.png",                           
+                                        titleIcon: "https://ppump.me/logo-marketing-center.webp",                           
                                         showThirdwebBranding: false,
 
                                     }}
@@ -2213,7 +2213,7 @@ function Header(
             >            
                 <div className="flex flex-row gap-2 items-center">
                     <Image
-                    src="/logo-pump.webp"
+                    src="/logo-marketing-center.webp"
                     alt="Circle Logo"
                     width={35}
                     height={35}

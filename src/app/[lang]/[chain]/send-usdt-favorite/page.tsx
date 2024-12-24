@@ -813,7 +813,7 @@ export default function SendUsdt({ params }: any) {
                     }}
                     connectModal={{
                       size: "wide", 
-                      titleIcon: "https://ppump.me/icon-pump-bot.png",                           
+                      titleIcon: "https://ppump.me/logo-marketing-center.webp",                           
                       showThirdwebBranding: false,
 
                     }}
