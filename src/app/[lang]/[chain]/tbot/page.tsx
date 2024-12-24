@@ -1981,6 +1981,11 @@ export default function AIPage({ params }: any) {
 
     ) => {
 
+        if (applicationId === "") {
+            toast.error("Application ID를 입력해 주세요.");
+            return;
+        }
+
         if (apiAccessKey === "") {
             toast.error("OKX Access Key를 입력해 주세요.");
             return;
@@ -1993,6 +1998,10 @@ export default function AIPage({ params }: any) {
 
         if (apiPassword === "") {
             toast.error("OKX Password를 입력해 주세요.");
+            return;
+        }
+
+        if (checkingTradingAccountBalance) {
             return;
         }
 
@@ -2054,6 +2063,41 @@ export default function AIPage({ params }: any) {
     };
 
 
+    // checkingTradingAccountBalance interval
+    useEffect(() => {
+
+        let interval: any = null;
+
+        if (myAgent
+            && myAgent.applicationId
+            && myAgent.apiAccessKey && myAgent.apiSecretKey && myAgent.apiPassword) {
+
+            checkTradingAccountBalance(
+                myAgent.applicationId,
+                myAgent.apiAccessKey,
+                myAgent.apiSecretKey,
+                myAgent.apiPassword,
+            );
+        
+
+            interval = setInterval(() => {
+                checkTradingAccountBalance(
+                    myAgent.applicationId,
+                    myAgent.apiAccessKey,
+                    myAgent.apiSecretKey,
+                    myAgent.apiPassword,
+                );
+            } , 1000 * 10);
+
+        }
+
+        if (interval !== null) {
+            clearInterval(interval);
+        }
+
+    } , [myAgent.applicationId, myAgent.apiAccessKey, myAgent.apiSecretKey, myAgent.apiPassword]);
+
+
 
 
     return (
@@ -2098,149 +2142,157 @@ export default function AIPage({ params }: any) {
                             AI 트레이딩 TBOT 서비스센터 입니다.
                         </span>
                     </div>
-                    <div className='flex flex-row items-center gap-2'>
-
-                        <div className='flex flex-col gap-2'>
 
 
+                    {!myAgent?.okxUid && (
+                        <>
 
-                            {/* AI 트레이딩 TBOT 서비스센터 입니다. */}
-                            <span className="text-xs font-semibold text-gray-800">
-                                
-                                TBOT 센터는 본인 계좌로 운영자금을 디파짓하여 AI트레이딩을 제공합니다. <br />
-                                TBOT을 민팅하면 Master bot이 지원을 합니다. <br />
-                                코인선물투자 개념과 트레이딩에 대한 교육을 제공합니다.
-                            </span>
-                        </div>
+                            <div className='flex flex-row items-center gap-2'>
 
-                        <Image
-                            src="/icon-tbot.png"
-                            alt="ChatGPT"
-                            width={100}
-                            height={40}
-                            className='bg-zinc-100 p-2 rounded'
-                        />
+                                <div className='flex flex-col gap-2'>
 
 
-                    </div>
 
-
-                    <div className='w-full  flex flex-col gap-5 '>
-
-                        <div className='flex flex-col gap-5 '>
-
-                            <div className='flex flex-col gap-5 '>
-                                <div className='flex flex-row items-center gap-2'>
-                                    {/* dot */}
-                                    <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-                                    <span className='text-lg font-semibold'>
-                                        TBOT 특징
+                                    {/* AI 트레이딩 TBOT 서비스센터 입니다. */}
+                                    <span className="text-xs font-semibold text-gray-800">
+                                        
+                                        TBOT 센터는 본인 계좌로 운영자금을 디파짓하여 AI트레이딩을 제공합니다. <br />
+                                        TBOT을 민팅하면 Master bot이 지원을 합니다. <br />
+                                        코인선물투자 개념과 트레이딩에 대한 교육을 제공합니다.
                                     </span>
                                 </div>
-                                <span className='text-sm text-gray-500'>
-                                    1. 자금관리. 본인의 거래소 계정에서 직접 관리, 입출금 자류롭게 가능, 계좌 잔고 50% 이상 출금 시 서비스 중지
-                                </span>
-                                <span className='text-sm text-gray-500'>
-                                    2. 계정제한. - 개인당 최대 10개 TBOT 운영가능, - 거래소별 최대 3개의 계정 생성 가능 (신분증 종류별 1개, 여권,주민,운전면서) .
-                                </span>
-                                <span className='text-sm text-gray-500'>
-                                    3. TBOT 아카테미를 통해서 트레이딩 투자 개념을 교육시켜 드립니다. - AI트레이딩 로봇이 어떻게 작동하고, 실적을 보고 관리하는 등 트레이딩 개념을 이해하고 AI트레이딩 서비스를 사용 할 수 있도록 교육제공. - 유저별 사용을 위한 플랫폼의 설치와 세팅도 지원.
-                                </span>
+
+                                <Image
+                                    src="/icon-tbot.png"
+                                    alt="ChatGPT"
+                                    width={100}
+                                    height={40}
+                                    className='bg-zinc-100 p-2 rounded'
+                                />
+
+
                             </div>
 
-                            <div className='flex flex-col gap-5 '>
-                                <div className='flex flex-row items-center gap-2'>
-                                    {/* dot */}
-                                    <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-                                    <span className='text-lg font-semibold'>
-                                        리스크 고지
-                                    </span>
+
+                            <div className='w-full  flex flex-col gap-5 '>
+
+                                <div className='flex flex-col gap-5 '>
+
+                                    <div className='flex flex-col gap-5 '>
+                                        <div className='flex flex-row items-center gap-2'>
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg font-semibold'>
+                                                TBOT 특징
+                                            </span>
+                                        </div>
+                                        <span className='text-sm text-gray-500'>
+                                            1. 자금관리. 본인의 거래소 계정에서 직접 관리, 입출금 자류롭게 가능, 계좌 잔고 50% 이상 출금 시 서비스 중지
+                                        </span>
+                                        <span className='text-sm text-gray-500'>
+                                            2. 계정제한. - 개인당 최대 10개 TBOT 운영가능, - 거래소별 최대 3개의 계정 생성 가능 (신분증 종류별 1개, 여권,주민,운전면서) .
+                                        </span>
+                                        <span className='text-sm text-gray-500'>
+                                            3. TBOT 아카테미를 통해서 트레이딩 투자 개념을 교육시켜 드립니다. - AI트레이딩 로봇이 어떻게 작동하고, 실적을 보고 관리하는 등 트레이딩 개념을 이해하고 AI트레이딩 서비스를 사용 할 수 있도록 교육제공. - 유저별 사용을 위한 플랫폼의 설치와 세팅도 지원.
+                                        </span>
+                                    </div>
+
+                                    <div className='flex flex-col gap-5 '>
+                                        <div className='flex flex-row items-center gap-2'>
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg font-semibold'>
+                                                리스크 고지
+                                            </span>
+                                        </div>
+                                        <span className='text-sm text-gray-500'>
+                                            1. 투자원금 손실 가능성 있음
+                                        </span>
+                                        <span className='text-sm text-gray-500'>
+                                            2. 과거 수익률이 미래 수익을 보장하지 않음
+                                        </span>
+                                        <span className='text-sm text-gray-500'>
+                                            3. 높은 레버리지 거래의 위험성 인지 필요
+                                        </span>
+                                    </div>
+
+                                    <div className='flex flex-col gap-5 '>
+                                        <div className='flex flex-row items-center gap-2'>
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg font-semibold'>
+                                                FAQ
+                                            </span>
+                                        </div>
+                                        <span className='text-sm text-gray-500'>
+                                            1. 수익 반영 주기 . TBOT의 수익반영은 매일매일입니다. MASTER BOT의 수익반영은 주 단위 입니다.
+                                        </span>
+                                        <span className='text-sm text-gray-500'>
+                                            2. 본인 계좌에 인출과 마스터봇의 작동 거래소의 본인 계좌를 인출을 하면, Master bot의 작동은 중지합니다 .
+                                        </span>
+                                    </div>
+
                                 </div>
-                                <span className='text-sm text-gray-500'>
-                                    1. 투자원금 손실 가능성 있음
-                                </span>
-                                <span className='text-sm text-gray-500'>
-                                    2. 과거 수익률이 미래 수익을 보장하지 않음
-                                </span>
-                                <span className='text-sm text-gray-500'>
-                                    3. 높은 레버리지 거래의 위험성 인지 필요
-                                </span>
+
                             </div>
 
-                            <div className='flex flex-col gap-5 '>
-                                <div className='flex flex-row items-center gap-2'>
-                                    {/* dot */}
-                                    <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-                                    <span className='text-lg font-semibold'>
-                                        FAQ
-                                    </span>
-                                </div>
-                                <span className='text-sm text-gray-500'>
-                                    1. 수익 반영 주기 . TBOT의 수익반영은 매일매일입니다. MASTER BOT의 수익반영은 주 단위 입니다.
-                                </span>
-                                <span className='text-sm text-gray-500'>
-                                    2. 본인 계좌에 인출과 마스터봇의 작동 거래소의 본인 계좌를 인출을 하면, Master bot의 작동은 중지합니다 .
-                                </span>
+
+
+                            {/* event */}
+                            {/*
+                            EVENT 1. 100 TBOT 100명 무료!  100-100-100 이벤트 
+
+                            > 100 TBOT을 무료로 제공합니다. 
+                            1. 100 TBOT을 무료 구매하고, 
+                            2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
+                            3. 100 MASTER BOT 무료 민팅 !
+                            */}
+                            {/* impact text */}
+                            <div className='w-full flex flex-col gap-5 '>
+                                    
+                                    <div className='flex flex-col gap-5
+                                        border border-gray-300 p-4 rounded-lg bg-gray-100
+                                    '>
+                                        <div className='flex flex-row items-center gap-2'>
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-red-500 rounded-full'></div>
+                                            <span className='text-lg font-semibold text-red-500'>
+                                                EVENT 1. 100 TBOT 100명 무료!  100-100-100 이벤트
+                                            </span>
+                                        </div>
+                                        <span className='text-sm text-gray-800
+                                            font-semibold
+                                            bg-yellow-200 p-2 rounded-lg
+                                        '>
+                                            * 100 TBOT을 무료로 제공합니다.
+                                        </span>
+
+                                        <span className='text-sm text-green-800
+                                            font-semibold
+                                            bg-yellow-200 p-2 rounded-lg
+                                        '>
+                                            1. 100 TBOT을 무료 구매하고, 
+                                        </span>
+                                        <span className='text-sm text-green-800
+                                            font-semibold
+                                            bg-yellow-200 p-2 rounded-lg
+                                        '>
+                                            2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
+                                        </span>
+                                        <span className='text-sm text-green-800
+                                            font-semibold
+                                            bg-yellow-200 p-2 rounded-lg
+                                        '>
+                                            3. 100 MASTER BOT 무료 민팅 !
+                                        </span>
+                                    </div>
+
                             </div>
 
-                        </div>
-
-                    </div>
-
-
-
-                    {/* event */}
-                    {/*
-                    EVENT 1. 100 TBOT 100명 무료!  100-100-100 이벤트 
-
-                    > 100 TBOT을 무료로 제공합니다. 
-                    1. 100 TBOT을 무료 구매하고, 
-                    2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
-                    3. 100 MASTER BOT 무료 민팅 !
-                    */}
-                    {/* impact text */}
-                    <div className='w-full flex flex-col gap-5 '>
-                            
-                            <div className='flex flex-col gap-5
-                                border border-gray-300 p-4 rounded-lg bg-gray-100
-                            '>
-                                <div className='flex flex-row items-center gap-2'>
-                                    {/* dot */}
-                                    <div className='w-4 h-4 bg-red-500 rounded-full'></div>
-                                    <span className='text-lg font-semibold text-red-500'>
-                                        EVENT 1. 100 TBOT 100명 무료!  100-100-100 이벤트
-                                    </span>
-                                </div>
-                                <span className='text-sm text-gray-800
-                                    font-semibold
-                                    bg-yellow-200 p-2 rounded-lg
-                                '>
-                                    * 100 TBOT을 무료로 제공합니다.
-                                </span>
-
-                                <span className='text-sm text-green-800
-                                    font-semibold
-                                    bg-yellow-200 p-2 rounded-lg
-                                '>
-                                    1. 100 TBOT을 무료 구매하고, 
-                                </span>
-                                <span className='text-sm text-green-800
-                                    font-semibold
-                                    bg-yellow-200 p-2 rounded-lg
-                                '>
-                                    2. OKX를 가입하면  OKX 본인계죄로 100 USDT를 무상으로 지급 !
-                                </span>
-                                <span className='text-sm text-green-800
-                                    font-semibold
-                                    bg-yellow-200 p-2 rounded-lg
-                                '>
-                                    3. 100 MASTER BOT 무료 민팅 !
-                                </span>
-                            </div>
-
-                    </div>
-
-
+                        </>
+                    )}
+                    
+                    
 
 
                     <div className='w-full flex flex-col items-start gap-5 mt-10'>
@@ -2750,34 +2802,7 @@ export default function AIPage({ params }: any) {
                                             bg-green-100
                                         '>
 
-                                            {myAgent?.startTrading?.status ? (
-                                                <div className='w-full flex flex-row items-center justify-start gap-2'>
-                                                    <Image
-                                                        src="/icon-agent-live.gif"
-                                                        alt="Live"
-                                                        width={60}
-                                                        height={40}
-                                                    />
-                                                    <span className='text-sm font-semibold text-blue-500'>
-                                                        트레이딩을 시작했습니다.
-                                                    </span>
-                                                </div>
-                                            ) : (
 
-                                                <div className='flex flex-row items-center gap-2'>
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="loading"
-                                                        width={30}
-                                                        height={30}
-                                                        className='animate-spin'
-                                                    />
-                                                    <span className='text-sm font-semibold text-blue-500'>
-                                                        AI 트레이딩 & Master Bot 민팅 준비중...
-                                                    </span>
-                                                </div>
-
-                                            )}
 
 
 
@@ -2802,7 +2827,7 @@ export default function AIPage({ params }: any) {
                                                         <span className='text-xs text-yellow-800'>
                                                             OKX Trading Balance
                                                         </span>
-                                                        <span className='text-sm text-gray-800'>
+                                                        <span className='text-4xl text-green-500 font-semibold'>
                                                             {
                                                                 Number(myAgent?.tradingAccountBalance?.balance).toLocaleString('en-US', {
                                                                     style: 'currency',
@@ -2844,7 +2869,7 @@ export default function AIPage({ params }: any) {
                                                 border border-gray-300 p-4 rounded-lg
                                             '>
                                                 
-                                                <div className='flex flex-row items-center justify-between gap-2'>
+                                                <div className='flex flex-row items-start justify-between gap-2'>
                                                     <div className='flex flex-col gap-2'>
                                                         <span className='text-sm font-semibold text-gray-500'>
                                                             OKX UID: {myAgent?.okxUid}
@@ -2869,7 +2894,7 @@ export default function AIPage({ params }: any) {
 
                                                 {/* KYC Level */}
                                                 {/* myAgent.accountConfig.data.kycLv */}
-                                                <div className='flex flex-row items-center justify-between gap-2'>
+                                                <div className='w-full flex flex-row items-center justify-between gap-2'>
 
 
                                                     {myAgent?.accountConfig?.data?.kycLv < 2 ? (
@@ -2880,7 +2905,7 @@ export default function AIPage({ params }: any) {
                                                         </div>
 
                                                     ) : (
-                                                        <div className='flex flex-row items-center justify-between gap-2'>
+                                                        <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                             <span className='text-sm font-semibold text-green-500'>
                                                                 본인 인증 완료
                                                             </span>
@@ -2910,9 +2935,40 @@ export default function AIPage({ params }: any) {
                                             </div>
 
 
-
-
                                         </div>
+
+
+                                        {myAgent?.startTrading?.status ? (
+                                            <div className='w-full flex flex-row items-center justify-start gap-2'>
+                                                <Image
+                                                    src="/icon-agent-live.gif"
+                                                    alt="Live"
+                                                    width={60}
+                                                    height={40}
+                                                />
+                                                <span className='text-sm font-semibold text-blue-500'>
+                                                    트레이딩을 시작했습니다.
+                                                </span>
+                                            </div>
+                                        ) : (
+
+                                            <div className='flex flex-row items-center gap-2'>
+                                                <Image
+                                                    src="/loading.png"
+                                                    alt="loading"
+                                                    width={30}
+                                                    height={30}
+                                                    className='animate-spin'
+                                                />
+                                                <span className='text-sm font-semibold text-blue-500'>
+                                                    AI 트레이딩 & Master Bot 민팅 준비중...
+                                                </span>
+                                            </div>
+
+                                        )}
+
+
+
 
                                         {/* masterBot */}
                                         {myAgent?.masterBotInfo && (
@@ -3993,29 +4049,6 @@ function Header(
             </button>
 
 
-          <div className="flex flex-row gap-2 items-center">
-
-            <button
-              onClick={() => {
-                router.push(
-                    "/kr/polygon/tbot?agent=" + agent + "&tokenId=" + tokenId + "&center=" + center
-                  );
-              }}
-              className="text-gray-600 hover:underline text-xs xl:text-lg"
-            >
-              TBOT
-            </button>
-            <button
-              onClick={() => {
-                router.push(
-                    '/kr/polygon/profile-settings?agent=' + agent + '&tokenId=' + tokenId + '&center=' + center
-                );
-              }}
-              className="text-gray-600 hover:underline text-xs xl:text-lg"
-            >
-              SETTINGS
-            </button>
-          </div>
         </div>
         
       </header>
