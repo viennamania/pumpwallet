@@ -1329,14 +1329,17 @@ export default function AgentPage({ params }: any) {
                         const fetchData = async () => {
 
                             setLoadingApplications(true);
-                            const response = await fetch("/api/agent/getApplicationsCenter", {
+                            const response = await fetch("/api/agent/getReferApplications", {
+
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify({
-                                    walletAddress: address,
-                                    marketingCenter: "ppump",
+                                    page: 1,
+                                    limit: 10,
+                                    agentBot: agentContractAddress,
+                                    agentBotNumber: agentTokenId,
                                 }),
                             });
 
@@ -1351,6 +1354,8 @@ export default function AgentPage({ params }: any) {
                             const total = data.result.totalCount;
 
                             setApplications(data.result.applications);
+
+                            setTotalTradingAccountBalance( data.result.totalTradingAccountBalance );
 
 
                             setLoadingApplications(false);
