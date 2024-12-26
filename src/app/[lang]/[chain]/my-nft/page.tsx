@@ -135,14 +135,12 @@ const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; //
 
 export default function SettingsPage({ params }: any) {
 
+    const center = params.center;
 
     //console.log("params", params);
     
     const searchParams = useSearchParams();
-
-    const center = searchParams.get('center');
  
-    const wallet = searchParams.get('wallet');
 
     const agent = searchParams.get('agent');
 
@@ -1853,7 +1851,7 @@ export default function SettingsPage({ params }: any) {
                                                         onClick={() => {
                                                             
                                                             navigator.clipboard.writeText(
-                                                                'https://ppump.me/kr/polygon/tbot' + '/?center=' + params.center +
+                                                                'https://ppump.me/kr/polygon/tbot' + '/?center=' + center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
