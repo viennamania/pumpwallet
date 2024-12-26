@@ -2587,7 +2587,7 @@ export default function AIPage({ params }: any) {
                                                         {checkingAgentBotNftList.find((item) => item.applicationId === application.id)?.checking ? "Checking..." : "Check NFT"}
                                                     </button>
                                                 ) : (
-                                                    <div className='w-full flex flex-col gap-1
+                                                    <div className='w-full h-56 flex flex-col gap-1
                                                         items-center justify-center
                                                         bg-gray-200 p-2 rounded-lg border border-gray-300
                                                     '>
@@ -2848,7 +2848,7 @@ export default function AIPage({ params }: any) {
                                                     <span className='text-xs text-yellow-800'>
                                                         OKX Trading Balance
                                                     </span>
-                                                    <span className='text-sm text-gray-800'>
+                                                    <span className='text-4xl text-green-800 font-semibold'>
                                                         {
                                                             Number(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance)
                                                             .toLocaleString('en-US', {
@@ -2865,6 +2865,7 @@ export default function AIPage({ params }: any) {
                                                         }
                                                     </span>
                                                 </div>
+                                                {/*
                                                 <button
                                                     onClick={() => {
                                                         checkTradingAccountBalance(
@@ -2883,6 +2884,7 @@ export default function AIPage({ params }: any) {
                                                 >
                                                     {checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update"}
                                                 </button>
+                                                */}
                                             </div>
 
 
