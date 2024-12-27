@@ -1744,7 +1744,7 @@ export default function AgentPage({ params }: any) {
                                 <span className='text-xs text-yellow-800'>
                                     OKX Trading Balance
                                 </span>
-                                <span className='text-sm text-gray-800'>
+                                <span className='text-4xl text-green-800 font-semibold'>
                                     {
                                         Number(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance)
                                         .toLocaleString('en-US', {
