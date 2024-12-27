@@ -146,7 +146,7 @@ const contractErc1155 = getContract({
 export default function AIPage({ params }: any) {
 
 
-    console.log("SettingsPage params", params);
+    //console.log("SettingsPage params", params);
     
     
     // get params from the URL
@@ -563,7 +563,7 @@ export default function AIPage({ params }: any) {
 
 
 
-    console.log("address", address);
+    ///console.log("address", address);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -584,7 +584,7 @@ export default function AIPage({ params }: any) {
 
             const data = await response.json();
 
-            console.log("data", data);
+            ///console.log("data", data);
 
 
             if (data.result) {
@@ -602,6 +602,7 @@ export default function AIPage({ params }: any) {
 
 
 
+    const [centerBotSummaryList, setCenterBotSummaryList] = useState([] as any[]);
 
     const [totalTradingAccountBalance, setTotalTradingAccountBalance] = useState(0);
 
@@ -632,7 +633,15 @@ export default function AIPage({ params }: any) {
 
             const data = await response.json();
 
-            ///const total = data.result.totalCount;
+            
+
+            const summary = data?.summary?.result;
+
+            //console.log("summary", summary);
+
+
+
+            setCenterBotSummaryList(summary);
 
 
             setApplications(data.result.applications);
@@ -648,9 +657,9 @@ export default function AIPage({ params }: any) {
         if (address && marketingCenter) {
             fetchData();
         }
-    }, [address, marketingCenter]);
+    }, [address]);
 
-    console.log("marketingCenter", marketingCenter);
+    ///console.log("marketingCenter", marketingCenter);
 
     //console.log("applications", applications);
 
@@ -1494,7 +1503,7 @@ export default function AIPage({ params }: any) {
     
     const deployErc721ContractForMasterBot = async () => {
 
-        console.log("deployErc721Contract=====================");
+        //console.log("deployErc721Contract=====================");
 
   
         if (!address) {
@@ -1572,7 +1581,7 @@ export default function AIPage({ params }: any) {
             
                 });
 
-                console.log("masterBotContractAddress", masterBotContractAddress);
+                ///console.log("masterBotContractAddress", masterBotContractAddress);
 
                 // save the contract address to the database
                 // /api/user/updateUser
@@ -1668,7 +1677,7 @@ export default function AIPage({ params }: any) {
             return;
         }
 
-        console.log("mintMasterBotNft applicationId", applicationId);
+        ///console.log("mintMasterBotNft applicationId", applicationId);
 
 
         const application = applications.find((item) => item.id === applicationId);
@@ -2442,6 +2451,68 @@ export default function AIPage({ params }: any) {
                                         </span>
                                     </div>
                                 )}
+
+
+
+                                {/* centerBotSummaryList */}
+                                {/*
+                                [
+
+                                    {
+                                        "_id": "",
+                                        "tradingAccountBalanceCount": 6,
+                                        "tradingAccountBalanceSum": 348.71666196092025
+                                    },
+                                    {
+                                        "_id": "owin_drosi_bot",
+                                        "tradingAccountBalanceCount": 2,
+                                        "tradingAccountBalanceSum": 112.40018756164966
+                                    }
+                                ]
+                                */}
+
+                                {address && centerBotSummaryList?.length > 0 && (
+                                    <div className='w-full flex flex-col gap-5'>
+
+                                        <div className='flex flex-row items-center gap-2'>
+                                            <span className='text-lg font-semibold text-gray-800'>
+                                                Center Bot Summary
+                                            </span>
+                                        </div>
+
+                                        <div className='w-full grid grid-cols-2 xl:grid-cols-5 gap-5'>
+
+                                            {centerBotSummaryList.map((item) => (
+                                                <div
+                                                    key={item._id}
+                                                    className={`w-full flex flex-col gap-5
+                                                    border border-gray-300 p-4 rounded-lg bg-gray-100
+                                                    `}
+                                                >
+                                                    <div className='w-full flex flex-col items-start justify-between gap-2'>
+                                                        <span className='text-sm font-semibold text-gray-800'>
+                                                            {item._id}
+                                                        </span>
+                                                        <span className='text-sm text-gray-800'>
+                                                            거래 계정 수: {item.tradingAccountBalanceCount}개
+                                                        </span>
+                                                        <span className='text-sm text-gray-800'>
+                                                            총 잔고: {
+                                                                Number(item.tradingAccountBalanceSum).toLocaleString('en-US', {
+                                                                    style: 'currency',
+                                                                    currency: 'USD'
+                                                                })
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+
+                                        </div>
+
+                                    </div>
+                                )}
+
 
 
 
