@@ -2084,40 +2084,35 @@ export default function CenterPage({ params }: any) {
 
 
                 {/* history back */}
-                <div className='mt-5 flex flex-row items-center gap-2'>
-                <button
-                    onClick={() => router.back()}
-                    className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-                    hover:bg-gray-600
-                    "
-                >
-                    <Image
-                    src="/icon-back.png"
-                    width={24}
-                    height={24}
-                    alt="Back"
-                    />
-                    <span className='text-sm text-white'>
-                    뒤로가기
-                    </span>
-                </button>
+                {/* sticky top-0 bg-white */}
+                <div className='
+                    sticky top-0 bg-white z-50
+                    flex flex-row items-center justify-between gap-4
+                    p-4
+                    w-full
+                '>
+                    <button
+                        onClick={() => router.back()}
+                        className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
+                        hover:bg-gray-600
+                        "
+                    >
+                        <Image
+                        src="/icon-back.png"
+                        width={24}
+                        height={24}
+                        alt="Back"
+                        />
+                        <span className='text-sm text-white'>
+                        뒤로가기
+                        </span>
+                    </button>
                 </div>
 
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                    <div className='flex flex-row items-center gap-4'>
-                        
-                        <Image
-                            src="/logo-agent-center.png"
-                            alt="TBOT"
-                            width={100}
-                            height={40}
-                        />
-                        <span className="text-sm font-semibold text-gray-500">
-                            AI 트레이딩 TBOT 서비스센터 입니다.
-                        </span>
-                    </div>
+
                     <div className='flex flex-row items-center gap-4'>
                         {/* red dot */}
                         <div className='w-4 h-4 bg-red-500 rounded-full'></div>
@@ -2254,6 +2249,7 @@ export default function CenterPage({ params }: any) {
                     </div>
 
                     {/* deploy ERC721 contract for MasterBot */}
+                    {/*
                     {address && isAdmin && (
                         <div className='w-full flex flex-col gap-5'>
 
@@ -2264,7 +2260,6 @@ export default function CenterPage({ params }: any) {
                                         MasterBot 계약주소 생성
                                     </span>
 
-                                    {/* deploy button */}
                                     <button
                                         onClick={() => {
                                             deployErc721ContractForMasterBot();
@@ -2291,11 +2286,7 @@ export default function CenterPage({ params }: any) {
 
                         </div>
                     )}
-
-
-
-
-
+                    */}
 
  
                     {/* applications table */}
@@ -2443,22 +2434,31 @@ export default function CenterPage({ params }: any) {
 
                                 {/* totalTradingAccountBalance */}
                                 {totalTradingAccountBalance > 0 && (
-                                    <div className='w-full flex flex-row gap-2'>
+                                    <div className='w-full flex flex-col xl:flex-row items-start justify-between gap-5'>
                                         {/* startTrading is exist count */}
-                                        <span className='text-2xl text-gray-800 font-semibold'>
-                                            시작된 Bot: {
-                                                applications.filter((item) => item.accountConfig?.data.roleType === "2").length
-                                            }개
-                                        </span>
-                                        {' '}/{' '}
-                                        <span className='text-2xl font-semibold text-gray-800'>
-                                            총 거래 계정 잔고: {
-                                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD'
-                                            })
-                                            }
-                                        </span>
+                                        <div className='w-full flex flex-row items-center gap-2'>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                시작된 Bot:
+                                            </span>
+                                            <span className='text-4xl text-green-500 font-semibold'>
+                                                {
+                                                    applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className='w-full flex flex-row items-center gap-2'>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                총 거래 계정 잔고:
+                                            </span>
+                                            <span className='text-4xl text-green-500 font-semibold'>
+                                                {
+                                                Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                                    style: 'currency',
+                                                    currency: 'USD'
+                                                })
+                                                }
+                                            </span>
+                                        </div>
                                     </div>
                                 )}
 
@@ -2879,7 +2879,7 @@ export default function CenterPage({ params }: any) {
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>
-                                                        OKX Trading Balance
+                                                        OKX 거래 계정 잔고
                                                     </span>
                                                     <span className='text-4xl text-green-800 font-semibold'>
                                                         {
