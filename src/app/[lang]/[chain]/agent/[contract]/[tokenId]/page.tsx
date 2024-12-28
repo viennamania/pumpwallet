@@ -122,12 +122,14 @@ export default function AgentPage({ params }: any) {
  
  
 
-  ///console.log("agentContractAddress", agentContractAddress);
+  //console.log("agentContractAddress", agentContractAddress);
 
-
-  const [holderWalletAddress, setHolderWalletAddress] = useState("");
   
   const [agent, setAgent] = useState({} as any);
+  
+ 
+  const [holderWalletAddress, setHolderWalletAddress] = useState("");
+
 
   const [ownerInfo, setOwnerInfo] = useState({} as any);
 
@@ -156,11 +158,10 @@ export default function AgentPage({ params }: any) {
   
         const data = await response.json();
 
-        //console.log("getAgentNFTByContractAddressAndTokenId data", data);
+        console.log("getAgentNFTByContractAddressAndTokenId data", data);
 
   
         setAgent(data.result);
-
 
         setOwnerInfo(data?.ownerInfo);
         setHolderWalletAddress(data?.ownerInfo?.walletAddress);
@@ -389,7 +390,7 @@ export default function AgentPage({ params }: any) {
 
           const data = await response.json();
 
-          console.log("getReferApplications data", data);
+          ///console.log("getReferApplications data", data);
 
 
 
@@ -946,26 +947,31 @@ export default function AgentPage({ params }: any) {
 
 
 
-        {/*
-        <div className="mt-4 flex justify-start space-x-4 mb-10">
+        {/* history back */}
+        {/* sticky top-0 bg-white */}
+        <div className='
+            sticky top-0 bg-white z-50
+            flex flex-row items-center justify-between gap-4
+            p-4
+            w-full
+        '>
             <button
-              
-              onClick={() => router.push(
-                
-                //'/' + params.lang + '/' + params.chain
-
-                wallet === "smart" ?
-                '/' + params.lang + '/' + params.chain + '/?wallet=smart'
-                :
-                '/' + params.lang + '/' + params.chain
-
-              )}
-
-              className="text-gray-600 font-semibold underline">
-              {Go_Home}
+                onClick={() => router.back()}
+                className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
+                hover:bg-gray-600
+                "
+            >
+                <Image
+                src="/icon-back.png"
+                width={24}
+                height={24}
+                alt="Back"
+                />
+                <span className='text-sm text-white'>
+                뒤로가기
+                </span>
             </button>
         </div>
-        */}
         
 
         {/* header */}
@@ -980,7 +986,7 @@ export default function AgentPage({ params }: any) {
                   height={50}
                   alt="Agent"
                   className="rounded-lg
-                    object-cover
+                    object-cover w-10 h-10
                   "
                 />
 
@@ -1039,29 +1045,6 @@ export default function AgentPage({ params }: any) {
 
 
 
-
-        {/* history back */}
-        <div className='mt-5 flex flex-row items-center gap-2'>
-          <button
-            onClick={() => router.back()}
-            className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-              hover:bg-gray-600
-            "
-          >
-            <Image
-              src="/icon-back.png"
-              width={24}
-              height={24}
-              alt="Back"
-            />
-            <span className='text-sm text-white'>
-              뒤로가기
-            </span>
-          </button>
-        </div>
-
-
-
         <div className="mt-10 flex flex-col items-start justify-center space-y-4">
 
 
@@ -1103,9 +1086,10 @@ export default function AgentPage({ params }: any) {
               <div className='w-full flex flex-col gap-5'>
 
 
-                <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                    
 
+                <div className='w-full flex flex-row items-center justify-between gap-2
+                 border-b border-gray-300 pb-2
+                '>
                     {/* opensea */}
                     <button
                         onClick={() => {
@@ -1116,25 +1100,11 @@ export default function AgentPage({ params }: any) {
                         <Image
                             src="/logo-opensea.png"
                             alt="OpenSea"
-                            width={30}
-                            height={30}
+                            width={50}
+                            height={50}
                             className="rounded-lg"
                         />
                     </button>
-
-                </div>
-
-
-                <div className='w-full flex flex-row items-center justify-between gap-2
-                 border-b border-gray-300 pb-2
-                '>
-                    <Image
-                      src='/smart-contract.png'
-                      width={60}
-                      height={60}
-                      alt='Agent'
-                      className='rounded-lg'
-                    />
 
                   <div className='w-full flex flex-col xl:flex-row items-start justify-start gap-2'>
                       <div className='flex flex-col items-start justify-between gap-2'>
@@ -1163,6 +1133,9 @@ export default function AgentPage({ params }: any) {
 
 
                   <div className='w-full flex flex-col items-start justify-start gap-2'>
+
+
+
 
                     <div className='w-full flex flex-col items-start justify-between gap-2
                       border-b border-gray-300 pb-2
@@ -1197,6 +1170,7 @@ export default function AgentPage({ params }: any) {
                         <span className='text-sm text-yellow-500'>
                             AI 에이전트 NFT 소유자 정보
                         </span>
+                        
                         <div className='w-full flex flex-row items-center justify-start gap-2'>
                             <span className='text-xs text-gray-800'>
                                 소유자 지갑주소: {holderWalletAddress?.slice(0, 5) + '...' + holderWalletAddress?.slice(-5)}
@@ -1214,6 +1188,7 @@ export default function AgentPage({ params }: any) {
                                 Copy
                             </button>
                         </div>
+                        
 
                         <div className='w-full flex flex-row items-center justify-start gap-2
                           border-b border-gray-300 pb-2
@@ -1296,7 +1271,7 @@ export default function AgentPage({ params }: any) {
 
                   <div className='w-full flex flex-col items-start justify-start gap-2'>
                     <span className='text-sm text-yellow-500'>
-                        에이전트 NFT 이미지
+                        AI 에이전트 NFT 이미지
                     </span>
                     {agent.image && (
                       <Image
@@ -1325,7 +1300,8 @@ export default function AgentPage({ params }: any) {
 
 
           {/* application list */}
-          <div className='mt-10 w-full flex flex-col gap-5'>
+          <div className='mt-5
+            w-full flex flex-col gap-5'>
 
 
             <div className='flex flex-row items-center gap-2'>
@@ -1418,24 +1394,34 @@ export default function AgentPage({ params }: any) {
 
             {/* totalTradingAccountBalance */}
             {totalTradingAccountBalance > 0 && (
-                <div className='w-full flex flex-row gap-2'>
+                <div className='w-full flex flex-col xl:flex-row items-start justify-between gap-5'>
                     {/* startTrading is exist count */}
-                    <span className='text-2xl text-gray-800 font-semibold'>
-                        시작된 Bot: {
-                            applications.filter((item) => item.accountConfig?.data.roleType === "2").length
-                        }개
-                    </span>
-                    {' '}/{' '}
-                    <span className='text-2xl font-semibold text-gray-800'>
-                        총 거래 계정 잔고: {
-                        Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD'
-                        })
-                        }
-                    </span>
+                    <div className='w-full flex flex-row items-center gap-2'>
+                        <span className='text-lg text-gray-800 font-semibold'>
+                            시작된 Bot:
+                        </span>
+                        <span className='text-4xl text-green-500 font-semibold'>
+                            {
+                                applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                            }
+                        </span>
+                    </div>
+                    <div className='w-full flex flex-row items-center gap-2'>
+                        <span className='text-lg text-gray-800 font-semibold'>
+                            총 거래 계정 잔고:
+                        </span>
+                        <span className='text-4xl text-green-500 font-semibold'>
+                            {
+                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'USD'
+                            })
+                            }
+                        </span>
+                    </div>
                 </div>
             )}
+
 
               <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-5'>
 
@@ -1742,7 +1728,7 @@ export default function AgentPage({ params }: any) {
                         <div className='w-full flex flex-row items-center justify-between gap-2'>
                             <div className='flex flex-col gap-2'>
                                 <span className='text-xs text-yellow-800'>
-                                    OKX Trading Balance
+                                    OKX 거래 계정 잔고
                                 </span>
                                 <span className='text-4xl text-green-800 font-semibold'>
                                     {
