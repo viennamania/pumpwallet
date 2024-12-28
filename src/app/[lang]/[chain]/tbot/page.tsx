@@ -2842,6 +2842,7 @@ export default function AIPage({ params }: any) {
                                                             }
                                                         </span>
                                                     </div>
+                                                    {/*
                                                     <button
                                                         onClick={() => {
                                                             checkTradingAccountBalance(
@@ -2860,6 +2861,7 @@ export default function AIPage({ params }: any) {
                                                     >
                                                         {checkingTradingAccountBalance ? "Updating..." : "Update"}
                                                     </button>
+                                                    */}
                                                 </div>
                                             )}
 
@@ -2874,6 +2876,7 @@ export default function AIPage({ params }: any) {
                                                         <span className='text-sm font-semibold text-gray-500'>
                                                             OKX UID: {myAgent?.okxUid}
                                                         </span>
+                                                        {/*
                                                         <span className='text-sm font-semibold text-gray-500'>
                                                             API Access Key: {myAgent.apiAccessKey.substring(0, 10) + "..."}
                                                         </span>
@@ -2883,6 +2886,7 @@ export default function AIPage({ params }: any) {
                                                         <span className='text-sm font-semibold text-gray-500'>
                                                             API Password: {myAgent?.apiPassword?.substring(0, 10) + "..."}
                                                         </span>
+                                                        */}
                                                     </div>
                                                     <Image
                                                         src="/verified.png"
