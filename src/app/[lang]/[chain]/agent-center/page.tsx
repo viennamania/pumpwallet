@@ -2472,17 +2472,29 @@ export default function AIPage({ params }: any) {
                                                                 {item._id}
                                                             </span>
                                                         </div>
-                                                        <span className='text-sm text-gray-800'>
-                                                            거래 계정 수: {item.tradingAccountBalanceCount}개
-                                                        </span>
-                                                        <span className='text-sm text-gray-800'>
-                                                            총 잔고: {
-                                                                Number(item.tradingAccountBalanceSum).toLocaleString('en-US', {
-                                                                    style: 'currency',
-                                                                    currency: 'USD'
-                                                                })
-                                                            }
-                                                        </span>
+                                                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+                                                            <span className='text-sm text-gray-800'>
+                                                                거래 계정 수:
+                                                            </span>
+                                                            <span className='text-lg font-semibold text-green-500'>
+                                                                {item.tradingAccountBalanceCount}
+                                                            </span>
+
+                                                        </div>
+                                                        <div className='w-full flex flex-row items-center justify-between gap-2'>
+
+                                                            <span className='text-sm text-gray-800'>
+                                                                총 잔고: 
+                                                            </span>
+                                                            <span className='text-lg font-semibold text-green-500'>
+                                                                {
+                                                                    Number(item.tradingAccountBalanceSum).toLocaleString('en-US', {
+                                                                        style: 'currency',
+                                                                        currency: 'USD'
+                                                                    })
+                                                                }
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))}
