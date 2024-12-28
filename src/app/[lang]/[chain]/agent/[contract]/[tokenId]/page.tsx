@@ -1568,6 +1568,7 @@ export default function AgentPage({ params }: any) {
                                     >
                                         Copy
                                     </button>
+                                    {/*
                                     <button
                                         onClick={() => {
                                             checkApiAccessKey(
@@ -1584,6 +1585,7 @@ export default function AgentPage({ params }: any) {
                                     >
                                         {checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update UID"}
                                     </button>
+                                    */}
 
 
                                 </div>
@@ -1747,6 +1749,7 @@ export default function AgentPage({ params }: any) {
                                     }
                                 </span>
                             </div>
+                            {/*
                             <button
                                 onClick={() => {
                                     checkTradingAccountBalance(
@@ -1765,6 +1768,7 @@ export default function AgentPage({ params }: any) {
                             >
                                 {checkingTradingAccountBalanceList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update"}
                             </button>
+                            */}
                         </div>
 
 
