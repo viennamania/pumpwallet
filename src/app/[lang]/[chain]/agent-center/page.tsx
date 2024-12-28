@@ -2416,22 +2416,31 @@ export default function AIPage({ params }: any) {
 
                                 {/* totalTradingAccountBalance */}
                                 {totalTradingAccountBalance > 0 && (
-                                    <div className='w-full flex flex-row gap-2'>
+                                    <div className='w-full flex flex-col xl:flex-row items-start justify-between gap-5'>
                                         {/* startTrading is exist count */}
-                                        <span className='text-2xl text-gray-800 font-semibold'>
-                                            시작된 Bot: {
-                                                applications.filter((item) => item.accountConfig?.data.roleType === "2").length
-                                            }개
-                                        </span>
-                                        {' '}/{' '}
-                                        <span className='text-2xl font-semibold text-gray-800'>
-                                            총 거래 계정 잔고: {
-                                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD'
-                                            })
-                                            }
-                                        </span>
+                                        <div className='w-full flex flex-row items-center gap-2'>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                시작된 Bot:
+                                            </span>
+                                            <span className='text-4xl text-green-500 font-semibold'>
+                                                {
+                                                    applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                                                }
+                                            </span>
+                                        </div>
+                                        <div className='w-full flex flex-row items-center gap-2'>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                총 거래 계정 잔고:
+                                            </span>
+                                            <span className='text-4xl text-green-500 font-semibold'>
+                                                {
+                                                Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                                    style: 'currency',
+                                                    currency: 'USD'
+                                                })
+                                                }
+                                            </span>
+                                        </div>
                                     </div>
                                 )}
 
@@ -2905,7 +2914,7 @@ export default function AIPage({ params }: any) {
                                             <div className='w-full flex flex-row items-center justify-between gap-2'>
                                                 <div className='flex flex-col gap-2'>
                                                     <span className='text-xs text-yellow-800'>
-                                                        OKX Trading Balance
+                                                        OKX 거래 계정 잔고
                                                     </span>
                                                     <span className='text-4xl text-green-800 font-semibold'>
                                                         {
