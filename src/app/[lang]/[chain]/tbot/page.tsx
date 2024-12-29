@@ -2481,32 +2481,64 @@ export default function AIPage({ params }: any) {
 
      
 
-                    <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
-                        <button
-                            className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
-                            onClick={() => {
-                                //window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
-                                // https://www.okx.com/join/69963198
-                                window.open("https://www.okx.com/join/69963198", "_blank");
-                            }}
-                        >
-                            OKX 가입하러 가기
-                        </button>
-                        {/* OKX 가입 메뉴얼 */}
-                        {/* https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view */}
+                    {/* masterBot */}
+                    {myAgent?.masterBotInfo ? (
+                        <div className='w-full flex flex-col gap-2
+                            border border-gray-300 p-4 rounded-lg
+                        '>
+                            <div className='flex flex-row items-center gap-2'>
+                                <Image
+                                    src="/logo-opensea.png"
+                                    alt="OpenSea"
+                                    width={20}
+                                    height={20}
+                                />
+                                <span className='text-sm font-semibold text-blue-500'>
+                                    Master Bot NFT
+                                </span>
+                            </div>
 
-                        <button
-                            className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
-                            onClick={() => {
-                                ///window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
+                            <div className='flex flex-row items-center gap-2'>
+                                <Image
+                                    src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
+                                    alt="Master Bot"
+                                    width={500}
+                                    height={500}
+                                    className='animate-pulse w-full rounded-lg'
+                                />
 
-                                // https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view
-                                window.open("https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view", "_blank");
-                            }}
-                        >
-                            OKX 가입 메뉴얼 보러 가기
-                        </button>
-                    </div>
+                            </div>
+                        </div>
+                    ) : (
+     
+                        <div className='w-full flex flex-col xl:flex-row items-center justify-between gap-2'>
+                            <button
+                                className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                                onClick={() => {
+                                    //window.open("https://www.htx.com.pk/invite/en-us/1h?invite_code=z73y9223", "_blank");
+                                    // https://www.okx.com/join/69963198
+                                    window.open("https://www.okx.com/join/69963198", "_blank");
+                                }}
+                            >
+                                OKX 가입하러 가기
+                            </button>
+                            {/* OKX 가입 메뉴얼 */}
+                            {/* https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view */}
+
+                            <button
+                                className='w-full bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                                onClick={() => {
+                                    ///window.open("https://drive.google.com/file/d/1eK_1jIc1PmZxJ-JYnxJKYJohoVqe1Dw9/view", "_blank");
+
+                                    // https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view
+                                    window.open("https://drive.google.com/file/d/1tTDrHUodLWmQfUdjYDr3z21WJHKj6I2j/view", "_blank");
+                                }}
+                            >
+                                OKX 가입 메뉴얼 보러 가기
+                            </button>
+                        </div>
+
+                    )}
 
 
 
@@ -2802,10 +2834,6 @@ export default function AIPage({ params }: any) {
                                             bg-green-100
                                         '>
 
-
-
-
-
                                             <span className='text-lg font-semibold text-blue-500 '>
                                                 Master Bot 정보
                                             </span>
@@ -2970,32 +2998,6 @@ export default function AIPage({ params }: any) {
                                             </div>
 
                                         )}
-
-
-
-
-                                        {/* masterBot */}
-                                        {myAgent?.masterBotInfo && (
-                                            <div className='w-full flex flex-col gap-2
-                                                border border-gray-300 p-4 rounded-lg
-                                            '>
-                                                <span className='text-lg font-semibold text-blue-500'>
-                                                    Master Bot NFT
-                                                </span>
-
-                                                <div className='flex flex-row items-center gap-2'>
-                                                    <Image
-                                                        src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
-                                                        alt="Master Bot"
-                                                        width={200}
-                                                        height={200}
-                                                        className='animate-pulse w-full rounded-lg'
-                                                    />
-
-                                                </div>
-                                            </div>
-                                        )}
-                                        
 
 
                                     </div>
