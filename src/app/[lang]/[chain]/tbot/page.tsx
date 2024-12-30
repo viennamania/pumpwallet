@@ -3591,7 +3591,9 @@ export default function AIPage({ params }: any) {
                             `}
                             onClick={() => {
                                 setSelectedMasterBot(0);
-                                setMasterBotPrice(515460);
+                                setMasterBotPrice(
+                                    363 * usdKrwExchangeRate
+                                );
                             } }
                             >
                                 <Image
@@ -3625,7 +3627,9 @@ export default function AIPage({ params }: any) {
                             `}
                             onClick={() => {
                                 setSelectedMasterBot(1);
-                                setMasterBotPrice(859100);
+                                setMasterBotPrice(
+                                    605 * usdKrwExchangeRate
+                                );
                             } }
                             >
                                 <Image
@@ -3653,13 +3657,16 @@ export default function AIPage({ params }: any) {
                                     }(vat 포함)
                                 </span>
                             </div>
+
                             <div className={`flex flex-col gap-2
                                 p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                                 ${selectedMasterBot === 2 ? 'border-blue-500' : 'border-gray-300'}
                             `}
                             onClick={() => {
                                 setSelectedMasterBot(2);
-                                setMasterBotPrice(1718200);
+                                setMasterBotPrice(
+                                    1210 * usdKrwExchangeRate
+                                );
                             } }
                             >
                                 <Image
@@ -3687,13 +3694,17 @@ export default function AIPage({ params }: any) {
                                     }(vat 포함)
                                 </span>
                             </div>
+                            
+
                             <div className={`flex flex-col gap-2
                                 p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                                 ${selectedMasterBot === 3 ? 'border-blue-500' : 'border-gray-300'}
                             `}
                             onClick={() => {
                                 setSelectedMasterBot(3);
-                                setMasterBotPrice(859100);
+                                setMasterBotPrice(
+                                    6050 * usdKrwExchangeRate
+                                );
                             } }
                             >
                                 <Image
@@ -3721,13 +3732,16 @@ export default function AIPage({ params }: any) {
                                     }(vat 포함)
                                 </span>
                             </div>
+
                             <div className={`flex flex-col gap-2
                                 p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                                 ${selectedMasterBot === 4 ? 'border-blue-500' : 'border-gray-300'}
                             `}
                             onClick={() => {
                                 setSelectedMasterBot(4);
-                                setMasterBotPrice(1718200);
+                                setMasterBotPrice(
+                                    12100 * usdKrwExchangeRate
+                                );
                             } }
                             >
 
