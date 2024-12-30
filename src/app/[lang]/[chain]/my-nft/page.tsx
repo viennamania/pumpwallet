@@ -1821,237 +1821,303 @@ export default function SettingsPage({ params }: any) {
 
                                     <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
                                         {myNfts?.map((nft, index) => (
-                                            <div
-                                                key={index}
-                                                className='w-full flex flex-col gap-2 items-start justify-start border border-gray-300 p-4 rounded-lg
-                                                bg-yellow-100'
-                                            >
 
-                                                <div className='w-full flex flex-row gap-2 items-start justify-between'>
-                                                    {/* goto button for detail page */}
-                                                    
-                                                    <button
-                                                        onClick={() => {
+                                            <>
 
-                                                            //router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
-                                                            router.push('/kr/polygon/agent/' + nft.contract.address + '/' + nft.tokenId + '/?center=' + center);
-
-                                                        }}
-                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
-                                                    >
-                                                        <span className='text-xs xl:text-lg font-semibold'>
-                                                            상세보기
-                                                        </span>
-                                                    </button>
-                                                    
-
-                                                    {/* referral link button */}
-                                                    <button
-                                                        onClick={() => {
-                                                            
-                                                            navigator.clipboard.writeText(
-                                                                'https://ppump.me/kr/polygon/tbot' + '/?center=' + center +
-                                                                '&agent=' + nft.contract.address + 
-                                                                '&tokenId=' + nft.tokenId
-                                                            );
-                                                            
-                                                            toast.success('레퍼럴 URL 복사 완료');
-                                                        }}
-                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
-                                                    >
-                                                        레퍼럴 URL 복사하기
-                                                    </button>
-
-                                                </div>
-
-
-                                                <div className='w-full grid grid-cols-2 gap-2 items-start justify-between'>
-
-
-                                                    <div className="flex flex-col gap-2 items-center justify-center">
-
-
-                                                        {/*
+                                            {/* 0x7b49Ba8811cF3bD8CBf8aD788a400AF23c6d1022 is master bot contract */}
+                                            {nft.contract && nft.contract.address === '0x7b49Ba8811cF3bD8CBf8aD788a400AF23c6d1022' ? (
+                                                <div
+                                                    key={index}
+                                                    className='w-full flex flex-col gap-2 items-start justify-start border border-gray-300 p-4 rounded-lg
+                                                    bg-green-100'
+                                                >
+                                                    {/* master bot */}
+                                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                         <button
+                                                            className=" flex flex-row items-center justify-center
+                                                            gap-2 p-2 bg-gray-300 text-gray-800 rounded
+                                                            hover:bg-gray-400"
                                                             onClick={() => {
-                                                                window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
+                                                                router.push('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
                                                             }}
-                                                            className="p-2 rounded hover:bg-gray-300"
+
                                                         >
                                                             <Image
                                                                 src="/logo-opensea.png"
-                                                                alt="OpenSea"
+                                                                alt="Master Bot"
                                                                 width={30}
                                                                 height={30}
                                                                 className="rounded-lg"
                                                             />
+                                                            <div className='text-xs font-semibold text-gray-800'>
+                                                                {nft.name}
+                                                            </div>
                                                         </button>
-                                                        */}
-
                                                         <Image
                                                             src={nft.image.thumbnailUrl ? nft.image.thumbnailUrl : "/icon-anonymous.png"}
                                                             alt="NFT"
                                                             width={200}
                                                             height={200}
-                                                            className="rounded-lg w-32 xl:w-40 border border-gray-300"
-                                                            
+                                                            className="rounded-lg w-full border border-gray-300"
                                                         />
+                                                        {/* 발행인: */}
+                                                        <span className='text-lg font-semibold text-green-500'>
+                                                            발행인: {nft.description}
+                                                        </span>
+                                                        <span className='text-sm text-gray-800 font-semibold'>
+                                                            발행일:{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
+                                                                ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} 일 전`
+                                                                : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} 시간 전`
+                                                            }
+                                                        </span>
 
-                                                        {/* 누적 배당수익 */}
-                                                        <div className='flex flex-col gap-2 items-start justify-between
-                                                            border border-gray-300 p-4 rounded-lg'>
+                                                    </div>
+                                                        
+
+                                                </div>
+                                            ) : (
+
+                                                <div
+                                                    key={index}
+                                                    className='w-full flex flex-col gap-2 items-start justify-start border border-gray-300 p-4 rounded-lg
+                                                    bg-yellow-100'
+                                                >
+
+                                                    
+
+                                                    <div className='w-full flex flex-row gap-2 items-start justify-between'>
+                                                        {/* goto button for detail page */}
+                                                        
+                                                        <button
+                                                            onClick={() => {
+
+                                                                //router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+                                                                router.push('/kr/polygon/agent/' + nft.contract.address + '/' + nft.tokenId + '/?center=' + center);
+
+                                                            }}
+                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                            hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                        >
                                                             <span className='text-xs xl:text-lg font-semibold'>
-                                                                Total Dividend
+                                                                상세보기
                                                             </span>
-                                                            <span className='text-xl xl:text-2xl font-semibold text-green-500'>
-                                                                0.00 USDT
-                                                            </span>
-                                                            {/* 배당 수령 */}
-                                                            {/*
-                                                            <button
-                                                                className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                                hover:bg-blue-600"
-                                                            >
-                                                                Claim Dividend
-                                                            </button>
-                                                            */}
-                                                        </div>
+                                                        </button>
+                                                        
 
+                                                        {/* referral link button */}
+                                                        <button
+                                                            onClick={() => {
+                                                                
+                                                                navigator.clipboard.writeText(
+                                                                    'https://ppump.me/kr/polygon/tbot' + '/?center=' + center +
+                                                                    '&agent=' + nft.contract.address + 
+                                                                    '&tokenId=' + nft.tokenId
+                                                                );
+                                                                
+                                                                toast.success('레퍼럴 URL 복사 완료');
+                                                            }}
+                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                            hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                        >
+                                                            레퍼럴 URL 복사하기
+                                                        </button>
 
                                                     </div>
 
-                                                    <div className='flex flex-col gap-2 items-start justify-between'>
-                                                        {/* contract address */}
-                                                        <div className='text-xs font-semibold'>
-                                                            계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
-                                                        </div>
-                                                        <div className='text-2xl font-semibold text-blue-500'>
-                                                            계약번호: #{nft.tokenId}
-                                                        </div>
-                                                        <div className='text-sm font-semibold text-green-500'>
-                                                            {nft.name}
-                                                        </div>
-                                                        <div className='text-xs font-semibold'>
-                                                            {nft.description}
+
+                                                    <div className='w-full grid grid-cols-2 gap-2 items-start justify-between'>
+
+
+                                                        <div className="flex flex-col gap-2 items-center justify-center">
+
+
+                                                            {/*
+                                                            <button
+                                                                onClick={() => {
+                                                                    window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
+                                                                }}
+                                                                className="p-2 rounded hover:bg-gray-300"
+                                                            >
+                                                                <Image
+                                                                    src="/logo-opensea.png"
+                                                                    alt="OpenSea"
+                                                                    width={30}
+                                                                    height={30}
+                                                                    className="rounded-lg"
+                                                                />
+                                                            </button>
+                                                            */}
+
+                                                            <Image
+                                                                src={nft.image.thumbnailUrl ? nft.image.thumbnailUrl : "/icon-anonymous.png"}
+                                                                alt="NFT"
+                                                                width={200}
+                                                                height={200}
+                                                                className="rounded-lg w-32 xl:w-40 border border-gray-300"
+                                                                
+                                                            />
+
+                                                            {/* 누적 배당수익 */}
+                                                            {/*
+                                                            <div className='flex flex-col gap-2 items-start justify-between
+                                                                border border-gray-300 p-4 rounded-lg'>
+                                                                <span className='text-xs xl:text-lg font-semibold'>
+                                                                    Total Dividend
+                                                                </span>
+                                                                <span className='text-xl xl:text-2xl font-semibold text-green-500'>
+                                                                    0.00 USDT
+                                                                </span>
+
+                                                                
+                                                                <button
+                                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                                    hover:bg-blue-600"
+                                                                >
+                                                                    Claim Dividend
+                                                                </button>
+                                                                
+                                                            </div>
+                                                            */}
+
+
                                                         </div>
 
                                                         <div className='flex flex-col gap-2 items-start justify-between'>
-                                                            {/* // from now to mint in hours minutes seconds
-                                                            // now - mint */}
-                                                            <span className='text-xs xl:text-sm font-semibold'>
-                                                                Start{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
-                                                                    ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days ago`
-                                                                    : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours ago`
-                                                                }
-                                                            </span>
-                                                            
-                                                            {/* Accounts */}
-                                                            <span className='text-xs xl:text-sm font-semibold'>
-                                                                Accounts: 0
-                                                            </span>
+                                                            {/* contract address */}
+                                                            <div className='text-xs font-semibold'>
+                                                                계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
+                                                            </div>
+                                                            <div className='text-lg font-semibold text-blue-500'>
+                                                                계약번호: #{nft.tokenId}
+                                                            </div>
+                                                            <div className='text-sm font-semibold text-green-500'>
+                                                                {nft.name}
+                                                            </div>
+                                                            <div className='text-xs font-semibold'>
+                                                                {nft.description}
+                                                            </div>
 
-                                                            {/* Funds */}
-                                                            <span className='text-xs xl:text-sm font-semibold'>
-                                                                Funds: 0 USDT
-                                                            </span>
+                                                            <div className='flex flex-col gap-2 items-start justify-between'>
+                                                                {/* // from now to mint in hours minutes seconds
+                                                                // now - mint */}
+                                                                <span className='text-xs xl:text-sm text-gray-800 font-semibold'>
+                                                                    발행:{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
+                                                                        ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} 일 전`
+                                                                        : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} 시간 전`
+                                                                    }
+                                                                </span>
+                                                                
+                                                               {/*
+                                                                <span className='text-xs xl:text-sm font-semibold'>
+                                                                    Accounts: 0
+                                                                </span>
 
-                                                            {/* 수익률 */}
-                                                            <span className='text-xs xl:text-sm font-semibold'>
-                                                                ROI: ??%
-                                                            </span>
+                                                                
+                                                                <span className='text-xs xl:text-sm font-semibold'>
+                                                                    Funds: 0 USDT
+                                                                </span>
+
+                                                               
+                                                                <span className='text-xs xl:text-sm font-semibold'>
+                                                                    ROI: ??%
+                                                                </span>
+                                                                */}
+
+
+
+                                                            </div>
 
 
 
                                                         </div>
 
-
-
                                                     </div>
 
-                                                </div>
 
+                                                    {/* transfer NFT */}
+                                                    <div className='w-full flex flex-col gap-2 items-end justify-between'>
 
-                                                {/* transfer NFT */}
-                                                <div className='w-full flex flex-col gap-2 items-end justify-between'>
-
-                                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                                        <span className='text-sm text-red-500 font-semibold'>
-                                                            소유권 이전하기
-                                                        </span>
-                                                        <div className='flex flex-row items-center justify-start gap-2'>
-                                                            <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                                                            <span className='text-xs text-gray-800'>
-                                                                소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
+                                                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                            <span className='text-sm text-red-500 font-semibold'>
+                                                                소유권 이전하기
                                                             </span>
+                                                            <div className='flex flex-row items-center justify-start gap-2'>
+                                                                <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                                                                <span className='text-xs text-gray-800'>
+                                                                    소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
 
 
-                                                    <input
-                                                        className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                                        placeholder="받는 사람 지갑주소"
-                                                        type='text'
+                                                        <input
+                                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                            placeholder="받는 사람 지갑주소"
+                                                            type='text'
 
-                                                        value={toAddressList.find((item) =>
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.to}
-
-                                                        onChange={(e) => {
-                                                            setToAddressList(toAddressList.map((item) => {
-
-                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                    return {
-                                                                        ...item,
-                                                                        to: e.target.value,
-                                                                    };
-                                                                } else {
-                                                                    return item;
-                                                                }
-                                                            }));
-                                                        }}
-                                                    />
-                                                    <button
-                                                        
-                                                        disabled={transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring}
-
-                                                        onClick={() => {
-                                                            transferNft(nft.contract.address, nft.tokenId);
-                                                        }}
-                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                        ${transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring ? 'opacity-50' : ''}
-                                                        `}
-                                                    >
-                                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                                            {transferingNftList.find((item) =>
+                                                            value={toAddressList.find((item) =>
                                                                 item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                            )?.transferring && (
+                                                            )?.to}
 
-                                                                <Image
-                                                                    src="/loading.png"
-                                                                    alt="Send"
-                                                                    width={25}
-                                                                    height={25}
-                                                                    className="animate-spin"
-                                                                />
-                                                            )}
-                                                            <span className='text-lg font-semibold'>
-                                                                NFT 전송하기
-                                                            </span>
-                                                        </div>
-                                                    </button>
+                                                            onChange={(e) => {
+                                                                setToAddressList(toAddressList.map((item) => {
+
+                                                                    if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                        return {
+                                                                            ...item,
+                                                                            to: e.target.value,
+                                                                        };
+                                                                    } else {
+                                                                        return item;
+                                                                    }
+                                                                }));
+                                                            }}
+                                                        />
+                                                        <button
+                                                            
+                                                            disabled={transferingNftList.find((item) => 
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring}
+
+                                                            onClick={() => {
+                                                                transferNft(nft.contract.address, nft.tokenId);
+                                                            }}
+                                                            className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                            ${transferingNftList.find((item) => 
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring ? 'opacity-50' : ''}
+                                                            `}
+                                                        >
+                                                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                                                {transferingNftList.find((item) =>
+                                                                    item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                                )?.transferring && (
+
+                                                                    <Image
+                                                                        src="/loading.png"
+                                                                        alt="Send"
+                                                                        width={25}
+                                                                        height={25}
+                                                                        className="animate-spin"
+                                                                    />
+                                                                )}
+                                                                <span className='text-lg font-semibold'>
+                                                                    NFT 전송하기
+                                                                </span>
+                                                            </div>
+                                                        </button>
+
+                                                    </div>
+
+
 
                                                 </div>
 
+                                            )}
 
+                                            </>
 
-                                            </div>
                                         ))}
                                     </div>
 
