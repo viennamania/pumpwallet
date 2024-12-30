@@ -2103,17 +2103,13 @@ export default function AIPage({ params }: any) {
 
                 <AppBarComponent />
 
+                
                 <Header
                     center={center || ""}
                     agent={agent || ""}
                     tokenId={agentNumber || ""}
                 />
                 
-
-
-
-                
-
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 

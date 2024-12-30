@@ -1481,11 +1481,41 @@ export default function SettingsPage({ params }: any) {
 
                 <AppBarComponent />
 
+                {/*}
                 <Header
                     center={center ? center : ""}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
+                */}
+
+
+                {/* history back */}
+                {/* sticky top-0 bg-white */}
+                <div className='
+                    sticky top-0 bg-white z-50
+                    flex flex-row items-center justify-between gap-4
+                    p-4
+                    w-full
+                '>
+                    <button
+                        onClick={() => router.back()}
+                        className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
+                        hover:bg-gray-600
+                        "
+                    >
+                        <Image
+                        src="/icon-back.png"
+                        width={24}
+                        height={24}
+                        alt="Back"
+                        />
+                        <span className='text-sm text-white'>
+                        뒤로가기
+                        </span>
+                    </button>
+                </div>
+
         
 
 
@@ -1510,58 +1540,67 @@ export default function SettingsPage({ params }: any) {
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                        <div className='flex flex-col gap-2'>
+                        <div className='w-full flex flex-col items-start gap-5 mt-10'>
+                            {/* live icon */}
+                            {address ? (
+                                <div className='flex flex-row items-center gap-2'>
+                                    <Image
+                                        src="/icon-wallet-live.gif"
+                                        alt="Live"
+                                        width={50}
+                                        height={50}
+                                    />
 
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                <ConnectButton
-                                    client={client}
-                                    wallets={wallets}
-                                    accountAbstraction={{
-                                        chain: polygon,
-                                        
-                                        sponsorGas: true
-                                    }}
-                                    theme={"light"}
-                                    connectButton={{
-                                        label: "Sign in with AGENT Wallet",
-                                    }}
-                                    connectModal={{
-                                        size: "wide", 
-                                        titleIcon: "https://ppump.me/logo-marketing-center.webp",                           
-                                        showThirdwebBranding: false,
+                                    <span className='text-lg font-semibold text-blue-500'>
+                                        {address.slice(0, 6)}...{address.slice(-4)}
+                                    </span>
 
-                                    }}
-                                    locale={"ko_KR"}
-                                    //locale={"en_US"}
-                                />
-                                {/* userType */}
-                                {address && userType === "telegram" && (
-                                    <button
-                                        onClick={() => {
-                                            window.open("https://t.me/ppump_bot", "_blank");
-                                        }}
-                                        className="p-2 bg-zinc-800 text-white rounded"
+                                    <div className="flex flex-col gap-2">
+                                        {/* disconnect button */}
+                                        <button
+                                            onClick={() => {
+                                                confirm("지갑 연결을 해제하시겠습니까?") && activeWallet?.disconnect();
+                                            }}
+                                            className="bg-zinc-800 text-white p-2 rounded-lg"
                                         >
-                                        <div className="flex flex-row gap-2 items-center">
-                                            <Image
-                                            src="/logo-telegram.webp"
-                                            alt="Telegram"
-                                            width={50}
-                                            height={50}
-                                            className="rounded-lg w-10 h-10"
-                                            />
-                                            <span>Go to Telegram</span>
-                                        </div>
-                                    </button>
-                                )}
-                            </div>
+                                            지갑 연결 해제
+                                        </button>
+                                    </div>
 
-                            {!address && (
-                                <div className="text-xs xl:text-sm font-semibold">
-                                    {Please_connect_your_wallet_first}
+                                </div>
+                            ) : (
+                                <div className='flex flex-col items-start gap-2'>
+                                    
+                                    <ConnectButton
+                                        client={client}
+                                        wallets={wallets}
+                                        accountAbstraction={{
+                                            chain: polygon,
+                                            
+                                            sponsorGas: true
+                                        }}
+                                        theme={"light"}
+                                        connectButton={{
+                                            label: "Sign in with Wallet",
+                                        }}
+                                        connectModal={{
+                                            size: "wide", 
+                                            titleIcon: "https://ppump.me/logo-marketing-center.webp",                           
+                                            showThirdwebBranding: false,
+
+                                        }}
+                                        locale={"ko_KR"}
+                                        //locale={"en_US"}
+                                    />
+
+                        
+
+
+                                    <span className='text-sm font-semibold text-red-500'>
+                                        {Please_connect_your_wallet_first}
+                                    </span>
                                 </div>
                             )}
-
                         </div>
 
 
@@ -1571,92 +1610,6 @@ export default function SettingsPage({ params }: any) {
 
                             <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                                <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                
-                                    <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                        <Image
-                                        src="/icon-wallet-live.gif"
-                                        alt="Wallet"
-                                        width={65}
-                                        height={25}
-                                        className="rounded"
-                                        />
-                                        <div className="flex flex-col gap-2">
-                                            {/* disconnect button */}
-                                            <button
-                                                onClick={() => {
-                                                confirm("지갑 연결을 해제하시겠습니까?") && 
-                                                    activeWallet?.disconnect();
-                                                }}
-                                                className="bg-zinc-800 text-white p-2 rounded-lg"
-                                            >
-                                                지갑 연결 해제
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            My_Balance
-                                        }
-                                    </div>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            Number(balance).toFixed(2)
-                                        } USDT
-                                    </div>
-                                </div>
-
-                                {/* send USDT */}
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_USDT}
-                                    </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="0.00"
-                                            type='number'
-                                            onChange={(e) => {
-                                                setAmount(Number(e.target.value));
-                                            }}
-                                        />
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
-                                            type='text'
-                                            onChange={(e) => {
-                                                setRecipient({
-                                                    ...recipient,
-                                                    walletAddress: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    {Pay_USDT}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
 
                                 {/* wallet address and copy button */}
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
@@ -2266,7 +2219,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PPUMP
+                    HOME
                     </span>
                 </div>
             </button>
