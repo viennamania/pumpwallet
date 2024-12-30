@@ -159,17 +159,11 @@ export default function AIPage({ params }: any) {
 
     const searchParams = useSearchParams();
 
-    const center = searchParams.get('center');
+    const center = searchParams.get('center') || "ppump_orry_bot";
 
-    const wallet = searchParams.get('wallet');
+    const agent = searchParams.get('agent') || "0xC1E15771a4b6550F72BC4dB9B4A77e141C36F59E";
 
-    const agent = searchParams.get('agent');
-
-    //console.log("agent", agent);
-
-
-
-    const agentNumber = searchParams.get('tokenId');
+    const agentNumber = searchParams.get('tokenId') || "0";
     
     
     const [data, setData] = useState({
