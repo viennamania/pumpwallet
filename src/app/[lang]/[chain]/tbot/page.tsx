@@ -95,6 +95,7 @@ import { Alert, useForkRef } from '@mui/material';
 import thirdwebIcon from "@public/thirdweb.svg";
 import { add } from 'thirdweb/extensions/farcaster/keyGateway';
 import { time } from 'console';
+import { marketingCenter } from '@/app/config';
 
 
 const wallets = [
@@ -1161,6 +1162,10 @@ export default function AIPage({ params }: any) {
         // if center is 5 characters
         if (center?.slice(0, 5) === "ppump") {
             marketingCenter = "ppump";
+        } else if (center?.slice(0, 4) === "owin") {
+            marketingCenter = "owin";
+        } else if (center?.slice(0, 4) === "exms") {
+            marketingCenter = "exms";
         }
 
         const response = await fetch("/api/agent/applyMintNFT", {
@@ -1957,7 +1962,7 @@ export default function AIPage({ params }: any) {
 
 
     // usd / krw exchange rate
-    const [usdKrwExchangeRate, setUsdKrwExchangeRate] = useState(1437);
+    const [usdKrwExchangeRate, setUsdKrwExchangeRate] = useState(1470);
 
 
 
@@ -3753,7 +3758,7 @@ export default function AIPage({ params }: any) {
                                     <span className='text-sm font-semibold text-gray-500'>
                                         입금할 계좌
                                     </span>
-                                    {center === "ppump_orry_bot" ? (
+                                    {marketingCenter === "ppump" ? (
                                     <span className='text-sm font-semibold text-gray-500'>
                                         KB국민은행 342301-04-169235 (주)프로젝트오리진
                                     </span>
@@ -3827,7 +3832,7 @@ export default function AIPage({ params }: any) {
                                         {masterBot?.price.toLocaleString()} 원(vat 포함)
                                     </span>
                                     <span className='text-sm font-semibold text-gray-500'>
-                                        {center === "ppump_orry_bot" ? (
+                                        {marketingCenter === "ppump" ? (
                                         "KB국민은행 342301-04-169235 (주)프로젝트오리진"
                                         ) : (
                                         "NH 농협은행 301-0357-6583-41 온리윈 주식회사"
