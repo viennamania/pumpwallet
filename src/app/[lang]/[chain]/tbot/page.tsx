@@ -3003,7 +3003,11 @@ export default function AIPage({ params }: any) {
                                         </div>
 
 
+                                        {/*
                                         {!isValidReferralLoading && isValidReferral && (
+                                        */}
+                                        {true && (
+
                                             <div className='mt-10 w-full flex flex-col items-center gap-2
                                                 border border-gray-300 p-4 rounded-lg bg-green-100
                                             '>
@@ -3058,9 +3062,10 @@ export default function AIPage({ params }: any) {
                                                         {/* running 2 hours */}
                                                         {/* runngin 2 days */}
                                                         <span className='text-sm font-semibold text-gray-500'>
-                                                            Running{' '}{(new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
-                                                                        ? `${Math.floor((new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days`
-                                                                        : `${Math.floor((new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours`
+                                                            Running{' '}{
+                                                                        (new Date().getTime() - new Date(referralAgentNFT?.mint?.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
+                                                                        ? `${Math.floor((new Date().getTime() - new Date(referralAgentNFT?.mint?.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days`
+                                                                        : `${Math.floor((new Date().getTime() - new Date(referralAgentNFT?.mint?.timestamp).getTime()) / 1000 / 60 / 60)} hours`
                                                                     }
                                                         </span>
                                                         {/* accounts */}
@@ -3098,6 +3103,7 @@ export default function AIPage({ params }: any) {
                                             </div>
                                         )}
 
+                                        {/*
                                         {!isValidReferralLoading && !isValidReferral && (
                                             <div className='mt-10 w-full flex flex-col items-center gap-2
                                                 border border-gray-300 p-4 rounded-lg
@@ -3107,10 +3113,15 @@ export default function AIPage({ params }: any) {
                                                 </span>
                                             </div>
                                         )}
+                                        */}
 
-
+                                        {/*
                                         {!isValidReferralLoading && !isValidReferral
                                         && agents.length > 0 && (
+                                        */}
+                                        {false && (
+
+
                                             <div className=' w-full flex flex-col items-center gap-2
                                                 border border-gray-300 p-4 rounded-lg
                                             '>
