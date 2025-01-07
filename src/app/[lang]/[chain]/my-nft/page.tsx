@@ -135,7 +135,7 @@ const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; //
 
 export default function SettingsPage({ params }: any) {
 
-    const center = params.center;
+    ///const center = params.center;
 
     //console.log("params", params);
     
@@ -145,6 +145,10 @@ export default function SettingsPage({ params }: any) {
     const agent = searchParams.get('agent');
 
     const agentNumber = searchParams.get('tokenId');
+
+
+    const center = searchParams.get('center');
+
 
     const wallets = [
         inAppWallet({
@@ -1655,43 +1659,11 @@ export default function SettingsPage({ params }: any) {
 
                 <AppBarComponent />
 
-                {/*
                 <Header
                     center={center ? center : ""}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
-                */}
-
-
-
-
-                {/* history back */}
-                {/* sticky top-0 bg-white */}
-                <div className='
-                    sticky top-0 bg-white z-50
-                    flex flex-row items-center justify-between gap-4
-                    p-4
-                    w-full
-                '>
-                    <button
-                        onClick={() => router.back()}
-                        className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-                        hover:bg-gray-600
-                        "
-                    >
-                        <Image
-                        src="/icon-back.png"
-                        width={24}
-                        height={24}
-                        alt="Back"
-                        />
-                        <span className='text-sm text-white'>
-                        뒤로가기
-                        </span>
-                    </button>
-                </div>
-
         
 
 
@@ -1937,13 +1909,22 @@ export default function SettingsPage({ params }: any) {
                                                         
 
                                                         {/* referral link button */}
+                                                        
                                                         <button
                                                             onClick={() => {
                                                                 
+                                                                /*
                                                                 navigator.clipboard.writeText(
                                                                     'https://ppump.me/kr/polygon/tbot' + '/?center=' + center +
                                                                     '&agent=' + nft.contract.address + 
                                                                     '&tokenId=' + nft.tokenId
+                                                                );
+                                                                */
+                                                                
+                                                                // https://t.me/owin_kingkong_bot?start=0x7b49Ba8811cF3bD8CBf8aD788a400AF23c6d1022_1
+
+                                                                navigator.clipboard.writeText(
+                                                                    'https://t.me/' + center + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                                 );
                                                                 
                                                                 toast.success('레퍼럴 URL 복사 완료');
@@ -1953,6 +1934,7 @@ export default function SettingsPage({ params }: any) {
                                                         >
                                                             레퍼럴 URL 복사하기
                                                         </button>
+                                                        
 
                                                     </div>
 
@@ -2222,7 +2204,7 @@ function Header(
                     className="rounded-full w-10 h-10 xl:w-14 xl:h-14"
                     />
                     <span className="text-lg xl:text-3xl text-gray-800 font-semibold">
-                    PPUMP
+                        Home
                     </span>
                 </div>
             </button>

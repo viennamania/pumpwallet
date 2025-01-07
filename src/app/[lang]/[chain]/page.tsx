@@ -1035,26 +1035,6 @@ export default function Index({ params }: any) {
                 </div>
               </button>
 
-              {address && userType === "telegram" && (
-                  <button
-                      onClick={() => {
-                          window.open("https://t.me/ppump_bot", "_blank");
-                      }}
-                      className="p-2 bg-zinc-800 text-white rounded"
-                      >
-                      <div className="flex flex-row gap-2 items-center">
-                          <Image
-                          src="/logo-telegram.webp"
-                          alt="Telegram"
-                          width={50}
-                          height={50}
-                          className="rounded-lg w-10 h-10"
-                          />
-                          <span>Go to Telegram</span>
-                      </div>
-                  </button>
-              )}
-
             </div>
 
 
@@ -1514,7 +1494,7 @@ export default function Index({ params }: any) {
                   >
                     <div className="flex flex-row justify-between items-center gap-2">
                       <p className="text-lg font-semibold text-white">
-                        구매하기
+                        USDT 구매하기
                       </p>
                       <Image
                         src="/goto-icon.webp"
