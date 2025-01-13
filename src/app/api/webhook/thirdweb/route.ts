@@ -1,20 +1,32 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+/*
 import {
   UserProps,
 	acceptBuyOrder,
   updateBuyOrderByQueueId,
 } from '@lib/api/order';
+*/
 
-// Download the helper library from https://www.twilio.com/docs/node/install
-import twilio from "twilio";
-import { idCounter } from "thirdweb/extensions/farcaster/idRegistry";
+import {
+  getOneByWalletAddress
+} from '@lib/api/user';
+
+import {
+  insertOne,
+} from '@lib/api/transfer';
+
 
 
 export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
+
+  ////console.log("body", body);
+
+
+  /*
   const {
     queueId,
     status,
@@ -62,10 +74,38 @@ export async function POST(request: NextRequest) {
     retryMaxFeePerGas,
     retryMaxPriorityFeePerGas,
   } = body;
+  */
+
+  /*
+  body {
+    type: 'event-log',
+    data: {
+      chainId: 137,
+      contractAddress: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
+      blockNumber: 66572232,
+      transactionHash: '0x4bb6866dee52a97254b73bcbf0e4ba1a3964c88efa4f72d37c6016dbf18eb382',
+      topics: [
+        '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+        '0x00000000000000000000000076d9553f9910c5cf1f5dbbb210dc95bc5a63ee68',
+        '0x0000000000000000000000006a34bc58416381ad92aaae770256ed09ce2b2ec9'
+      ],
+      data: '0x000000000000000000000000000000000000000000000000000000000661ea89',
+      eventName: 'Transfer',
+      decodedLog: { to: [Object], from: [Object], value: [Object] },
+      timestamp: 1736605148000,
+      transactionIndex: 3,
+      logIndex: 15
+    }
+  }
+  */
 
 
+  //console.log("status", status);
+
+  /*
   if (status === "mined") {
 
+    
     const result = await updateBuyOrderByQueueId({
       queueId,
       transactionHash,
@@ -83,8 +123,69 @@ export async function POST(request: NextRequest) {
         result: "error",
       });
     }
+    
 
   }
+  */
+
+  const {
+    data,
+  } = body;
+
+  const {
+    chainId,
+    contractAddress,
+    blockNumber,
+    transactionHash,
+    topics,
+    eventName,
+    decodedLog,
+    timestamp,
+    transactionIndex,
+    logIndex,
+  } = data;
+
+
+  //console.log("to", decodedLog.to, "from", decodedLog.from, "value", decodedLog.value);
+
+
+
+  const toAddress = decodedLog.to.value;
+  const fromAddress = decodedLog.from.value;
+  const value = decodedLog.value.value;
+
+  /*
+  console.log("transactionHash", transactionHash, "transactionIndex", transactionIndex,
+    "fromAddress", fromAddress, "toAddress", toAddress, "value", value,
+    "timestamp", timestamp);
+  */
+
+
+  /*
+  const userToAddress = await getOneByWalletAddress(toAddress);
+  if (userToAddress) {
+    console.log("userToAddress", userToAddress);
+  }
+
+  const userFromAddress = await getOneByWalletAddress(fromAddress);
+
+  if (userFromAddress) {
+    console.log("userFromAddress", userFromAddress);
+  }
+  */
+
+  const result = insertOne({
+    transactionHash,
+    transactionIndex,
+    fromAddress,
+    toAddress,
+    value,
+    timestamp,
+  });
+
+  ///console.log("insertOne", result);
+
+  
 
   return NextResponse.json({
     result: "ok",
