@@ -1,3 +1,4 @@
+import { transfer } from 'thirdweb/extensions/erc20';
 import clientPromise from '../mongodb';
 
 /*
@@ -47,16 +48,22 @@ export async function insertOne(data: any) {
 
 
     ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
-    
+    /*
     const userFromAddress = collectionUsers
     .aggregate([
         { $match: { walletAddress: data.fromAddress } },
         { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
     ])
+    */
+    const userFromAddress = collectionUsers.findOne(
+        { walletAddress: data.fromAddress },
+        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+    )
 
     if (userFromAddress) {
         
         //console.log("userFromAddress", userFromAddress);
+
 
 
         await collectionUserTransfers.insertOne(
@@ -73,7 +80,12 @@ export async function insertOne(data: any) {
 
     }
 
-    const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
+    //const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
+
+    const userToAddress = await collectionUsers.findOne(
+        { walletAddress: data.toAddress },
+        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+    )
 
     if (userToAddress) {
         
@@ -153,8 +165,17 @@ export async function getTransferByWalletAddress(data: any) {
     .sort({ "transferData.timestamp": -1 })
     .toArray();
 
+    // totalTransfers
+    const totalTransfers = await collectionUserTransfers
+    .find({ "user._id": user._id })
+    .count();
 
-    return userTransfers;
+
+
+    return {
+        transfers: userTransfers,
+        totalTransfers: totalTransfers,
+    }
 
 }
 
