@@ -1909,20 +1909,10 @@ export default function SettingsPage({ params }: any) {
                                                         
 
                                                         {/* referral link button */}
-                                                        
+                                                        {/*
                                                         <button
                                                             onClick={() => {
                                                                 
-                                                                /*
-                                                                navigator.clipboard.writeText(
-                                                                    'https://ppump.me/kr/polygon/tbot' + '/?center=' + center +
-                                                                    '&agent=' + nft.contract.address + 
-                                                                    '&tokenId=' + nft.tokenId
-                                                                );
-                                                                */
-                                                                
-                                                                // https://t.me/owin_kingkong_bot?start=0x7b49Ba8811cF3bD8CBf8aD788a400AF23c6d1022_1
-
                                                                 navigator.clipboard.writeText(
                                                                     'https://t.me/' + center + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                                 );
@@ -1934,7 +1924,8 @@ export default function SettingsPage({ params }: any) {
                                                         >
                                                             레퍼럴 URL 복사하기
                                                         </button>
-                                                        
+                                                        */}
+                                  
 
                                                     </div>
 
