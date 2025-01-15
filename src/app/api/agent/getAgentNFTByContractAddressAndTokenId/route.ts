@@ -50,6 +50,8 @@ export async function POST(request: NextRequest) {
     omitMetadata: false, // // Flag to omit metadata
   });
   */
+
+  
   const response = await alchemy.nft.getNftMetadata(
     erc721ContractAddress,
     parseInt(tokenId)
@@ -71,9 +73,7 @@ export async function POST(request: NextRequest) {
     parseInt(tokenId)
   );
 
-  ////console.log("owner: ", owner);
-
-
+  //console.log("getOwnersForNft owner: ", owner);
   /*
   {
     owners: [ '0xAcDb8a6c00718597106F8cDa389Aac68973558B3' ],
@@ -81,16 +81,18 @@ export async function POST(request: NextRequest) {
   }
   */
 
+  const walletAddress = owner?.owners?.[0];
 
-  const user = await getOneByWalletAddress(owner?.owners?.[0]);
+  ///console.log("walletAddress: ", walletAddress);
+
+  const user = await getOneByWalletAddress(walletAddress);
 
 
 
 
   return NextResponse.json({
-
     result: response,
-    ownerWalletAddress: owner?.owners?.[0],
+    holderWalletAddress: walletAddress,
     ownerInfo: user,
     
   });
